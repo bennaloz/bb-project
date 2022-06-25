@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[tbl_Workout]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] NVARCHAR(50) NOT NULL, 
+    [fk_WorkoutPlanId] BIGINT NOT NULL
+)

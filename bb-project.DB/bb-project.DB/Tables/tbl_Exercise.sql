@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[tbl_Exercise]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] NVARCHAR(50) NOT NULL, 
+    [fk_UserId] NVARCHAR(50) NOT NULL,
+
+)
