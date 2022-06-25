@@ -9,5 +9,7 @@ namespace bb_project.Models
         public long ID { get; }
 
         public string Name { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

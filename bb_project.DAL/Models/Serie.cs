@@ -6,7 +6,7 @@ namespace bb_project.Models
     {
         public long ID { get; }
 
-        public long OwnerExercise { get; set; }
+        public long OwnerExerciseId { get; set; }
 
         public int Reps { get; set; }
 
