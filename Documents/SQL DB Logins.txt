@@ -1,0 +1,9 @@
+***************************PROD***************************
+DATABASE:
+USER:
+PASS:
+
+***************************TEST***************************
+DATABASE: bb-project/bb-project-test
+USER: bb-project-admin-test
+PASS: vHETYV9W4Z5sDGGBGn
