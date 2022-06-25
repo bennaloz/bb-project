@@ -6,10 +6,8 @@ namespace bb_project.Models
 {
     public class WorkoutPlan
     {
-        public int ID { get; }
+        public long ID { get; }
 
         public string Name { get; set; }
-
-        public IEnumerable<Workout> Workouts { get; set; }
     }
 }

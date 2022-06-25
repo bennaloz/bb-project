@@ -4,9 +4,9 @@ namespace bb_project.Models
 {
     public class Serie
     {
-        public int ID { get; }
+        public long ID { get; }
 
-        public Exercise OwnerExercise { get; set; }
+        public long OwnerExercise { get; set; }
 
         public int Reps { get; set; }
 

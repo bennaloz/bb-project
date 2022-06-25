@@ -47,8 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDataStore.cs" />
-    <Compile Include="MockDataStore.cs" />
+    <Compile Include="IWorkoutsDataStore.cs" />
+    <Compile Include="WorkoutsMockDataStore.cs" />
     <Compile Include="Models\Enums\ExerciseKind.cs" />
     <Compile Include="Models\Exercise.cs" />
     <Compile Include="Models\Serie.cs" />

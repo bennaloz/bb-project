@@ -11,9 +11,9 @@ using System.Text;
 
 namespace bb_project.Models
 {
-    internal class Exercise
+    public class Exercise
     {
-        public int ID { get; }
+        public long ID { get; }
 
         public string Name { get; set; }
 
