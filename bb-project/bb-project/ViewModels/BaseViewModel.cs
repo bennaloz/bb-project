@@ -10,7 +10,7 @@ namespace bb_project.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IWorkoutsDataStore DataStore => DependencyService.Get<IWorkoutsDataStore>();
 
         bool isBusy = false;
         public bool IsBusy

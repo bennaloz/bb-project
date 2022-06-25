@@ -35,7 +35,7 @@ namespace bb_project.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await DataStore.GetOwnerExerciseAsync(true);
                 foreach (var item in items)
                 {
                     Items.Add(item);

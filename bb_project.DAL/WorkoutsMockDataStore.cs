@@ -15,9 +15,9 @@ namespace bb_project.DAL
 {
     public class WorkoutsMockDataStore : IWorkoutsDataStore
     {
-        public Task<Exercise> GetOwnerExerciseAsync(long exerciseId)
+        public async Task<Exercise> GetOwnerExerciseAsync(long exerciseId)
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(new Exercise() { Name = "Prova", ID= 1 }) ;
         }
 
         public Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(int? id = null)

@@ -9,3 +9,8 @@
 /.vs/bb-project/FileContentIndex
 /bb_project.DAL/obj
 /.vs
+/bb-project/bb-project/bin/Debug/netstandard2.0
+/bb-project/bb-project.Android/bin/Debug
+/bb-project/bb-project.iOS/bin/iPhone/Debug
+/bb_project.DAL/bin/Debug
+*.user
