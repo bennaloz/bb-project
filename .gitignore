@@ -14,3 +14,4 @@
 /bb-project/bb-project.iOS/bin/iPhone/Debug
 /bb_project.DAL/bin/Debug
 *.user
+/bb-project/bb-project/bin/Debug/netstandard2.1
