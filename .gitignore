@@ -16,3 +16,9 @@
 *.user
 /bb-project.DB/.vs/bb-project.DB
 /bb-project.DB/bb-project.DB/obj/Debug
+/bb-project/bb-project/bin/Debug/netstandard2.1
+/bb-project.HomeModule/obj
+/ContentMainPageModule/obj
+/ContentModule/bin/Debug/netstandard2.1
+/ContentModule/obj
+/bb-project.HomeModule/bin/Debug/netstandard2.1

@@ -1,32 +1,38 @@
-﻿using bb_project.Services;
-using bb_project.Views;
+﻿using bb_project.Views;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Unity;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace bb_project
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
 
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
         }
 
-        protected override void OnStart()
+        protected override void OnInitialized()
         {
+            var result = NavigationService.NavigateAsync("AppShell").Result;
+            if (!result.Success)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
         }
-
-        protected override void OnSleep()
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<AppShell>("AppShell");
+            containerRegistry.RegisterRegionServices();
         }
-
-        protected override void OnResume()
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
+            moduleCatalog.AddModule<bb_project.HomeModule.HomeModule>();
+            base.ConfigureModuleCatalog(moduleCatalog);
         }
     }
 }
