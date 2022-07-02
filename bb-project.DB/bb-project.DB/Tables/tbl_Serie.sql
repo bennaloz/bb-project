@@ -3,7 +3,8 @@
 	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
     [Reps] SMALLINT NOT NULL, 
     [Rest] SMALLINT NULL, 
-    [ExerciseKind] SMALLINT NOT NULL, 
-    [fk_ExerciseId] BIGINT NOT NULL,
+    [fk_ExerciseId] BIGINT NOT NULL, 
+    [fk_WorkoutId] BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_Workout(Id), 
+    [ExerciseMethod] SMALLINT NOT NULL DEFAULT 1
 
 )
