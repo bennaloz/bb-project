@@ -11,5 +11,12 @@ namespace bb_project.DAL.Models.DB
         public string Name { get; set; }
 
         public bool IsActive { get; set; }
+
+        public static implicit operator WorkoutPlan(WorkoutPlanDbRecord dbRecord)
+        {
+            var result = new WorkoutPlan();
+
+            return result;
+        }
     }
 }

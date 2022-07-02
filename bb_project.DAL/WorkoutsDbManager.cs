@@ -15,6 +15,11 @@ namespace bb_project.DAL
     {
         private string connectionString = "";
 
+        public WorkoutsDbManager(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
         public async Task<IEnumerable<WorkoutPlanDbRecord>> GetWorkoutPlansAsync(long? id = null)
         {
             using (var conn = new SqlConnection(this.connectionString))

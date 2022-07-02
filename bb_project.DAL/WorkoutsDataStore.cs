@@ -1,6 +1,7 @@
 ﻿using bb_project.DAL.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,9 +9,13 @@ namespace bb_project.DAL
 {
     public class WorkoutsDataStore : IWorkoutsDataStore
     {
-        public Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)
+        private readonly WorkoutsDbManager dbManager = new WorkoutsDbManager("Server=bb-project.database.windows.net;Database=bb-project-test;User Id=bb-project-admin-test;Password=vHETYV9W4Z5sDGGBGn;");
+
+        public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)
         {
-            throw new NotImplementedException();
+            var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id);
+
+            return workoutPlansDb.Cast<WorkoutPlan>();
         }
 
         public Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)

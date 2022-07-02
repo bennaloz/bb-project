@@ -9,5 +9,7 @@ namespace bb_project.DAL.Models
         public long ID { get; }
 
         public string Name { get; set; }
+
+        public IEnumerable<Serie> Serie { get; set; }
     }
 }

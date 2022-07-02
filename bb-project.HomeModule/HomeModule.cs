@@ -1,4 +1,6 @@
-﻿using bb_project.HomeModule.Views;
+﻿using bb_project.DAL;
+using bb_project.DAL.Models;
+using bb_project.HomeModule.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
@@ -9,15 +11,22 @@ namespace bb_project.HomeModule
     public class HomeModule : IModule
     {
         private readonly IRegionManager regionManager;
+        private readonly IWorkoutsDataStore workoutDatStore;
 
-        public  HomeModule(IRegionManager regionManager)
+        public  HomeModule(IRegionManager regionManager, IWorkoutsDataStore workoutDatStore)
         {
             this.regionManager = regionManager;
+            this.workoutDatStore = workoutDatStore;
         }
-        public void OnInitialized(IContainerProvider containerProvider)
+        public async void OnInitialized(IContainerProvider containerProvider)
         {
             regionManager.RegisterViewWithRegion("ContentMainRegion", typeof(HomeView));
-            regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
+
+            if ((await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false)
+            {
+                regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
+
+            }
 
         }
 
