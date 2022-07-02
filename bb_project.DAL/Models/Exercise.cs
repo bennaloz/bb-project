@@ -1,4 +1,6 @@
-﻿namespace bb_project.Models
+﻿using bb_project.DAL.Models.Enums;
+
+namespace bb_project.DAL.Models
 {
     public class Exercise
     {

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bb_project.DAL.Models
+namespace bb_project.DAL.Models.DB
 {
-    public class Workout
+    public class WorkoutPlanDbRecord
     {
         public long ID { get; }
 
         public string Name { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

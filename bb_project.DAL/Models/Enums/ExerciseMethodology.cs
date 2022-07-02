@@ -1,6 +1,6 @@
-﻿namespace bb_project.Models.Enums
+﻿namespace bb_project.DAL.Models.Enums
 {
-    public enum ExerciseKind
+    public enum ExerciseMethodology
     {
         Single = 1,
         JumpSet = 2,

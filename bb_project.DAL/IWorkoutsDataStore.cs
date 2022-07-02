@@ -1,8 +1,8 @@
-﻿using bb_project.Models;
+﻿using bb_project.DAL.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace bb_project
+namespace bb_project.DAL
 {
     public interface IWorkoutsDataStore
     {
@@ -12,14 +12,12 @@ namespace bb_project
 
         Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId);
 
-        Task<Exercise> GetOwnerExerciseAsync(long exerciseId);
+        Task InsertWorkoutPlanAsync(WorkoutPlan workoutPlan);
 
-        Task<long> InsertWorkoutPlanAsync(WorkoutPlan workoutPlan);
-
-        Task<long> InsertWorkoutAsync(long workoutPlanId, Workout workout);
+        Task InsertWorkoutAsync(long workoutPlanId, Workout workout);
 
         Task InsertWorkoutSeriesAsync(IEnumerable<Serie> series);
 
-        Task<long> InsertExerciseAsync(Exercise exercise);
+        Task InsertExerciseAsync(Exercise exercise);
     }
 }
