@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bb_project.Modules.WorkoutAssistantModule.Views.WorkoutPlanSummaryView">
+  <ContentView.Content>
+      
+      <!--//TODO: display workouts-->
+        <StackLayout>
+            <Label Text="Hello Xamarin.Forms!" />
+            <Button Text="Mostra esercizi"
+                    Command="{Binding ShowWorkoutExercisesCommand}" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

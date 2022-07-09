@@ -5,7 +5,7 @@ using System.Text;
 
 namespace bb_project.DAL.Models
 {
-    public class WorkoutPlanDbRecord
+    internal class WorkoutPlanDbRecord
     {
         public long ID { get; }
 

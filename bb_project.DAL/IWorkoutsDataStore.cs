@@ -18,7 +18,10 @@ namespace bb_project.DAL
         Task InsertWorkoutAsync(long workoutPlanId, Workout workout);
 
         Task InsertWorkoutSeriesAsync(IEnumerable<Serie> series);
+        Task<WorkoutPlan> GetActiveWorkoutPlanAsync();
 
-        Task InsertExerciseAsync(ExerciseDbRecord exercise);
+        Task InsertExerciseAsync(Exercise exercise);
+        
+        Task<bool?> HasActiveWorkoutPlanAsync();
     }
 }

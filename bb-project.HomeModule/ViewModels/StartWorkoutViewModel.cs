@@ -13,25 +13,12 @@ namespace bb_project.Modules.HomeModule.ViewModels
 {
     internal class StartWorkoutViewModel : BindableBase
     {
-        private readonly IWorkoutsDataStore workoutsDataStore;
         private readonly IEventAggregator eventAggregator;
-
-        public string WorkoutPlanName { get; set; }
-
-        public string WorkoutName { get; set; }
-
         public ICommand StartWorkoutCommand { get; set; }
 
-        public StartWorkoutViewModel(IWorkoutsDataStore workoutsDataStore,
-                                     IEventAggregator eventAggregator)
+        public StartWorkoutViewModel(IEventAggregator eventAggregator)
         {
-            this.workoutsDataStore = workoutsDataStore;
             this.eventAggregator = eventAggregator;
-
-            //WorkoutPlan activeWorkoutPlan = this.workoutsDataStore.GetActiveWorkoutPlanAsync().GetAwaiter().GetResult();
-            //this.WorkoutPlanName = activeWorkoutPlan.Name;
-
-            //TODO: Get today's workout
 
             this.StartWorkoutCommand = new DelegateCommand(() =>
             {

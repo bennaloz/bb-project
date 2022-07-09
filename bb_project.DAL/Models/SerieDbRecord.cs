@@ -2,7 +2,7 @@
 
 namespace bb_project.DAL.Models
 {
-    public class SerieDbRecord
+    internal class SerieDbRecord
     {
         public long ID { get; }
 

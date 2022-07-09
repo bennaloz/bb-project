@@ -35,7 +35,7 @@ namespace bb_project
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<bb_project.Modules.HomeModule.HomeModule>();
-            moduleCatalog.AddModule<bb_project.Modules.WorkoutAssistantModule.WorkoutAssistantModuleModule>();
+            moduleCatalog.AddModule<bb_project.Modules.WorkoutAssistantModule.WorkoutAssistantModule>();
             moduleCatalog.AddModule<bb_project.Modules.WorkoutEditorModule.WorkoutEditorModule>();
             base.ConfigureModuleCatalog(moduleCatalog);
         }

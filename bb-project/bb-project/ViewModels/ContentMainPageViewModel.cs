@@ -25,7 +25,7 @@ namespace bb_project.ViewModels
 
         private void startWorkout()
         {
-            this.regionManager.RequestNavigate("ContentMainPageRegion", "WorkoutAssistantView");
+            this.regionManager.RequestNavigate("ContentMainPageRegion", nameof(WorkoutAssistantView));
         }
     }
 }

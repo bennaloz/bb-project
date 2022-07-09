@@ -22,10 +22,12 @@ namespace bb_project.Modules.HomeModule
         {
             regionManager.RegisterViewWithRegion("ContentMainPageRegion", typeof(HomeView));
 
-            if (true/*(await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false*/)
+            if ((await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false)
             {
                 regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
             }
+            else
+                regionManager.RegisterViewWithRegion("HomeRegion", typeof(CreateWorkoutView));
 
         }
 

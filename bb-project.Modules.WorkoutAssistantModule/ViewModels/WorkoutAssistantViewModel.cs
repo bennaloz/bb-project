@@ -1,5 +1,8 @@
-﻿using Prism.Commands;
+﻿using bb_project.DAL;
+using bb_project.Infrastructure.Models.Data;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,17 +11,16 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
 {
     public class WorkoutAssistantViewModel : BindableBase
     {
-        private string _title;
+        private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IRegionManager regionManager;
 
-        public string Title
+        public WorkoutAssistantViewModel(IWorkoutsDataStore workoutsDataStore,
+                                         IRegionManager regionManager)
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
+            this.workoutsDataStore = workoutsDataStore;
+            this.regionManager = regionManager;
 
-        public WorkoutAssistantViewModel()
-        {
-            Title = "View A";
+            //TODO: mostrare tutti i workout disponibili evidenziando il successivo rispetto l'ultimo fatto
         }
     }
 }

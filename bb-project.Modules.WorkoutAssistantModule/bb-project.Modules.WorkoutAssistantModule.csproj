@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-","_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,9 +12,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\bb_project.DAL\bb_project.Infrastructure.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Views\WorkoutAssistantView.xaml.cs">
       <DependentUpon>WorkoutAssistantView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\WorkoutPlanSummaryView.xaml.cs">
+      <DependentUpon>WorkoutPlanSummaryView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\CardioExerciseView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\WeightsExerciseView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\WorkoutExercisesView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\WorkoutPlanSummaryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
