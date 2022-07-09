@@ -12,6 +12,11 @@ namespace bb_project.DAL
     {
         private readonly WorkoutsDbManager dbManager = new WorkoutsDbManager("Server=bb-project.database.windows.net;Database=bb-project-test;User Id=bb-project-admin-test;Password=vHETYV9W4Z5sDGGBGn;");
 
+        public Task<WorkoutPlan> GetActiveWorkoutPlanAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)
         {
             var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id);
@@ -25,6 +30,11 @@ namespace bb_project.DAL
         }
 
         public Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool?> HasActiveWorkoutPlanAsync()
         {
             throw new NotImplementedException();
         }

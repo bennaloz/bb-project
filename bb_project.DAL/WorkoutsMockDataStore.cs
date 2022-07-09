@@ -8,6 +8,11 @@ namespace bb_project.DAL
 {
     public class WorkoutsMockDataStore : IWorkoutsDataStore
     {
+        public Task<WorkoutPlan> GetActiveWorkoutPlanAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)
         {
             throw new NotImplementedException();
@@ -23,7 +28,12 @@ namespace bb_project.DAL
             throw new NotImplementedException();
         }
 
-        public Task InsertExerciseAsync(ExerciseDbRecord exercise)
+        public Task<bool?> HasActiveWorkoutPlanAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task InsertExerciseAsync(Exercise exercise)
         {
             throw new NotImplementedException();
         }
