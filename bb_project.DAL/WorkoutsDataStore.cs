@@ -1,4 +1,5 @@
 ﻿using bb_project.DAL.Models;
+using bb_project.Infrastructure.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
