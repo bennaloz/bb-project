@@ -5,6 +5,6 @@
                xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True">
 
-    <ContentView prism:RegionManager.RegionName="ContentMainRegion"/>
+    <ContentView prism:RegionManager.RegionName="ContentMainPageRegion"/>
 
 </ContentPage>

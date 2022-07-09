@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bb-project.Modules.WorkoutA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bb-project.Infrastructure.Models", "bb-project.Infrastructure.Models\bb-project.Infrastructure.Models.csproj", "{9D8E935A-2A12-4B05-BF29-2DB7D09E3A5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bb-project.Modules.WorkoutEditorModule", "bb-project.Modules.WorkoutEditorModule\bb-project.Modules.WorkoutEditorModule.csproj", "{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +145,18 @@ Global
 		{9D8E935A-2A12-4B05-BF29-2DB7D09E3A5A}.Release|iPhone.Build.0 = Release|Any CPU
 		{9D8E935A-2A12-4B05-BF29-2DB7D09E3A5A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{9D8E935A-2A12-4B05-BF29-2DB7D09E3A5A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Release|iPhone.Build.0 = Release|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{C2F8C138-3E94-4AB3-88AB-57E1C96F7F16}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

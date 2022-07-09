@@ -5,14 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Prism.Forms.Regions" Version="8.1.97" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Prism.Forms" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\WorkoutAssistantView.xaml.cs">
-      <DependentUpon>WorkoutAssistantView.xaml</DependentUpon>
+    <Compile Update="Views\WorkoutEditorView.xaml.cs">
+      <DependentUpon>WorkoutEditorView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

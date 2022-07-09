@@ -2,7 +2,7 @@
 
 namespace bb_project.Modules.WorkoutAssistantModule.Views
 {
-    public partial class WorkoutAssistantView : ContentPage
+    public partial class WorkoutAssistantView : ContentView
     {
         public WorkoutAssistantView()
         {

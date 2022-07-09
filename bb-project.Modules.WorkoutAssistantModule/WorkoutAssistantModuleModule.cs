@@ -7,6 +7,10 @@ namespace bb_project.Modules.WorkoutAssistantModule
 {
     public class WorkoutAssistantModuleModule : IModule
     {
+        public WorkoutAssistantModuleModule()
+        {
+        }
+
         public void OnInitialized(IContainerProvider containerProvider)
         {
 
@@ -14,7 +18,7 @@ namespace bb_project.Modules.WorkoutAssistantModule
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<WorkoutAssistantView, WorkoutAssistantViewModel>();
+            containerRegistry.RegisterForRegionNavigation<WorkoutAssistantView>(name: "WorkoutAssistantView");
         }
     }
 }

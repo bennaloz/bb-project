@@ -20,18 +20,18 @@ namespace bb_project.Modules.HomeModule
         }
         public async void OnInitialized(IContainerProvider containerProvider)
         {
-            regionManager.RegisterViewWithRegion("ContentMainRegion", typeof(HomeView));
+            regionManager.RegisterViewWithRegion("ContentMainPageRegion", typeof(HomeView));
 
-            //if ((await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false)
-            //{
-            //    regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
-
-            //}
+            if (true/*(await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false*/)
+            {
+                regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
+            }
 
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+
         }
     }
 }
