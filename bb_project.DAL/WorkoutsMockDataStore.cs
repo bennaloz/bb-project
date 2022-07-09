@@ -1,4 +1,5 @@
 ﻿using bb_project.DAL.Models;
+using bb_project.Infrastructure.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace bb_project.DAL
             throw new NotImplementedException();
         }
 
-        public Task InsertExerciseAsync(Exercise exercise)
+        public Task InsertExerciseAsync(ExerciseDbRecord exercise)
         {
             throw new NotImplementedException();
         }

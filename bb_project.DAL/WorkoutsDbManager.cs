@@ -1,6 +1,5 @@
 ﻿using bb_project.DAL.Helpers;
 using bb_project.DAL.Models;
-using bb_project.DAL.Models.DB;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -53,7 +52,7 @@ namespace bb_project.DAL
         {
         }
 
-        public async Task<long> InsertExerciseAsync(Exercise exercise)
+        public async Task<long> InsertExerciseAsync(ExerciseDbRecord exercise)
         {
             return default;
         }

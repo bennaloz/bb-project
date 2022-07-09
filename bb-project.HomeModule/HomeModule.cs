@@ -1,12 +1,12 @@
 ﻿using bb_project.DAL;
 using bb_project.DAL.Models;
-using bb_project.HomeModule.Views;
+using bb_project.Modules.HomeModule.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
 
-namespace bb_project.HomeModule
+namespace bb_project.Modules.HomeModule
 {
     public class HomeModule : IModule
     {
@@ -22,11 +22,11 @@ namespace bb_project.HomeModule
         {
             regionManager.RegisterViewWithRegion("ContentMainRegion", typeof(HomeView));
 
-            if ((await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false)
-            {
-                regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
+            //if ((await this.workoutDatStore?.HasActiveWorkoutPlanAsync()) ?? false)
+            //{
+            //    regionManager.RegisterViewWithRegion("HomeRegion", typeof(StartWorkoutView));
 
-            }
+            //}
 
         }
 

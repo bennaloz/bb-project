@@ -1,4 +1,5 @@
 ﻿using bb_project.DAL.Models;
+using bb_project.Infrastructure.Models.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,6 +19,6 @@ namespace bb_project.DAL
 
         Task InsertWorkoutSeriesAsync(IEnumerable<Serie> series);
 
-        Task InsertExerciseAsync(Exercise exercise);
+        Task InsertExerciseAsync(ExerciseDbRecord exercise);
     }
 }

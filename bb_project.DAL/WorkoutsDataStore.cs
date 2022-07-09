@@ -28,7 +28,7 @@ namespace bb_project.DAL
             throw new NotImplementedException();
         }
 
-        public Task InsertExerciseAsync(Exercise exercise)
+        public Task InsertExerciseAsync(ExerciseDbRecord exercise)
         {
             throw new NotImplementedException();
         }

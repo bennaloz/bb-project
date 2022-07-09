@@ -31,7 +31,7 @@ namespace bb_project
         }
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
-            moduleCatalog.AddModule<bb_project.HomeModule.HomeModule>();
+            moduleCatalog.AddModule<bb_project.Modules.HomeModule.HomeModule>();
             base.ConfigureModuleCatalog(moduleCatalog);
         }
     }

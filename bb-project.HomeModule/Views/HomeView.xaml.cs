@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace bb_project.HomeModule.Views
+namespace bb_project.Modules.HomeModule.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomeView : ContentView

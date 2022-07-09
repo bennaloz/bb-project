@@ -20,3 +20,9 @@
 /bb_project.Authentication/bin/Debug/netstandard2.1
 /bb_project.Authentication/obj
 /bb-project.HomeModule/obj
+/bb-project/bb-project/bin/Debug/netstandard2.1
+/bb-project.HomeModule/bin/Debug/netstandard2.1
+/bb-project.Modules.WorkoutAssistantModule/bin/Debug/netstandard2.0
+/bb-project.Modules.WorkoutAssistantModule/obj
+/obj/Debug/netstandard2.1
+/bb-project.Infrastructure.Models/obj

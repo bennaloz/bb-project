@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\bb-project.HomeModule\bb-project.HomeModule.csproj" />
-    <ProjectReference Include="..\..\bb_project.DAL\bb_project.DAL.csproj" />
+    <ProjectReference Include="..\..\bb-project.HomeModule\bb-project.Modules.HomeModule.csproj" />
+    <ProjectReference Include="..\..\bb_project.DAL\bb_project.Infrastructure.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
