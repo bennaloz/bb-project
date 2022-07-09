@@ -10,8 +10,6 @@ namespace bb_project.Infrastructure.Models.Data
 
         public string Name { get; set; }
 
-        public IEnumerable<Workout> Workouts { get; set; }
-
         public bool IsActive { get; set; }
     }
 }

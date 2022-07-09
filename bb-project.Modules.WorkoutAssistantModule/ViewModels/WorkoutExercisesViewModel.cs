@@ -30,9 +30,10 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
             this.StartWorkoutCommand = new DelegateCommand(this.startWorkoutCommand);
         }
 
-        private void startWorkoutCommand()
+        private async void startWorkoutCommand()
         {
-            switch (currentWorkout.Serie.First().OwnerExercise.Type)
+            var firstExerciseType = (await this.workoutsDataStore.GetWorkoutSeriesAsync(1)).First().OwnerExercise.Type;
+            switch (firstExerciseType)
             {
                 case Infrastructure.Models.Enums.ExerciseType.Cardio:
                     this.regionManager.RequestNavigate(WorkoutAssistantModule.WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME, nameof(CardioExerciseView));

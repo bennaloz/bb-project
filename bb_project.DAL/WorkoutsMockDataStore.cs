@@ -8,7 +8,7 @@ namespace bb_project.DAL
 {
     public class WorkoutsMockDataStore : IWorkoutsDataStore
     {
-        public Task<WorkoutPlan> GetActiveWorkoutPlanAsync()
+        public Task<IEnumerable<Workout>> GetActiveWorkoutsAsync()
         {
             throw new NotImplementedException();
         }

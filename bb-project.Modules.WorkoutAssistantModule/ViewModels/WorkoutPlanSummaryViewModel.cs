@@ -26,9 +26,7 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
         {
             this.workoutsDataStore = workoutsDataStore;
             this.regionManager = regionManager;
-            WorkoutPlan activeWorkoutPlan = this.workoutsDataStore.GetActiveWorkoutPlanAsync().GetAwaiter().GetResult();
-            this.WorkoutPlanName = activeWorkoutPlan.Name;
-            this.Workouts = activeWorkoutPlan.Workouts;
+            this.Workouts = this.workoutsDataStore.GetActiveWorkoutsAsync().GetAwaiter().GetResult();
 
             this.ShowWorkoutExercisesCommand = new DelegateCommand<Workout>(this.goToWorkoutExercisesView);
         }

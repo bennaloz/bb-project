@@ -6,10 +6,13 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class Workout
     {
-        public long ID { get; }
+        public long Id { get; }
 
         public string Name { get; set; }
 
-        public IEnumerable<Serie> Serie { get; set; }
+        public Workout(long id)
+        {
+            this.Id = id;
+        }
     }
 }

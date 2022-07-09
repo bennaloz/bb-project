@@ -19,6 +19,24 @@ namespace bb_project.DAL
             this.connectionString = connectionString;
         }
 
+        public async Task<bool> HasActiveWorkoutAsync()
+        {
+            using (var conn = new SqlConnection(this.connectionString))
+            {
+                await conn.OpenAsync();
+                return await conn.QueryFirstOrDefaultAsync<bool>("spr_HasActiveWorkoutPlan");
+            }
+        }
+
+        public async Task<IEnumerable<WorkoutDbRecord>> GetActiveWorkoutsAsync()
+        {
+            using(var conn = new SqlConnection(this.connectionString))
+            {
+                await conn.OpenAsync();
+                return await conn.QueryAsync<WorkoutDbRecord>("spr_GetActiveWorkouts");
+            }
+        }
+
         public async Task<IEnumerable<WorkoutPlanDbRecord>> GetWorkoutPlansAsync(long? id = null)
         {
             using (var conn = new SqlConnection(this.connectionString))

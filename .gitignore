@@ -27,3 +27,6 @@
 /obj/Debug/netstandard2.1
 /bb-project.Infrastructure.Models/obj
 /bb-project.Infrastructure.Models/bin/Debug/netstandard2.1
+/bb-project.Modules.WorkoutAssistantModule/bin/Debug/netstandard2.1
+/bb-project.Modules.WorkoutEditorModule/bin/Debug/netstandard2.1
+/bb-project.Modules.WorkoutEditorModule/obj
