@@ -6,4 +6,4 @@ AS
         FROM tbl_WorkoutPlan
         WHERE @workoutPlanId = 0 OR tbl_WorkoutPlan.Id = @workoutPlanId
     END
-RETURN 0
+RETURN @@ROWCOUNT;

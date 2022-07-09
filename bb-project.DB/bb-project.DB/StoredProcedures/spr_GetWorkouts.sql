@@ -5,4 +5,4 @@ AS
     SELECT *
     FROM tbl_Workout
     WHERE tbl_Workout.fk_WorkoutPlanId = @workoutPlanId AND (@workoutId = 0 OR tbl_Workout.Id = @workoutId)
-RETURN 0
+RETURN @@ROWCOUNT

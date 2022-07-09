@@ -72,6 +72,8 @@
     <Build Include="StoredProcedures\spw_InsertWorkout.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutSeries.sql" />
     <Build Include="StoredProcedures\spw_InsertExercise.sql" />
+    <Build Include="StoredProcedures\spr_HasActiveWorkoutPlan.sql" />
+    <Build Include="StoredProcedures\spr_GetActiveWorkouts.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="bb-project.DB.refactorlog" />

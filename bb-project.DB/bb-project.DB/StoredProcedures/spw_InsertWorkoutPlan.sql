@@ -7,4 +7,4 @@ AS
     VALUES (@workoutPlanName, @isActive)
 
     SET @workoutPlanId = SCOPE_IDENTITY();
-RETURN 0
+RETURN @@ROWCOUNT
