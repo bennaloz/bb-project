@@ -5,7 +5,11 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class Exercise
     {
-        public long ID { get; internal set; }
+        public Exercise(long id)
+        {
+            this.ID = id;
+        }
+        public long ID { get;}
 
         public string Name { get; set; }
 

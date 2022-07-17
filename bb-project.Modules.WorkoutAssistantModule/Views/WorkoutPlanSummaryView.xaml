@@ -5,8 +5,20 @@
   <ContentView.Content>
       
       <!--//TODO: display workouts-->
-        <StackLayout>
-            <Label Text="Hello Xamarin.Forms!" />
+        <StackLayout Orientation="Vertical">
+
+            <ListView ItemsSource="{Binding WorkoutPlans}"  VerticalOptions="Center"  SelectionMode="Single" SelectedItem="{Binding SelectedWorkoutPlan, Mode=TwoWay}"  >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" >
+                                <CheckBox IsChecked="{Binding IsActive}" />
+                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="30" FontAttributes="Bold"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button Text="Mostra esercizi"
                     Command="{Binding ShowWorkoutExercisesCommand}" />
         </StackLayout>

@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
@@ -19,7 +20,26 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
 
         public IEnumerable<Workout> Workouts { get; private set; }
 
-        public ICommand ShowWorkoutExercisesCommand { get; set; } 
+        public ICommand ShowWorkoutExercisesCommand { get; set; }
+
+        public IEnumerable<WorkoutPlan> WorkoutPlans
+        {
+            get
+            {
+                return this.workoutsDataStore.GetWorkoutPlansAsync().GetAwaiter().GetResult().ToList();
+            }
+        }
+
+        private WorkoutPlan selectedWorkoutPlan;
+
+        public WorkoutPlan SelectedWorkoutPlan
+        {
+            get { return selectedWorkoutPlan; }
+            set
+            {
+                SetProperty(ref selectedWorkoutPlan, value);
+            }
+        }
 
         public WorkoutPlanSummaryViewModel(IWorkoutsDataStore workoutsDataStore,
                                            IRegionManager regionManager)
@@ -27,6 +47,8 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
             this.workoutsDataStore = workoutsDataStore;
             this.regionManager = regionManager;
             this.Workouts = this.workoutsDataStore.GetActiveWorkoutsAsync().GetAwaiter().GetResult();
+
+            this.SelectedWorkoutPlan = this.WorkoutPlans.First(o => o.IsActive);
 
             this.ShowWorkoutExercisesCommand = new DelegateCommand<Workout>(this.goToWorkoutExercisesView);
         }

@@ -28,7 +28,7 @@ namespace bb_project
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<AppShell>("AppShell");
-            containerRegistry.RegisterSingleton<IWorkoutsDataStore, WorkoutsDataStore>();
+            containerRegistry.RegisterSingleton<IWorkoutsDataStore, WorkoutsMockDataStore>();
             containerRegistry.RegisterRegionServices();
         }
 

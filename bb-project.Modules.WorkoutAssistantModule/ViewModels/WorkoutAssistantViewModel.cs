@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
@@ -14,6 +15,15 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
         private readonly IWorkoutsDataStore workoutsDataStore;
         private readonly IRegionManager regionManager;
 
+        private WorkoutPlan selectedWorkoutPlan;
+        public WorkoutPlan SelectedWorkoutPlan
+        {
+            get { return selectedWorkoutPlan; }
+            set
+            {
+                SetProperty(ref selectedWorkoutPlan, value);
+            }
+        }
         public WorkoutAssistantViewModel(IWorkoutsDataStore workoutsDataStore,
                                          IRegionManager regionManager)
         {
