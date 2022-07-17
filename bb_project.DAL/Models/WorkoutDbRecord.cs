@@ -11,6 +11,7 @@ namespace bb_project.DAL.Models
 
         public string Name { get; set; }
 
+
         public static implicit operator Workout(WorkoutDbRecord workoutDbRecord)
         {
             return new Workout(workoutDbRecord.Id)

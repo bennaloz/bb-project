@@ -24,37 +24,57 @@ namespace bb_project.DAL
             return workoutPlansDb.Cast<WorkoutPlan>();
         }
 
-        public Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
+        public async Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
         {
-            throw new NotImplementedException();
+            var workouts = await this.dbManager.GetWorkoutsAsync(workoutPlanId);
+
+            return workouts.Cast<Workout>();
         }
 
-        public Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId)
+        public async Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId, string userId)
         {
-            throw new NotImplementedException();
+            var workouts = await this.dbManager.GetWorkoutSeriesAsync(workoutId, userId);
+
+            return workouts.Cast<Serie>();
         }
 
         public async Task<bool?> HasActiveWorkoutPlanAsync()
-            => await this.dbManager.HasActiveWorkoutAsync();
+            => await this.dbManager.HasActiveWorkoutPlanAsync();
 
-        public Task InsertExerciseAsync(Exercise exercise)
+        public async Task<long> InsertExerciseAsync(Exercise exercise)
         {
-            throw new NotImplementedException();
+            return await this.dbManager.InsertExerciseAsync(new ExerciseDbRecord
+            {
+                Name = exercise.Name,
+                Type = exercise.Type
+            });
         }
 
-        public Task InsertWorkoutAsync(long workoutPlanId, Workout workout)
+        public async Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName)
         {
-            throw new NotImplementedException();
+            return await this.dbManager.InsertWorkoutAsync(workoutPlanId, new WorkoutDbRecord
+            {
+                Name = workoutName
+            });
         }
 
-        public Task InsertWorkoutPlanAsync(WorkoutPlan workoutPlan)
+        public async Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false)
         {
-            throw new NotImplementedException();
+            return await this.dbManager.InsertWorkoutPlanAsync(new WorkoutPlanDbRecord
+            {
+                Name = workoutPlanName,
+                IsActive = isActive
+            });
         }
 
-        public Task InsertWorkoutSeriesAsync(IEnumerable<Serie> series)
+        public async Task InsertWorkoutSeriesAsync(long workoutId, IEnumerable<Serie> series)
         {
-            throw new NotImplementedException();
+            await this.dbManager.InsertWorkoutSeriesAsync(workoutId, series.Select(s =>
+            {
+                var sDb = (SerieDbRecord)s;
+                sDb.WorkoutId = workoutId;
+                return sDb;
+            }));
         }
     }
 }

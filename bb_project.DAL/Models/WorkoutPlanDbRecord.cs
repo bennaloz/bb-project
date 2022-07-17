@@ -13,6 +13,7 @@ namespace bb_project.DAL.Models
 
         public bool IsActive { get; set; }
 
+
         public static implicit operator WorkoutPlan(WorkoutPlanDbRecord dbRecord)
         {
             var result = new WorkoutPlan();
