@@ -14,5 +14,11 @@ namespace bb_project.Infrastructure.Models.Data
         public int Rest { get; set; }
 
         public ExerciseMethodology ExerciseMethod { get; set; }
+
+        public Serie(long id, Exercise ownerExercise)
+        {
+            this.ID = id;
+            this.OwnerExercise = ownerExercise;
+        }
     }
 }
