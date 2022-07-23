@@ -32,7 +32,7 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
 
         private async void startWorkoutCommand()
         {
-            var firstExerciseType = (await this.workoutsDataStore.GetWorkoutSeriesAsync(1)).First().OwnerExercise.Type;
+            var firstExerciseType = (await this.workoutsDataStore.GetWorkoutSeriesAsync(1,"a")).First().OwnerExercise.Type;
             switch (firstExerciseType)
             {
                 case Infrastructure.Models.Enums.ExerciseType.Cardio:

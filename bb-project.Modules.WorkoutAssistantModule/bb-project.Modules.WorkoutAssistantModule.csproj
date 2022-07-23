@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Prism.Forms.Regions" Version="8.1.97" />
+    <PackageReference Include="xamarin.fontawesome" Version="5.15.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Prism.Forms" Version="8.1.97" />
   </ItemGroup>

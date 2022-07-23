@@ -3,6 +3,7 @@ using bb_project.Infrastructure.Models.Data;
 using bb_project.Infrastructure.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace bb_project.DAL
@@ -10,32 +11,35 @@ namespace bb_project.DAL
     public class WorkoutsMockDataStore : IWorkoutsDataStore
     {
 
+
         IEnumerable<Workout> workouts;
         IEnumerable<Serie> series;
         IEnumerable<WorkoutPlan> plans;
         public WorkoutsMockDataStore()
         {
-            workouts = new List<Workout>()
+
+
+            this.plans = new ObservableCollection<WorkoutPlan>()
             {
-                new Workout(1){Name = "Scheda A"},
-                new Workout(2){Name = "Scheda B"},
-                new Workout(3){Name = "Scheda C"},
-                new Workout(4){Name = "Scheda D"},
+               new WorkoutPlan { Name ="MASSA", IsActive=true},
+                new WorkoutPlan { Name ="DEFINIZIONE", IsActive=false},
+                new WorkoutPlan { Name ="FORZA",IsActive =false}
             };
 
-            series = new List<Serie>()
+            this.workouts = new ObservableCollection<Workout>()
             {
-                new Serie() { ExerciseMethod = ExerciseMethodology.Single , OwnerExercise = new Exercise(1) { Name = "SQUAT", Type= ExerciseType.Weights}, Reps= 8, Rest=120 },
-                new Serie() { ExerciseMethod = ExerciseMethodology.Single , OwnerExercise = new Exercise(1) { Name = "SQUAT", Type= ExerciseType.Weights}, Reps= 8, Rest=120 },
-                new Serie() { ExerciseMethod = ExerciseMethodology.Single , OwnerExercise = new Exercise(1) { Name = "SQUAT", Type= ExerciseType.Weights}, Reps= 8, Rest=120 }
+                new Workout(1) { Name ="Scheda A"},
+                new Workout(2) { Name ="Scheda B"},
+                new Workout(3) { Name ="Scheda C"}
             };
 
-            plans = new List<WorkoutPlan>()
+            this.series = new ObservableCollection<Serie>()
             {
-                new WorkoutPlan(){ Name = "MASSA", IsActive = false },
-                new WorkoutPlan(){ Name = "DEFINIZIONE", IsActive = true},
-                new WorkoutPlan(){ Name = "FORZA", IsActive = false}
+                new Serie(1,new Exercise(1){Name ="Panca Piana",Type= ExerciseType.Weights}),
+                new Serie(2,new Exercise(1){Name ="Squat",Type= ExerciseType.Weights}),
+                new Serie(1,new Exercise(1){Name ="Tapis Roulant",Type= ExerciseType.Cardio})
             };
+
         }
 
 
@@ -59,6 +63,11 @@ namespace bb_project.DAL
             return await Task.FromResult(series);
         }
 
+        public Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool?> HasActiveWorkoutPlanAsync()
         {
             return await Task.FromResult(true);
@@ -74,12 +83,32 @@ namespace bb_project.DAL
             throw new NotImplementedException();
         }
 
+        public Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task InsertWorkoutPlanAsync(WorkoutPlan workoutPlan)
         {
             throw new NotImplementedException();
         }
 
+        public Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task InsertWorkoutSeriesAsync(IEnumerable<Serie> series)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task InsertWorkoutSeriesAsync(long workoutId, IEnumerable<Serie> series)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<long> IWorkoutsDataStore.InsertExerciseAsync(Exercise exercise)
         {
             throw new NotImplementedException();
         }

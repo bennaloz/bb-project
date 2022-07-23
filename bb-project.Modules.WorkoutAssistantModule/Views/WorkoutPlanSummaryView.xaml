@@ -1,24 +1,59 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="bb_project.Modules.WorkoutAssistantModule.Views.WorkoutPlanSummaryView">
-  <ContentView.Content>
+             xmlns:conv="clr-namespace:bb_project.Modules.WorkoutAssistantModule.Converters"
+             xmlns:wm="clr-namespace:bb_project.Modules.WorkoutAssistantModule.ViewModels"
+               xmlns:fa="clr-namespace:Xamarin.Forms.FontAwesome.Controls;assembly=Xamarin.Forms.FontAwesome"
+             x:Class="bb_project.Modules.WorkoutAssistantModule.Views.WorkoutPlanSummaryView"
+             x:Name="summaryView">
+
+    <ContentView.Resources>
+        <conv:VisibleConditionMultiConverter x:Key="visibleConverter"/>
+
+        <Style x:Key="GridSelection" TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="#007fff" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    
+    <ContentView.Content>
       
       <!--//TODO: display workouts-->
         <StackLayout Orientation="Vertical">
 
-            <ListView ItemsSource="{Binding WorkoutPlans}"  VerticalOptions="Center"  SelectionMode="Single" SelectedItem="{Binding SelectedWorkoutPlan, Mode=TwoWay}"  >
-                <ListView.ItemTemplate>
+            <CollectionView  SelectionMode="Single" HeightRequest="400" ItemsSource="{Binding WorkoutPlans}" SelectedItem="{Binding SelectedWorkoutPlan, Mode=TwoWay}">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" >
-                                <CheckBox IsChecked="{Binding IsActive}" />
-                                <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="30" FontAttributes="Bold"/>
-                            </StackLayout>
-                        </ViewCell>
+                        <StackLayout Orientation="Horizontal" HeightRequest="50" Style="{StaticResource GridSelection}">
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" />
+                            <fa:Icon FaName="dumbbell" FaStyle="Solid"  VerticalOptions="Center" FontSize="Medium">
+                                <fa:Icon.IsVisible>
+                                    <MultiBinding Converter="{StaticResource visibleConverter}">
+                                        <Binding  Path="BindingContext.SelectedWorkoutPlan" Source="{x:Reference summaryView}"/>
+                                        <Binding/>
+                                    </MultiBinding>
+                                </fa:Icon.IsVisible> 
+                            </fa:Icon>
+                        </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Button Text="Mostra esercizi"
                     Command="{Binding ShowWorkoutExercisesCommand}" />
         </StackLayout>
