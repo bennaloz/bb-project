@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[tbl_WorkoutHistory]
+(
+    [Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+    StartDate DATETIME2 NOT NULL,
+    EndDate DATETIME2,
+    fk_WorkoutId BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_Workout(Id),
+    fk_WorkoutPlanId BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_WorkoutPlan(Id),
+    fk_UserId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES tbl_User(Id)
+)
