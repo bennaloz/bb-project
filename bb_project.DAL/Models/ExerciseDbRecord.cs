@@ -1,8 +1,8 @@
 ﻿using bb_project.Infrastructure.Models.Enums;
 
-namespace bb_project.DAL.Models
+namespace bb_project.Infrastructure.DAL.Models
 {
-    internal class ExerciseDbRecord
+    public class ExerciseDbRecord
     {
         public long ID { get; internal set; }
 

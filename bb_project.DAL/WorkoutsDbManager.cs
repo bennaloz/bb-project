@@ -1,5 +1,4 @@
 ﻿using bb_project.DAL.Helpers;
-using bb_project.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,16 +7,27 @@ using Dapper;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Data;
+using bb_project.Infrastructure.DAL.Models;
 
 namespace bb_project.DAL
 {
-    internal class WorkoutsDbManager
+    public class WorkoutsDbManager
     {
         private string connectionString = "";
 
         public WorkoutsDbManager(string connectionString)
         {
             this.connectionString = connectionString;
+        }
+
+        public async Task<IEnumerable<WorkoutHistoryDbRecord>> GetWorkoutHistoryAsync(string userId, long? workoutId = null, DateTime from = default, DateTime to = default)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            parameters.Add("workoutId", workoutId);
+            parameters.Add("from", from == default ? DateTime.MinValue : from);
+            parameters.Add("to", to == default ? DateTime.MaxValue : to);
+            return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<WorkoutHistoryDbRecord>("spr_GetWorkoutHistory", parameters));
         }
 
         public async Task<bool> HasActiveWorkoutPlanAsync()

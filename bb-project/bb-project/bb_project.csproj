@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\bb-project.HomeModule\bb-project.Modules.HomeModule.csproj" />
+    <ProjectReference Include="..\..\bb-project.Infrastructure.BLL\bb-project.Infrastructure.BLL.csproj" />
     <ProjectReference Include="..\..\bb-project.Modules.WorkoutAssistantModule\bb-project.Modules.WorkoutAssistantModule.csproj" />
     <ProjectReference Include="..\..\bb-project.Modules.WorkoutEditorModule\bb-project.Modules.WorkoutEditorModule.csproj" />
     <ProjectReference Include="..\..\bb_project.DAL\bb_project.Infrastructure.DAL.csproj" />

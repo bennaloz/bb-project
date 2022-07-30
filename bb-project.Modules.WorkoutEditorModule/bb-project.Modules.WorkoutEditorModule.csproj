@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-","_"))</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +15,15 @@
     <Compile Update="Views\WorkoutEditorView.xaml.cs">
       <DependentUpon>WorkoutEditorView.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\WorkoutPlansSummaryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\WorkoutsSummaryView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

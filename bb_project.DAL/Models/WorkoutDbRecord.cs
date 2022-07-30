@@ -3,20 +3,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace bb_project.DAL.Models
+namespace bb_project.Infrastructure.DAL.Models
 {
-    internal class WorkoutDbRecord
+    public class WorkoutDbRecord
     {
         public long Id { get; }
 
         public string Name { get; set; }
+
+        public int Order { get; set; }
 
 
         public static implicit operator Workout(WorkoutDbRecord workoutDbRecord)
         {
             return new Workout(workoutDbRecord.Id)
             {
-                Name = workoutDbRecord.Name
+                Name = workoutDbRecord.Name,
+                Order = workoutDbRecord.Order
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using bb_project.DAL;
+using bb_project.Infrastructure.BLL;
 using bb_project.Infrastructure.Models.Data;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -29,8 +30,6 @@ namespace bb_project.Modules.WorkoutAssistantModule.ViewModels
         {
             this.workoutsDataStore = workoutsDataStore;
             this.regionManager = regionManager;
-
-            //TODO: mostrare tutti i workout disponibili evidenziando il successivo rispetto l'ultimo fatto
         }
     }
 }

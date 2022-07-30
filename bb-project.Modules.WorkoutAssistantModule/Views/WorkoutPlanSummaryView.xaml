@@ -55,7 +55,8 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Button Text="Mostra esercizi"
-                    Command="{Binding ShowWorkoutExercisesCommand}" />
+                    Command="{Binding ShowWorkoutExercisesCommand}"
+                    CommandParameter="{Binding SelectedWorkoutPlan}"/>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

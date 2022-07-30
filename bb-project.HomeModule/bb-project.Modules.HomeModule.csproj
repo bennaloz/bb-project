@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\bb-project.Infrastructure.BLL\bb-project.Infrastructure.BLL.csproj" />
     <ProjectReference Include="..\bb-project.Infrastructure.Models\bb-project.Infrastructure.Models.csproj" />
+    <ProjectReference Include="..\bb_project.Authentication\bb_project.Authentication.csproj" />
     <ProjectReference Include="..\bb_project.DAL\bb_project.Infrastructure.DAL.csproj" />
   </ItemGroup>
 

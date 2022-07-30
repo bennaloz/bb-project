@@ -10,6 +10,8 @@ namespace bb_project.Infrastructure.Models.Data
 
         public string Name { get; set; }
 
+        public int Order { get; set; }
+
         public Workout(long id)
         {
             this.Id = id;

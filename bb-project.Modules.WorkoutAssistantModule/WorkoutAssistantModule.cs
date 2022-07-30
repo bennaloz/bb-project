@@ -6,6 +6,9 @@ using Prism.Regions;
 
 namespace bb_project.Modules.WorkoutAssistantModule
 {
+
+    //TODO: creare un servizio per memorizzare i dati dei workout offline e poi allineare sul db cloud quando c'è connessione
+
     public class WorkoutAssistantModule : IModule
     {
         public const string WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME = "MainWorkoutAssistantRegion";

@@ -1,4 +1,5 @@
 ﻿using bb_project.DAL;
+using bb_project.Infrastructure.BLL;
 using bb_project.Infrastructure.Models.Data;
 using bb_project.Modules.WorkoutAssistantModule.Views;
 using Prism.Commands;

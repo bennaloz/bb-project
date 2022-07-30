@@ -15,6 +15,7 @@ namespace bb_project.Modules.WorkoutEditorModule
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForRegionNavigation<WorkoutEditorView>(name: nameof(WorkoutEditorView));
+            containerRegistry.RegisterForRegionNavigation<WorkoutPlansSummaryView>(name: nameof(WorkoutPlansSummaryView));
         }
     }
 }

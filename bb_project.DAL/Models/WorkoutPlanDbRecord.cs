@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace bb_project.DAL.Models
+namespace bb_project.Infrastructure.DAL.Models
 {
-    internal class WorkoutPlanDbRecord
+    public class WorkoutPlanDbRecord
     {
         public long ID { get; }
 

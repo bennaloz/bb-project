@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:Xamarin.Forms.FontAwesome.Controls;assembly=Xamarin.Forms.FontAwesome"
              x:Class="bb_project.Modules.WorkoutAssistantModule.Views.WorkoutExercisesView">
   <ContentView.Content>
       <StackLayout>
           <Label Text="Hello Xamarin.Forms!" />
 
-            <Button Text="Inizia allenamento!"
-                    Command="{Binding StartWorkoutCommand}" />
+            <ImageButton Command="{Binding StartWorkoutCommand}">
+                
+            </ImageButton>
         </StackLayout>
   </ContentView.Content>
 </ContentView>

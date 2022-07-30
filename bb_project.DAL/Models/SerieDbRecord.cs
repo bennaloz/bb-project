@@ -1,9 +1,9 @@
 ﻿using bb_project.Infrastructure.Models.Data;
 using bb_project.Infrastructure.Models.Enums;
 
-namespace bb_project.DAL.Models
+namespace bb_project.Infrastructure.DAL.Models
 {
-    internal class SerieDbRecord
+    public class SerieDbRecord
     {
         public long ID { get; }
 
