@@ -4,6 +4,7 @@ using bb_project.Infrastructure.Models.Data;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,26 +17,18 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
     {
         private readonly IWorkoutsDataStore workoutDataStore;
 
-        public IEnumerable<WorkoutPlan> WorkoutPlans { get; }
+        public List<WorkoutPlanViewModel> WorkoutPlans { get; private set; }
 
-        public Dictionary<long,IEnumerable<Workout>> WorkoutPlansChildren { get; }
 
         public WorkoutEditorViewModel(IWorkoutsDataStore workoutDataStore)
         {
             this.workoutDataStore = workoutDataStore;
-            this.WorkoutPlans = this.workoutDataStore.GetWorkoutPlansAsync().GetAwaiter().GetResult();
-            this.WorkoutPlansChildren = new Dictionary<long, IEnumerable<Workout>>();
-            foreach (var item in this.WorkoutPlans)
+            this.WorkoutPlans = new List<WorkoutPlanViewModel>();
+            foreach (var item in this.workoutDataStore.GetWorkoutPlansAsync().GetAwaiter().GetResult())
             {
-                var workout = this.workoutDataStore.GetWorkoutsAsync(item.ID).GetAwaiter().GetResult();
-                if(workout != default)
-                {
-                    this.WorkoutPlansChildren.Add(item.ID,workout);
-                }
+                this.WorkoutPlans.Add(new WorkoutPlanViewModel(this.workoutDataStore, item));
             }
         }
-
-
 
     }
 }
