@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace bb_project.Client.Views
+namespace bb_project.Client.Modules.WorkoutEditorModule.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ContentMainPage : ContentPage
+    public partial class WorkoutsListView : ContentView
     {
-        public ContentMainPage()
+        public WorkoutsListView()
         {
             InitializeComponent();
         }

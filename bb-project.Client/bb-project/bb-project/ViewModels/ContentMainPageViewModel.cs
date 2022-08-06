@@ -8,7 +8,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace bb_project.ViewModels
+namespace bb_project.Client.ViewModels
 {
     public class ContentMainPageViewModel
     {

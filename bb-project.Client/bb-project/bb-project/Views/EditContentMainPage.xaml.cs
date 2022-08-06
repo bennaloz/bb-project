@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace bb_project.Client.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ContentMainPage : ContentPage
+    public partial class EditContentMainPage : ContentPage
     {
-        public ContentMainPage()
+        public EditContentMainPage()
         {
             InitializeComponent();
         }

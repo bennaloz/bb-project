@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-       xmlns:local="clr-namespace:bb_project.Views"
+       xmlns:local="clr-namespace:bb_project.Client.Views"
        Title="bb_project"
-       x:Class="bb_project.AppShell">
+       x:Class="bb_project.Client.AppShell">
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
@@ -18,6 +18,9 @@
 
     <FlyoutItem Title="About" Icon="icon_about.png">
         <ShellContent Route="HOME" ContentTemplate="{DataTemplate local:ContentMainPage}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Edit">
+        <ShellContent Route="EDIT" ContentTemplate="{DataTemplate local:EditContentMainPage}" />
     </FlyoutItem>
 
 

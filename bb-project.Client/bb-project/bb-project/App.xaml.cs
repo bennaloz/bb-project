@@ -1,7 +1,8 @@
 ﻿
 
+using bb_project.Authentication;
 using bb_project.Client.Services;
-using bb_project.Views;
+using bb_project.Client.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
@@ -9,7 +10,7 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace bb_project
+namespace bb_project.Client
 {
     public partial class App : PrismApplication
     {
@@ -31,6 +32,7 @@ namespace bb_project
         {
             containerRegistry.RegisterForNavigation<AppShell>("AppShell");
             containerRegistry.RegisterSingleton<IWorkoutsDataStore, WorkoutsMockDataStore>();
+            containerRegistry.RegisterSingleton<IUserAuthenticatorService, UserAuthenticatorService>();
             containerRegistry.RegisterRegionServices();
         }
 

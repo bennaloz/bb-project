@@ -2,7 +2,7 @@
 <Prism:PrismApplication  xmlns:Prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms" 
                          xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="bb_project.App">
+             x:Class="bb_project.Client.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
     -->

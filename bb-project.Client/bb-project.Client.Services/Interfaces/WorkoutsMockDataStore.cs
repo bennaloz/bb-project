@@ -14,15 +14,16 @@ namespace bb_project.Client.Services
         IEnumerable<Workout> workouts;
         IEnumerable<Serie> series;
         IEnumerable<WorkoutPlan> plans;
+        Dictionary<long, IEnumerable<Workout>> workoutPlanChildren;
         public WorkoutsMockDataStore()
         {
 
 
             this.plans = new ObservableCollection<WorkoutPlan>()
             {
-               new WorkoutPlan { Name ="MASSA", IsActive=true},
-                new WorkoutPlan { Name ="DEFINIZIONE", IsActive=false},
-                new WorkoutPlan { Name ="FORZA",IsActive =false}
+               new WorkoutPlan(1) { Name ="MASSA", IsActive=true},
+                new WorkoutPlan(2) { Name ="DEFINIZIONE", IsActive=false},
+                new WorkoutPlan(3) { Name ="FORZA",IsActive =false}
             };
 
             this.workouts = new ObservableCollection<Workout>()
@@ -38,6 +39,18 @@ namespace bb_project.Client.Services
                 new Serie(2,new Exercise(1){Name ="Squat",Type= ExerciseType.Weights}),
                 new Serie(1,new Exercise(1){Name ="Tapis Roulant",Type= ExerciseType.Cardio})
             };
+
+            this.workoutPlanChildren = new Dictionary<long, IEnumerable<Workout>>();
+            foreach (var item in this.plans)
+            {
+                List<Workout> workouts = new List<Workout>()
+                {
+                    new Workout(1){Name = "Scheda A"},
+                    new Workout(1){Name = "Scheda B"},
+                    new Workout(1){Name = "Scheda C"}
+                };
+                this.workoutPlanChildren.Add(item.ID, workouts);
+            }
 
         }
 
@@ -64,7 +77,15 @@ namespace bb_project.Client.Services
 
         public async Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
         {
-            throw new NotImplementedException();
+            IEnumerable<Workout> result = new List<Workout>();
+            foreach (var item in workoutPlanChildren)
+            {
+                if (item.Key == workoutPlanId)
+                {
+                    result = item.Value;
+                }
+            }
+            return await Task.FromResult(result);
         }
 
         public async Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId)
