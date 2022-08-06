@@ -28,7 +28,7 @@ namespace bb_project.Modules.HomeModule.ViewModels
 
         public string WorkoutName { get; set; }
 
-        private IEnumerable<WorkoutExercise> Exercises { get; private set; }
+        private IEnumerable<WorkoutExercise> Exercises { get; set; }
 
         public StartWorkoutViewModel(IEventAggregator eventAggregator,
                                      IWorkoutsDataStore workoutDataStore,
@@ -52,25 +52,16 @@ namespace bb_project.Modules.HomeModule.ViewModels
                 var workoutPlans = await this.workoutDataStore.GetWorkoutPlansAsync();
                 var activeWOPlan = workoutPlans.FirstOrDefault(wop => wop.IsActive);
                 this.WorkoutPlanName = activeWOPlan?.Name;
-                var activeWorkouts = await this.workoutDataStore.GetActiveWorkoutsAsync();
                 var userId = this.userAuthenticator.UserId;
                 var userWorkoutsHistory = await this.workoutDataStore.GetWorkoutHistoryItems(userId, workoutPlanId: activeWOPlan.ID, from: DateTime.Now.AddDays(-14));
                 var previousWorkoutId = (userWorkoutsHistory?.Count() ?? 0) > 0 ? userWorkoutsHistory.OrderBy(woh => woh.StartDate).Last().WorkoutId
                                                                             : 0;
-                var nextWorkout = default(Workout);
-                var previousWorkoutIndex = activeWorkouts.First(wo => wo.Id == previousWorkoutId).Order;
-                var lastWorkoutIndex = activeWorkouts.OrderBy(wo => wo.Order).Last().Order;
-                if (previousWorkoutIndex == lastWorkoutIndex)
-                    nextWorkout = activeWorkouts.OrderBy(wo => wo.Order).First();
-                else
-                   nextWorkout = activeWorkouts.Where(wo=>wo.Equals(previousWorkoutIndex+1)).First();
+                var nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan.ID);
 
                 this.WorkoutName = nextWorkout.Name;
 
                 var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutSeriesAsync(nextWorkout.Id, userId);
-                //TODO: convertire le serie del prossimo workout negli esercizi
-                //spostare i calcoli per il recupero del prossimo esercizio nel data store BLL
-                this.Exercises = nextWorkoutExercises.Select(ex =>
+                this.Exercises = nextWorkoutSeries.Select(ex =>
                 {
                     return new WorkoutExercise
                     {

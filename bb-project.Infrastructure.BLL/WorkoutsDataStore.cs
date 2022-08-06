@@ -18,9 +18,25 @@ namespace bb_project.Infrastructure.BLL
             return (await this.dbManager.GetActiveWorkoutsAsync()).Cast<Workout>();
         }
 
-        public async Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutId = null, DateTime from = default, DateTime to = default)
+        public async Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId)
         {
-            return (await this.dbManager.GetWorkoutHistoryAsync(userId, workoutId, from, to)).Cast<WorkoutHistoryItem>();
+            var activeWorkouts = await this.GetActiveWorkoutsAsync();
+            var userWorkoutsHistory = await this.GetWorkoutHistoryItems(userId, workoutPlanId: activeWorkoutPlanId, from: DateTime.Now.AddDays(-14));
+            var previousWorkoutId = (userWorkoutsHistory?.Count() ?? 0) > 0 ? userWorkoutsHistory.OrderBy(woh => woh.StartDate).Last().WorkoutId
+                                                                        : 0;
+            var nextWorkout = default(Workout);
+            var previousWorkoutIndex = activeWorkouts.First(wo => wo.Id == previousWorkoutId).Order;
+            var lastWorkoutIndex = activeWorkouts.OrderBy(wo => wo.Order).Last().Order;
+            if (previousWorkoutIndex == lastWorkoutIndex)
+                nextWorkout = activeWorkouts.OrderBy(wo => wo.Order).First();
+            else
+                nextWorkout = activeWorkouts.Where(wo => wo.Equals(previousWorkoutIndex + 1)).First();
+            return nextWorkout;
+        }
+
+        public async Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutId = null, long? workoutPlanId = default, DateTime from = default, DateTime to = default)
+        {
+            return (await this.dbManager.GetWorkoutHistoryAsync(userId, workoutId, workoutPlanId, from, to)).Cast<WorkoutHistoryItem>();
         }
 
         public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)

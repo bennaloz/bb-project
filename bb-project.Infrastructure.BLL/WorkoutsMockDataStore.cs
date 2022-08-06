@@ -1,5 +1,4 @@
-﻿using bb_project.DAL.Models;
-using bb_project.Infrastructure.Models.Data;
+﻿using bb_project.Infrastructure.Models.Data;
 using bb_project.Infrastructure.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -46,6 +45,16 @@ namespace bb_project.Infrastructure.BLL
         public async Task<IEnumerable<Workout>> GetActiveWorkoutsAsync()
         {
             return await Task.FromResult(workouts);
+        }
+
+        public Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutPlanId = null, long? workoutId = null, DateTime from = default, DateTime to = default)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)

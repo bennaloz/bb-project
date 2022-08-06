@@ -1,5 +1,4 @@
 ﻿using bb_project.DAL;
-using bb_project.DAL.Models;
 using bb_project.Infrastructure.BLL;
 using bb_project.Modules.HomeModule.Views;
 using Prism.Ioc;

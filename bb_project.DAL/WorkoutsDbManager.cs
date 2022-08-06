@@ -20,11 +20,12 @@ namespace bb_project.DAL
             this.connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<WorkoutHistoryDbRecord>> GetWorkoutHistoryAsync(string userId, long? workoutId = null, DateTime from = default, DateTime to = default)
+        public async Task<IEnumerable<WorkoutHistoryDbRecord>> GetWorkoutHistoryAsync(string userId, long? workoutId = null, long? workoutPlanId = null, DateTime from = default, DateTime to = default)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("userId", userId);
             parameters.Add("workoutId", workoutId);
+            parameters.Add("workoutPlanId", workoutPlanId);
             parameters.Add("from", from == default ? DateTime.MinValue : from);
             parameters.Add("to", to == default ? DateTime.MaxValue : to);
             return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<WorkoutHistoryDbRecord>("spr_GetWorkoutHistory", parameters));

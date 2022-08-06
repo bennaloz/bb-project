@@ -23,6 +23,8 @@ namespace bb_project.Infrastructure.BLL
 
         Task<IEnumerable<Workout>> GetActiveWorkoutsAsync();
 
+        Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId);
+
         Task<long> InsertExerciseAsync(Exercise exercise);
         
         Task<bool?> HasActiveWorkoutPlanAsync();
