@@ -1,0 +1,104 @@
+{
+  "runtimeTarget": {
+    "name": ".NETStandard,Version=v2.1/",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETStandard,Version=v2.1": {},
+    ".NETStandard,Version=v2.1/": {
+      "bb-project.Modules.WorkoutEditorModule/1.0.0": {
+        "dependencies": {
+          "Prism.Forms": "8.1.97",
+          "Prism.Forms.Regions": "8.1.97",
+          "Xamarin.Forms": "5.0.0.2291"
+        },
+        "runtime": {
+          "bb-project.Modules.WorkoutEditorModule.dll": {}
+        }
+      },
+      "Prism.Core/8.1.97": {
+        "runtime": {
+          "lib/netstandard2.0/Prism.dll": {
+            "assemblyVersion": "8.1.97.5141",
+            "fileVersion": "8.1.97.5141"
+          }
+        }
+      },
+      "Prism.Forms/8.1.97": {
+        "dependencies": {
+          "Prism.Core": "8.1.97",
+          "Xamarin.Forms": "5.0.0.2291"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Prism.Forms.dll": {
+            "assemblyVersion": "8.1.97.5141",
+            "fileVersion": "8.1.97.5141"
+          }
+        }
+      },
+      "Prism.Forms.Regions/8.1.97": {
+        "dependencies": {
+          "Prism.Forms": "8.1.97"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Prism.Forms.Regions.dll": {
+            "assemblyVersion": "8.1.97.5141",
+            "fileVersion": "8.1.97.5141"
+          }
+        }
+      },
+      "Xamarin.Forms/5.0.0.2291": {
+        "runtime": {
+          "lib/netstandard2.0/Xamarin.Forms.Core.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.850"
+          },
+          "lib/netstandard2.0/Xamarin.Forms.Platform.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.850"
+          },
+          "lib/netstandard2.0/Xamarin.Forms.Xaml.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "5.0.0.850"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "bb-project.Modules.WorkoutEditorModule/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Prism.Core/8.1.97": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EP5zrvWddw3eSq25Y7hHnDYdmLZEC2Z/gMrvmHzUuLbitmA1UaS7wQUlSwNr9Km8lzJNCvytFnaGBEFukHgoHg==",
+      "path": "prism.core/8.1.97",
+      "hashPath": "prism.core.8.1.97.nupkg.sha512"
+    },
+    "Prism.Forms/8.1.97": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PZ11VwcKc1XNOhIAbdZXPwiRdG1QbxS3cV0JKdKJp914+LSGog71LbHg5hMY2C8AssfCe6wjG5wOvZaBV68nvw==",
+      "path": "prism.forms/8.1.97",
+      "hashPath": "prism.forms.8.1.97.nupkg.sha512"
+    },
+    "Prism.Forms.Regions/8.1.97": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AHKOlDfeheWt+ALeIaxsqLHQq/T8br7CoqRdlNYBdespTdoUazn6BDfBm47j1UPVNYcohjxrxaV4G7gjpj4FNQ==",
+      "path": "prism.forms.regions/8.1.97",
+      "hashPath": "prism.forms.regions.8.1.97.nupkg.sha512"
+    },
+    "Xamarin.Forms/5.0.0.2291": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-No5HI+c05RBDT5Oe7ZSRaO+cQVeZNhrYdchvczNeZdWQiwrux8RJcVg8chI4DZ2xODeBjF0juIF9u1A5ysZ+uQ==",
+      "path": "xamarin.forms/5.0.0.2291",
+      "hashPath": "xamarin.forms.5.0.0.2291.nupkg.sha512"
+    }
+  }
+}

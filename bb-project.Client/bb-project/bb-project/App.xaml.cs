@@ -1,0 +1,45 @@
+﻿
+
+using bb_project.Client.Services;
+using bb_project.Views;
+using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Unity;
+using System;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+
+namespace bb_project
+{
+    public partial class App : PrismApplication
+    {
+
+        public App()
+        {
+            InitializeComponent();
+        }
+
+        protected override void OnInitialized()
+        {
+            var result = NavigationService.NavigateAsync("AppShell").Result;
+            if (!result.Success)
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+        }
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<AppShell>("AppShell");
+            containerRegistry.RegisterSingleton<IWorkoutsDataStore, WorkoutsMockDataStore>();
+            containerRegistry.RegisterRegionServices();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            moduleCatalog.AddModule<bb_project.Client.Modules.HomeModule.HomeModule>();
+            moduleCatalog.AddModule<bb_project.Client.Modules.WorkoutAssistantModule.WorkoutAssistantModule>();
+            moduleCatalog.AddModule<bb_project.Client.Modules.WorkoutEditorModule.WorkoutEditorModule>();
+            base.ConfigureModuleCatalog(moduleCatalog);
+        }
+    }
+}

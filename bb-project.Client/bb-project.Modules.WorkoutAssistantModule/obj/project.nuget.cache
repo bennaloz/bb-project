@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "5S6uVheZoiSRz8YGD+PMLNXmbSHSi1t+jOmhhaiolOHyMQkpui4p/fxAHTrkOmgibUjv97uLgLUXsBhsLz/7Kg==",
+  "success": true,
+  "projectFilePath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Modules.WorkoutAssistantModule\\bb-project.Client.Modules.WorkoutAssistantModule.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benin\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.forms\\8.1.97\\prism.forms.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.forms.regions\\8.1.97\\prism.forms.regions.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\xamarin.fontawesome\\5.15.2\\xamarin.fontawesome.5.15.2.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\xamarin.forms\\5.0.0.2291\\xamarin.forms.5.0.0.2291.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1608",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package version outside of dependency constraint: xamarin.fontawesome 5.15.2 requires Xamarin.Forms (>= 4.6.0.726 && < 5.0.0) but version Xamarin.Forms 5.0.0.2291 was resolved.",
+      "libraryId": "Xamarin.Forms",
+      "targetGraphs": [
+        ".NETStandard,Version=v2.1"
+      ]
+    }
+  ]
+}

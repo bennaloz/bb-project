@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "TfoFdT4wCip+cS9Ew+V3rf9eJvVHVInH9VTkgP/9bk92L6+fneGSBB8LwiOj7GCO5vvviSEhAHcl/Q+wEnts6w==",
+  "success": true,
+  "projectFilePath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Modules.WorkoutEditorModule\\bb-project.Client.Modules.WorkoutEditorModule.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benin\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.forms\\8.1.97\\prism.forms.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.forms.regions\\8.1.97\\prism.forms.regions.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\xamarin.forms\\5.0.0.2291\\xamarin.forms.5.0.0.2291.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "FAKlk0aezECZt4ugL8b+Np5wPfL2exZRExN5NGrRwphnCsYf0iUqOkvMnu9vCnuTUo4vWK52BpDIg9QZDD6okg==",
+  "success": true,
+  "projectFilePath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Client.Services\\bb-project.Client.Services.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benin\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512"
+  ],
+  "logs": []
+}

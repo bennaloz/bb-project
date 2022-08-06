@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = bb_project.Modules.WorkoutEditorModule
+build_property.ProjectDir = C:\develop\bb-project\bb-project.Client\bb-project.Modules.WorkoutEditorModule\

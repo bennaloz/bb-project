@@ -1,0 +1,16 @@
+﻿using Prism.Commands;
+using Prism.Mvvm;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
+{
+    public class WorkoutsSummaryViewModel : BindableBase
+    {
+        public WorkoutsSummaryViewModel()
+        {
+
+        }
+    }
+}

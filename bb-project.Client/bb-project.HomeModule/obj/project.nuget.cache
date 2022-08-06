@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "lqKlChqp1QwvlitQRup3Ks0c2j5coxg3Lk9rFhA59/u/5onrMFec2AVVtLJJKyPpZQP28HG324pvBqzk60FQTg==",
+  "success": true,
+  "projectFilePath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.HomeModule\\bb-project.Client.Modules.HomeModule.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\benin\\.nuget\\packages\\prism.core\\8.1.97\\prism.core.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.forms\\8.1.97\\prism.forms.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.forms.regions\\8.1.97\\prism.forms.regions.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\prism.unity.forms\\8.1.97\\prism.unity.forms.8.1.97.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.2\\system.threading.tasks.extensions.4.5.2.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\unity.abstractions\\5.11.7\\unity.abstractions.5.11.7.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\unity.container\\5.11.11\\unity.container.5.11.11.nupkg.sha512",
+    "C:\\Users\\benin\\.nuget\\packages\\xamarin.forms\\5.0.0.2012\\xamarin.forms.5.0.0.2012.nupkg.sha512"
+  ],
+  "logs": []
+}

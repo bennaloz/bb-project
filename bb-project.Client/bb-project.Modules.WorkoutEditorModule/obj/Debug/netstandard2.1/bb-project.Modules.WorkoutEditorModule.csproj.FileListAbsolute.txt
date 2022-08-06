@@ -1,0 +1,14 @@
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\bin\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.deps.json
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\bin\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.dll
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\bin\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.pdb
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.csproj.AssemblyReference.cache
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.GeneratedMSBuildEditorConfig.editorconfig
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\Views\WorkoutEditorView.xaml.g.cs
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.AssemblyInfoInputs.cache
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.AssemblyInfo.cs
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.csproj.CoreCompileInputs.cache
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\XamlC.stamp
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.dll
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\bb-project.Modules.WorkoutEditorModule.pdb
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\Views\WorkoutPlansSummaryView.xaml.g.cs
+C:\develop\bb-project\bb-project.Modules.WorkoutEditorModule\obj\Debug\netstandard2.1\Views\WorkoutsSummaryView.xaml.g.cs

@@ -1,0 +1,521 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\develop\\bb-project\\bb-project\\bb-project.iOS\\bb-project.iOS.csproj": {}
+  },
+  "projects": {
+    "C:\\develop\\bb-project\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj",
+        "projectName": "bb-project.Modules.HomeModule",
+        "projectPath": "C:\\develop\\bb-project\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project.HomeModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj"
+              },
+              "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Prism.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Forms.Regions": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Unity.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj",
+        "projectName": "bb-project.Infrastructure.Models",
+        "projectPath": "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Prism.Core": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\develop\\bb-project\\bb-project.Modules.WorkoutAssistantModule\\bb-project.Modules.WorkoutAssistantModule.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutAssistantModule\\bb-project.Modules.WorkoutAssistantModule.csproj",
+        "projectName": "bb-project.Modules.WorkoutAssistantModule",
+        "projectPath": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutAssistantModule\\bb-project.Modules.WorkoutAssistantModule.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutAssistantModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Prism.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Forms.Regions": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2291, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\develop\\bb-project\\bb-project.Modules.WorkoutEditorModule\\bb-project.Modules.WorkoutEditorModule.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutEditorModule\\bb-project.Modules.WorkoutEditorModule.csproj",
+        "projectName": "bb-project.Modules.WorkoutEditorModule",
+        "projectPath": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutEditorModule\\bb-project.Modules.WorkoutEditorModule.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutEditorModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Prism.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Forms.Regions": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2291, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\develop\\bb-project\\bb-project\\bb-project.iOS\\bb-project.iOS.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project\\bb-project.iOS\\bb-project.iOS.csproj",
+        "projectName": "bb-project.iOS",
+        "projectPath": "C:\\develop\\bb-project\\bb-project\\bb-project.iOS\\bb-project.iOS.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project\\bb-project.iOS\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "xamarinios10"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "xamarinios10": {
+            "projectReferences": {
+              "C:\\develop\\bb-project\\bb-project\\bb-project\\bb_project.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project\\bb-project\\bb_project.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "xamarinios10": {
+          "dependencies": {
+            "Xamarin.Essentials": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2196, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
+    "C:\\develop\\bb-project\\bb-project\\bb-project\\bb_project.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project\\bb-project\\bb_project.csproj",
+        "projectName": "bb_project",
+        "projectPath": "C:\\develop\\bb-project\\bb-project\\bb-project\\bb_project.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project\\bb-project\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\develop\\bb-project\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj"
+              },
+              "C:\\develop\\bb-project\\bb-project.Modules.WorkoutAssistantModule\\bb-project.Modules.WorkoutAssistantModule.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutAssistantModule\\bb-project.Modules.WorkoutAssistantModule.csproj"
+              },
+              "C:\\develop\\bb-project\\bb-project.Modules.WorkoutEditorModule\\bb-project.Modules.WorkoutEditorModule.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Modules.WorkoutEditorModule\\bb-project.Modules.WorkoutEditorModule.csproj"
+              },
+              "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Prism.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Forms.Regions": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Unity.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Xamarin.Essentials": {
+              "target": "Package",
+              "version": "[1.7.3, )"
+            },
+            "Xamarin.Forms": {
+              "target": "Package",
+              "version": "[5.0.0.2478, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj",
+        "projectName": "bb_project.Infrastructure.DAL",
+        "projectPath": "C:\\develop\\bb-project\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb_project.DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

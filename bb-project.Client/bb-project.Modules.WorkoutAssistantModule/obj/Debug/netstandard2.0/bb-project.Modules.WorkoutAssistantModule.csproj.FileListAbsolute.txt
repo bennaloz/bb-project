@@ -1,0 +1,12 @@
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.csproj.AssemblyReference.cache
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.GeneratedMSBuildEditorConfig.editorconfig
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\Views\WorkoutAssistantView.xaml.g.cs
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.AssemblyInfoInputs.cache
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.AssemblyInfo.cs
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.csproj.CoreCompileInputs.cache
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\bin\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.deps.json
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\bin\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.dll
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\bin\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.pdb
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\XamlC.stamp
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.dll
+C:\develop\bb-project\bb-project.Modules.WorkoutAssistantModule\obj\Debug\netstandard2.0\bb-project.Modules.WorkoutAssistantModule.pdb

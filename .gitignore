@@ -32,3 +32,14 @@
 /bb-project.Modules.WorkoutEditorModule/obj
 /bb-project.Infrastructure.BLL/bin/Debug/netstandard2.1
 /bb-project.Infrastructure.BLL/obj
+/bb-project.API/.vs
+/bb-project.Server/.vs
+/bb-project.Server/bb-project.API/bin/Debug/net6.0
+/bb-project.Server/bb-project.API/obj
+/bb-project.Server/bb-project.DB/.vs/bb-project.DB
+/bb-project.Server/bb-project.DB/bb-project.DB/bin/Debug
+/bb-project.Server/bb-project.DB/bb-project.DB/obj/Debug
+/bb-project.Server/bb-project.Infrastructure.BLL/bin/Debug/netstandard2.1
+/bb-project.Server/bb-project.Infrastructure.BLL/obj
+/bb-project.Server/bb_project.DAL/bin/Debug/netstandard2.1
+/bb-project.Server/bb_project.DAL/obj

@@ -1,0 +1,93 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\develop\\bb-project\\bb-project.Client\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj": {}
+  },
+  "projects": {
+    "C:\\develop\\bb-project\\bb-project.Client\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj",
+        "projectName": "bb-project.Modules.HomeModule",
+        "projectPath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.HomeModule\\bb-project.Modules.HomeModule.csproj",
+        "packagesPath": "C:\\Users\\benin\\.nuget\\packages\\",
+        "outputPath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.HomeModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\benin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Infrastructure.BLL\\bb-project.Infrastructure.BLL.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Infrastructure.BLL\\bb-project.Infrastructure.BLL.csproj"
+              },
+              "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Client\\bb-project.Infrastructure.Models\\bb-project.Infrastructure.Models.csproj"
+              },
+              "C:\\develop\\bb-project\\bb-project.Client\\bb_project.Authentication\\bb_project.Authentication.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Client\\bb_project.Authentication\\bb_project.Authentication.csproj"
+              },
+              "C:\\develop\\bb-project\\bb-project.Client\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj": {
+                "projectPath": "C:\\develop\\bb-project\\bb-project.Client\\bb_project.DAL\\bb_project.Infrastructure.DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "Prism.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Forms.Regions": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            },
+            "Prism.Unity.Forms": {
+              "target": "Package",
+              "version": "[8.1.97, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
