@@ -12,6 +12,11 @@ namespace bb_project.Infrastructure.Models.Data
 
         public bool IsActive { get; set; }
 
+        public WorkoutPlan(long id)
+        {
+            this.ID = id;   
+        }
+
         public override bool Equals(object obj)
         {
             return this.Equals(obj as WorkoutPlan);
