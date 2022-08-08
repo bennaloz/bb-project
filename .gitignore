@@ -66,3 +66,9 @@
 /bb-project.Client/bb_project.Authentication/obj
 /bb-project.Client/bb-project/bb-project.iOS/bin/iPhone/Debug
 /bb-project.Client/bb-project/bb-project.iOS/obj
+/bb-project.Server/bb-project.API/bin/Release/net6.0
+/bb-project.Server/bb-project.Infrastructure.BLL/bin/Release/netstandard2.1
+/bb-project.Server/bb_project.DAL/bin/Release/netstandard2.1
+/bb-project.Server/bb-project.API/Properties/ServiceDependencies/bb-project-test-api - Web Deploy
+/bb-project.Server/bb-project.API/Properties/PublishProfiles
+/bb-project.Infrastructure.Models/bin/Release/netstandard2.1

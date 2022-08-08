@@ -16,7 +16,7 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public static implicit operator WorkoutPlan(WorkoutPlanDbRecord dbRecord)
         {
-            var result = new WorkoutPlan();
+            var result = new WorkoutPlan(dbRecord.ID);
 
             return result;
         }

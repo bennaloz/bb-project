@@ -20,9 +20,9 @@ namespace bb_project.Infrastructure.BLL
 
             this.plans = new ObservableCollection<WorkoutPlan>()
             {
-               new WorkoutPlan { Name ="MASSA", IsActive=true},
-                new WorkoutPlan { Name ="DEFINIZIONE", IsActive=false},
-                new WorkoutPlan { Name ="FORZA",IsActive =false}
+               new WorkoutPlan(1) { Name ="MASSA", IsActive=true},
+                new WorkoutPlan(2) { Name ="DEFINIZIONE", IsActive=false},
+                new WorkoutPlan(3) { Name ="FORZA",IsActive =false}
             };
 
             this.workouts = new ObservableCollection<Workout>()
