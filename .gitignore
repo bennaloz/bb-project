@@ -74,3 +74,5 @@
 /bb-project.Infrastructure.Models/bin/Release/netstandard2.1
 /bb-project.Client/.vs/ProjectEvaluation
 /bb-project.Server/bb-project.DB/bb-project.DB/bb-project.DB.dbmdl
+/bb-project.Server/bb-project.Server.Tests/bin/Debug/net6.0
+/bb-project.Server/bb-project.Server.Tests/obj

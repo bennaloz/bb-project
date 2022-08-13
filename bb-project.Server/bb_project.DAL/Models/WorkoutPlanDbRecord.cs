@@ -18,6 +18,9 @@ namespace bb_project.Infrastructure.DAL.Models
         {
             var result = new WorkoutPlan(dbRecord.ID);
 
+            result.Name = dbRecord.Name;
+            result.IsActive = dbRecord.IsActive;
+
             return result;
         }
     }

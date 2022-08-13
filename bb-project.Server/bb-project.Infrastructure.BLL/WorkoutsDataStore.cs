@@ -43,14 +43,14 @@ namespace bb_project.Infrastructure.BLL
         {
             var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id);
 
-            return workoutPlansDb.Cast<WorkoutPlan>();
+            return workoutPlansDb.Select(wpdb=> (WorkoutPlan) wpdb);
         }
 
         public async Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
         {
             var workouts = await this.dbManager.GetWorkoutsAsync(workoutPlanId);
 
-            return workouts.Cast<Workout>();
+            return workouts.Select(w=>(Workout)w);
         }
 
         public async Task<IEnumerable<Serie>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null)
@@ -63,9 +63,9 @@ namespace bb_project.Infrastructure.BLL
         public async Task<bool?> HasActiveWorkoutPlanAsync()
             => await this.dbManager.HasActiveWorkoutPlanAsync();
 
-        public async Task<long> InsertExerciseDefinitionAsync(ExerciseDefinition exerciseDefinition)
+        public async Task<long> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exerciseDefinition)
         {
-            return await this.dbManager.InsertExerciseAsync(new ExerciseDbRecord
+            return await this.dbManager.InsertExerciseAsync(userId, new ExerciseDbRecord
             {
                 Name = exerciseDefinition.Name,
                 Type = exerciseDefinition.Type
@@ -87,17 +87,18 @@ namespace bb_project.Infrastructure.BLL
             }
         }
 
-        public async Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName)
+        public async Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName, int order)
         {
             return await this.dbManager.InsertWorkoutAsync(workoutPlanId, new WorkoutDbRecord
             {
-                Name = workoutName
+                Name = workoutName,
+                Order = order
             });
         }
 
-        public async Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false)
+        public async Task<long> InsertWorkoutPlanAsync(string userId, string workoutPlanName, bool isActive = false)
         {
-            return await this.dbManager.InsertWorkoutPlanAsync(new WorkoutPlanDbRecord
+            return await this.dbManager.InsertWorkoutPlanAsync(userId, new WorkoutPlanDbRecord
             {
                 Name = workoutPlanName,
                 IsActive = isActive

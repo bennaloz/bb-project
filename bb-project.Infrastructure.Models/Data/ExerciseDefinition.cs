@@ -11,6 +11,11 @@ namespace bb_project.Infrastructure.Models.Data
 
         public ExerciseType Type { get; set; }
 
+        public ExerciseDefinition()
+        {
+
+        }
+
         public ExerciseDefinition(long id)
         {
             this.Id = id;

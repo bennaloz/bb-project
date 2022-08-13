@@ -29,7 +29,7 @@ namespace bb_project.DAL
             parameters.Add("workoutPlanId", workoutPlanId);
             parameters.Add("from", from == default ? DateTime.MinValue : from);
             parameters.Add("to", to == default ? DateTime.MaxValue : to);
-            return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<WorkoutHistoryDbRecord>("spr_GetWorkoutHistory", parameters));
+            return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<WorkoutHistoryDbRecord>("spr_GetWorkoutHistory", parameters, commandType: CommandType.StoredProcedure));
         }
 
         public async Task<bool> HasActiveWorkoutPlanAsync()
@@ -46,7 +46,7 @@ namespace bb_project.DAL
             using(var conn = new SqlConnection(this.connectionString))
             {
                 await conn.OpenAsync();
-                return await conn.QueryAsync<WorkoutDbRecord>("spr_GetActiveWorkouts");
+                return await conn.QueryAsync<WorkoutDbRecord>("spr_GetActiveWorkouts", commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -56,8 +56,8 @@ namespace bb_project.DAL
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("workoutPlanId", id ?? 0);
-                var workoutPlans = await conn.QueryAsync<WorkoutPlanDbRecord>("spr_GetWorkoutPlans", parameters);
-                return workoutPlans.Cast<WorkoutPlanDbRecord>();
+                var workoutPlans = await conn.QueryAsync<WorkoutPlanDbRecord>("spr_GetWorkoutPlans", parameters, commandType: CommandType.StoredProcedure);
+                return workoutPlans;
             }
         }
 
@@ -68,7 +68,7 @@ namespace bb_project.DAL
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("workoutPlanId", workoutPlanId);
                 parameters.Add("workoutId", workoutId ?? 0);
-                var workouts = await conn.QueryAsync<WorkoutDbRecord>("spr_GetWorkouts", parameters);
+                var workouts = await conn.QueryAsync<WorkoutDbRecord>("spr_GetWorkouts", parameters, commandType: CommandType.StoredProcedure);
                 return workouts.Cast<WorkoutDbRecord>();
             }
         }
@@ -82,22 +82,23 @@ namespace bb_project.DAL
                 parameters.Add("workoutId", workoutId);
                 if (seriesGroupId != null)
                     parameters.Add("seriesGroupId", seriesGroupId);
-                var workouts = await conn.QueryAsync<SerieDbRecord>("spr_GetWorkoutSeriesGroup", parameters);
+                var workouts = await conn.QueryAsync<SerieDbRecord>("spr_GetWorkoutSeriesGroup", parameters, commandType: CommandType.StoredProcedure);
                 return workouts.Cast<SerieDbRecord>();
             }
             
         }
 
-        public async Task<long> InsertWorkoutPlanAsync(WorkoutPlanDbRecord workoutPlan)
+        public async Task<long> InsertWorkoutPlanAsync(string userId, WorkoutPlanDbRecord workoutPlan)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("workoutPlanName", workoutPlan.Name);
                 parameters.Add("isActive", workoutPlan.IsActive);
-                parameters.Add("workoutPlanId", ParameterDirection.Output);
-                await conn.QueryAsync("spw_InsertWorkoutPlan", parameters);
-                return parameters.Get<long>("workoutId");
+                parameters.Add("userId", userId);
+                parameters.Add("workoutPlanId", dbType: DbType.Int64, direction: ParameterDirection.Output);
+                await conn.QueryAsync("spw_InsertWorkoutPlan", parameters, commandType: CommandType.StoredProcedure);
+                return parameters.Get<long>("workoutPlanId");
             }
         }
 
@@ -108,8 +109,9 @@ namespace bb_project.DAL
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("workoutPlanId", workoutPlanId);
                 parameters.Add("workoutName", workout.Name);
-                parameters.Add("workoutId", ParameterDirection.Output);
-                await conn.QueryAsync("spw_InsertWorkout", parameters);
+                parameters.Add("order", workout.Order);
+                parameters.Add("workoutId", dbType: DbType.Int64, direction: ParameterDirection.Output);
+                await conn.QueryAsync("spw_InsertWorkout", parameters, commandType: CommandType.StoredProcedure);
                 return parameters.Get<long>("workoutId");
             }
         }
@@ -119,7 +121,7 @@ namespace bb_project.DAL
             var parameters = new DynamicParameters();
             parameters.Add("exerciseMethod", (int)exerciseMethod);
             parameters.Add("seriesGroupId", direction: ParameterDirection.Output);
-            await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeriesGroup", parameters));
+            await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeriesGroup", parameters, commandType: CommandType.StoredProcedure));
             return parameters.Get<long>("seriesGroupId");
         }
 
@@ -135,7 +137,7 @@ namespace bb_project.DAL
                 parameters.Add("seriesGroupId", serie.SeriesGroupId);
                 parameters.Add("serieId", direction:ParameterDirection.Output);
 
-                await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeries", parameters));
+                await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeries", parameters, commandType: CommandType.StoredProcedure));
                 serie.Id = parameters.Get<long>("serieId");
             }
             //using (var conn = new SqlConnection(this.connectionString))
@@ -168,16 +170,17 @@ namespace bb_project.DAL
             //}
         }
 
-        public async Task<long> InsertExerciseAsync(ExerciseDbRecord exercise)
+        public async Task<long> InsertExerciseAsync(string userId, ExerciseDbRecord exercise)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("name", exercise.Name);
-                parameters.Add("type", exercise.Type);
-                parameters.Add("exercsiseId", ParameterDirection.Output);
-                var workouts = await conn.QueryAsync<IEnumerable<WorkoutDbRecord>>("spw_InsertExercise", parameters);
-                return parameters.Get<long>("exerciseId");
+                parameters.Add("name", exercise.Name, dbType: DbType.String);
+                parameters.Add("type", exercise.Type, dbType: DbType.Int16);
+                parameters.Add("userId", userId);
+                parameters.Add("exerciseId", dbType: DbType.Int64, direction: ParameterDirection.Output);
+                await conn.QueryAsync("spw_InsertExercise", parameters, commandType: CommandType.StoredProcedure);
+                return parameters.Get<long>("@exerciseId");
             }
         }
     }

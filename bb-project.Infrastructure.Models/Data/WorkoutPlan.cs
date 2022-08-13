@@ -6,7 +6,7 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class WorkoutPlan  : IEqualityComparer<WorkoutPlan>, IEquatable<WorkoutPlan>
     {
-        public long ID { get; }
+        public long Id { get; }
 
         public string Name { get; set; }
 
@@ -14,7 +14,7 @@ namespace bb_project.Infrastructure.Models.Data
 
         public WorkoutPlan(long id)
         {
-            this.ID = id;   
+            this.Id = id;   
         }
 
         public override bool Equals(object obj)
@@ -34,12 +34,12 @@ namespace bb_project.Infrastructure.Models.Data
 
         public bool Equals(WorkoutPlan x, WorkoutPlan y)
         {
-            return x.ID == y.ID;
+            return x.Id == y.Id;
         }
 
         public int GetHashCode(WorkoutPlan obj)
         {
-            return obj.ID.GetHashCode();
+            return obj.Id.GetHashCode();
         }
     }
 }

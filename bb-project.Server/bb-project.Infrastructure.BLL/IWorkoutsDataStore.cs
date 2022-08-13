@@ -15,9 +15,9 @@ namespace bb_project.Infrastructure.BLL
 
         Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null);
 
-        Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false);
+        Task<long> InsertWorkoutPlanAsync(string userId, string workoutPlanName, bool isActive = false);
 
-        Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName);
+        Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName, int order);
 
         Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups);
 
@@ -25,7 +25,7 @@ namespace bb_project.Infrastructure.BLL
 
         Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId);
 
-        Task<long> InsertExerciseDefinitionAsync(ExerciseDefinition exercise);
+        Task<long> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exercise);
 
         Task<bool?> HasActiveWorkoutPlanAsync();
     }
