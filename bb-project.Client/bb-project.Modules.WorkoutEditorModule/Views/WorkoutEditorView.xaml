@@ -6,12 +6,48 @@
 
 
 
-    <CollectionView 
-                        ItemsSource="{Binding WorkoutPlans}"
-                        SelectionMode="None">
+    <CollectionView ItemsSource="{Binding WorkoutPlansViewModels}"
+                    SelectionMode="None">
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <uc:WorkoutPlanView BindingContext="{Binding}" VerticalOptions="Start"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding Name}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GetWorkoutsCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <CollectionView Grid.Row="1"
+                                    ItemsSource="{Binding WorkoutsViewModels, Mode=OneWay}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding Name}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding GetWorkoutExercises}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <CollectionView Grid.Row="1"
+                                                    ItemsSource="{Binding WorkoutExercises, Mode=OneWay}">
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                    
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+                <!--<uc:WorkoutPlanView BindingContext="{Binding}" VerticalOptions="Start"/>-->
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>

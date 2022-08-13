@@ -34,16 +34,16 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
 
         private async void startWorkoutCommand()
         {
-            var firstExerciseType = (await this.workoutsDataStore.GetWorkoutSeriesAsync(1,"a")).First().OwnerExercise.Type;
-            switch (firstExerciseType)
-            {
-                case Infrastructure.Models.Enums.ExerciseType.Cardio:
-                    this.regionManager.RequestNavigate(WorkoutAssistantModule.WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME, nameof(CardioExerciseView));
-                    break;
-                case Infrastructure.Models.Enums.ExerciseType.Weights:
-                    this.regionManager.RequestNavigate(WorkoutAssistantModule.WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME, nameof(WeightsExerciseView));
-                    break;
-            }
+            //var firstExerciseType = (await this.workoutsDataStore.GetWorkoutSeriesAsync(1,"a")).First().ExerciseDefinition.Type;
+            //switch (firstExerciseType)
+            //{
+            //    case Infrastructure.Models.Enums.ExerciseType.Cardio:
+            //        this.regionManager.RequestNavigate(WorkoutAssistantModule.WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME, nameof(CardioExerciseView));
+            //        break;
+            //    case Infrastructure.Models.Enums.ExerciseType.Weights:
+            //        this.regionManager.RequestNavigate(WorkoutAssistantModule.WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME, nameof(WeightsExerciseView));
+            //        break;
+            //}
 
 
         }

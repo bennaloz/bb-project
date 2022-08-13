@@ -13,7 +13,7 @@ namespace bb_project.Client.Services
 
         Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null);
 
-        Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId, string userId);
+        Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesAsync(long workoutId, string userId);
 
         Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false);
 
@@ -25,7 +25,7 @@ namespace bb_project.Client.Services
 
         Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId);
 
-        Task<long> InsertExerciseAsync(Exercise exercise);
+        Task<long> InsertExerciseAsync(ExerciseDefinition exercise);
         
         Task<bool?> HasActiveWorkoutPlanAsync();
     }

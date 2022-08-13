@@ -7,18 +7,16 @@ namespace bb_project.Infrastructure.Models.Data
     {
         public long ID { get; }
 
-        public Exercise OwnerExercise { get; set; }
+        public ExerciseDefinition ExerciseDefinition { get; set; }
 
         public int Reps { get; set; }
 
         public int Rest { get; set; }
 
-        public ExerciseMethodology ExerciseMethod { get; set; }
-
-        public Serie(long id, Exercise ownerExercise)
+        public Serie(long id, ExerciseDefinition exerciseDefinition)
         {
             this.ID = id;
-            this.OwnerExercise = ownerExercise;
+            this.ExerciseDefinition = exerciseDefinition;
         }
     }
 }

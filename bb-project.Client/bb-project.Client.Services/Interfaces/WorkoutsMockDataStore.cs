@@ -12,7 +12,7 @@ namespace bb_project.Client.Services
 
 
         IEnumerable<Workout> workouts;
-        IEnumerable<Serie> series;
+        IEnumerable<SeriesGroup> seriesGroups;
         IEnumerable<WorkoutPlan> plans;
         Dictionary<long, IEnumerable<Workout>> workoutPlanChildren;
         public WorkoutsMockDataStore()
@@ -33,11 +33,23 @@ namespace bb_project.Client.Services
                 new Workout(3) { Name ="Scheda C"}
             };
 
-            this.series = new ObservableCollection<Serie>()
+            var seriesGroup1 = new SeriesGroup(1, ExerciseMethodology.Single);
+            seriesGroup1.Series.Add(new Serie(1, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
+            seriesGroup1.Series.Add(new Serie(2, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
+            seriesGroup1.Series.Add(new Serie(3, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
+            seriesGroup1.Series.Add(new Serie(4, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
+
+            var seriesGroup2 = new SeriesGroup(2, ExerciseMethodology.JumpSet);
+            seriesGroup2.Series.Add(new Serie(5, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }));
+            seriesGroup2.Series.Add(new Serie(6, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }));
+            seriesGroup2.Series.Add(new Serie(7, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }));
+            seriesGroup2.Series.Add(new Serie(8, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio })); 
+            seriesGroup2.Series.Add(new Serie(9, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }));
+            seriesGroup2.Series.Add(new Serie(10, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }));
+            this.seriesGroups = new ObservableCollection<SeriesGroup>()
             {
-                new Serie(1,new Exercise(1){Name ="Panca Piana",Type= ExerciseType.Weights}),
-                new Serie(2,new Exercise(1){Name ="Squat",Type= ExerciseType.Weights}),
-                new Serie(1,new Exercise(1){Name ="Tapis Roulant",Type= ExerciseType.Cardio})
+                seriesGroup1,
+                seriesGroup2
             };
 
             this.workoutPlanChildren = new Dictionary<long, IEnumerable<Workout>>();
@@ -88,14 +100,9 @@ namespace bb_project.Client.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId)
+        public async Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesAsync(long workoutId, string userId)
         {
-            return await Task.FromResult(series);
-        }
-
-        public Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId, string userId)
-        {
-            throw new NotImplementedException();
+            return await Task.FromResult(seriesGroups);
         }
 
         public async Task<bool?> HasActiveWorkoutPlanAsync()
@@ -103,7 +110,7 @@ namespace bb_project.Client.Services
             return await Task.FromResult(true);
         }
 
-        public async Task InsertExerciseAsync(Exercise exercise)
+        public async Task InsertExerciseAsync(ExerciseDefinition exercise)
         {
             throw new NotImplementedException();
         }
@@ -138,7 +145,7 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        Task<long> IWorkoutsDataStore.InsertExerciseAsync(Exercise exercise)
+        Task<long> IWorkoutsDataStore.InsertExerciseAsync(ExerciseDefinition exercise)
         {
             throw new NotImplementedException();
         }

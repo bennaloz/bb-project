@@ -19,7 +19,7 @@ namespace bb_project.API.Controllers
         }
 
         [HttpGet(Name = "getWorkoutsPlans")]
-        public async Task<ActionResult> GetAsync([FromQuery] long? workoutPlanId=null)
+        public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] long? workoutPlanId = null)
         {
             try
             {

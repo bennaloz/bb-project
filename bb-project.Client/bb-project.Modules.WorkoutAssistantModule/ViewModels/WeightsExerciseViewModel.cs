@@ -34,7 +34,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
 
         public string Name
         {
-            get { return serie.OwnerExercise.Name; }
+            get { return serie.ExerciseDefinition.Name; }
         }
 
 
@@ -42,7 +42,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
         {
             this.dataStore = dataStore;
 
-            serie = this.dataStore.GetWorkoutSeriesAsync(1,"a").GetAwaiter().GetResult().ToList().First();
+            //serie = this.dataStore.GetWorkoutSeriesAsync(1,"a").GetAwaiter().GetResult().ToList().First();
 
         }
 

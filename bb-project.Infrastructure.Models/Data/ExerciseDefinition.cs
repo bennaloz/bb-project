@@ -3,7 +3,7 @@ using bb_project.Infrastructure.Models.Enums;
 
 namespace bb_project.Infrastructure.Models.Data
 {
-    public class Exercise
+    public class ExerciseDefinition
     {
         public long ID { get; }
 
@@ -11,7 +11,7 @@ namespace bb_project.Infrastructure.Models.Data
 
         public ExerciseType Type { get; set; }
 
-        public Exercise(long id)
+        public ExerciseDefinition(long id)
         {
             this.ID = id;
         }

@@ -17,16 +17,16 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
     {
         private readonly IWorkoutsDataStore workoutDataStore;
 
-        public List<WorkoutPlanViewModel> WorkoutPlans { get; private set; }
-
-
+        public ObservableCollection<WorkoutPlanViewModel> WorkoutPlansViewModels { get; private set; }
         public WorkoutEditorViewModel(IWorkoutsDataStore workoutDataStore)
         {
             this.workoutDataStore = workoutDataStore;
-            this.WorkoutPlans = new List<WorkoutPlanViewModel>();
+            this.WorkoutPlansViewModels = new ObservableCollection<WorkoutPlanViewModel>();
             foreach (var item in this.workoutDataStore.GetWorkoutPlansAsync().GetAwaiter().GetResult())
             {
-                this.WorkoutPlans.Add(new WorkoutPlanViewModel(this.workoutDataStore, item));
+                var workoutPlanViewModel = new WorkoutPlanViewModel(this.workoutDataStore);
+                workoutPlanViewModel.WorkoutPlan = item;
+                this.WorkoutPlansViewModels.Add(workoutPlanViewModel);
             }
         }
 
