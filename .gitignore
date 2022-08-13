@@ -73,3 +73,4 @@
 /bb-project.Server/bb-project.API/Properties/PublishProfiles
 /bb-project.Infrastructure.Models/bin/Release/netstandard2.1
 /bb-project.Client/.vs/ProjectEvaluation
+/bb-project.Server/bb-project.DB/bb-project.DB/bb-project.DB.dbmdl

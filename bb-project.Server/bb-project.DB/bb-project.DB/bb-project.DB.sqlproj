@@ -67,7 +67,6 @@
     <Build Include="Tables\tbl_User.sql" />
     <Build Include="StoredProcedures\spr_GetWorkoutPlans.sql" />
     <Build Include="StoredProcedures\spr_GetWorkouts.sql" />
-    <Build Include="StoredProcedures\spr_GetWorkoutSerie.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutPlan.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkout.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutSeries.sql" />
@@ -78,6 +77,10 @@
     <Build Include="Tables\tbl_WorkoutData.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutHistory.sql" />
     <Build Include="StoredProcedures\spr_GetWorkoutHistory.sql" />
+    <Build Include="Tables\tbl_SeriesGroup.sql" />
+    <Build Include="Tables\tbl_SeriesGroup_Serie.sql" />
+    <Build Include="StoredProcedures\spw_InsertWorkoutSeriesGroup.sql" />
+    <Build Include="StoredProcedures\spr_GetWorkoutSeriesGroup.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="bb-project.DB.refactorlog" />
