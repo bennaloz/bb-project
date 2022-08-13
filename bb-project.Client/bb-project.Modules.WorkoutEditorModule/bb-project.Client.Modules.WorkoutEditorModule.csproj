@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AiForms.CollectionView" Version="0.3.23-pre" />
     <PackageReference Include="Prism.Forms.Regions" Version="8.1.97" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
     <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.4" />

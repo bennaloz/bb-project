@@ -3,6 +3,7 @@ using bb_project.Infrastructure.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace bb_project.Client.Services
@@ -107,15 +108,15 @@ namespace bb_project.Client.Services
 
         public async Task<bool?> HasActiveWorkoutPlanAsync()
         {
-            return await Task.FromResult(true);
+            return await Task.FromResult(this.plans.ToList().First(o => o.IsActive) != default); 
         }
 
-        public async Task InsertExerciseAsync(ExerciseDefinition exercise)
+        public Task<long> InsertExerciseDefinitionAsync(ExerciseDefinition exercise)
         {
             throw new NotImplementedException();
         }
 
-        public async Task InsertWorkoutAsync(long workoutPlanId, Workout workout)
+        public Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups)
         {
             throw new NotImplementedException();
         }
@@ -125,27 +126,7 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public async Task InsertWorkoutPlanAsync(WorkoutPlan workoutPlan)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task InsertWorkoutSeriesAsync(IEnumerable<Serie> series)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task InsertWorkoutSeriesAsync(long workoutId, IEnumerable<Serie> series)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<long> IWorkoutsManagementService.InsertExerciseDefinitionAsync(ExerciseDefinition exercise)
         {
             throw new NotImplementedException();
         }

@@ -1,56 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:uc="clr-namespace:bb_project.Client.Modules.WorkoutEditorModule.UserControls"
-             x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorView">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit" xmlns:ai="clr-namespace:AiForms.Renderers;assembly=CollectionView"
+             x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorView"
+             x:Name="root" >
 
+    <StackLayout Orientation="Vertical" BackgroundColor="Red">
+        <ListView 
+            ItemsSource="{Binding Items,Mode=OneWay, UpdateSourceEventName=PropertyChanged}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Button BorderWidth="150" BorderColor="Fuchsia" Text="{Binding Name}" Command="{Binding BindingContext.NextStateCommand, Source={x:Reference root}}" CommandParameter="{Binding}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="BACK" Command="{Binding PreviousStateCommand}"/>
+        <!--<sh:CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+          
 
+                        <ctrl:Expander Command="{Binding GetWorkoutsCommand}">
+                            <ctrl:Expander.Header>
+                                <Label Text="{Binding Name}"/>
+                            </ctrl:Expander.Header>
+                            <ctrl:Expander.Content>
 
-    <CollectionView ItemsSource="{Binding WorkoutPlansViewModels}"
-                    SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Label Text="{Binding Name}">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GetWorkoutsCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <CollectionView Grid.Row="1"
-                                    ItemsSource="{Binding WorkoutsViewModels, Mode=OneWay}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="auto" />
-                                    </Grid.RowDefinitions>
-                                    <Label Text="{Binding Name}">
-                                        <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding GetWorkoutExercises}" />
-                                        </Label.GestureRecognizers>
-                                    </Label>
-                                    <CollectionView Grid.Row="1"
-                                                    ItemsSource="{Binding WorkoutExercises, Mode=OneWay}">
-                                        <CollectionView.ItemTemplate>
-                                            <DataTemplate>
-                                                    
-                                            </DataTemplate>
-                                        </CollectionView.ItemTemplate>
-                                    </CollectionView>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
-                <!--<uc:WorkoutPlanView BindingContext="{Binding}" VerticalOptions="Start"/>-->
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+                                <sh:CollectionView ItemsSource="{Binding WorkoutsViewModels, Mode=OneWay}">
+                                    <sh:CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Text="{Binding Name}"></Label>
+                                        </DataTemplate>
+                                    </sh:CollectionView.ItemTemplate>
+                                </sh:CollectionView>
+                            </ctrl:Expander.Content>
+                        </ctrl:Expander>
+                        --><!--<ListView Grid.Row="1"
+                                    ItemsSource="{Binding WorkoutsViewModels, Mode=OneWay}" VerticalOptions="Start" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Text="{Binding Name}">
+                                        </Label>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>--><!--
 
+                    </Grid>
+                </DataTemplate>
+            </sh:CollectionView.ItemTemplate>-->
+
+    </StackLayout>
+
+    
 
 </ContentView>
