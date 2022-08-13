@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spw_InsertWorkout]
     @workoutPlanId BIGINT,
-    @workoutName VARCHAR,
+    @workoutName VARCHAR(100),
     @order SMALLINT,
     @workoutId bigint OUTPUT
 AS

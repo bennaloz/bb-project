@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spr_GetWorkoutSeriesGroup]
-    @workoutId BIGINT NOT NULL,
-    @userId UNIQUEIDENTIFIER NOT NULL,
+    @workoutId BIGINT,
+    @userId UNIQUEIDENTIFIER,
     @seriesGroupId BIGINT
 AS
     SELECT tbl_Serie.*,
