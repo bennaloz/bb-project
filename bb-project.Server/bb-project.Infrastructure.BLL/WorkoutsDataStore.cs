@@ -43,19 +43,19 @@ namespace bb_project.Infrastructure.BLL
         {
             var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id);
 
-            return workoutPlansDb.Cast<WorkoutPlan>();
+            return workoutPlansDb.Select(wpdb=> (WorkoutPlan) wpdb);
         }
 
         public async Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
         {
             var workouts = await this.dbManager.GetWorkoutsAsync(workoutPlanId);
 
-            return workouts.Cast<Workout>();
+            return workouts.Select(w=>(Workout)w);
         }
 
-        public async Task<IEnumerable<Serie>> GetWorkoutSeriesAsync(long workoutId, string userId)
+        public async Task<IEnumerable<Serie>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null)
         {
-            var workouts = await this.dbManager.GetWorkoutSeriesAsync(workoutId, userId);
+            var workouts = await this.dbManager.GetWorkoutSeriesGroupsAsync(workoutId, userId, seriesGroupId);
 
             return workouts.Cast<Serie>();
         }
@@ -63,26 +63,42 @@ namespace bb_project.Infrastructure.BLL
         public async Task<bool?> HasActiveWorkoutPlanAsync()
             => await this.dbManager.HasActiveWorkoutPlanAsync();
 
-        public async Task<long> InsertExerciseAsync(Exercise exercise)
+        public async Task<long> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exerciseDefinition)
         {
-            return await this.dbManager.InsertExerciseAsync(new ExerciseDbRecord
+            return await this.dbManager.InsertExerciseAsync(userId, new ExerciseDbRecord
             {
-                Name = exercise.Name,
-                Type = exercise.Type
+                Name = exerciseDefinition.Name,
+                Type = exerciseDefinition.Type
             });
         }
 
-        public async Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName)
+        public async Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups)
+        {
+            foreach (var seriesGroup in seriesGroups)
+            {
+                var seriesGroupId = await this.dbManager.InsertWorkoutSeriesGroupAsync(seriesGroup.ExerciseMethod);
+                await this.dbManager.InsertWorkoutSeriesAsync(workoutId, seriesGroup.Series.Select(s =>
+                {
+                    var dbRecord = (SerieDbRecord)s;
+                    dbRecord.SeriesGroupId = seriesGroupId;
+                    dbRecord.WorkoutId = workoutId;
+                    return dbRecord;
+                }));
+            }
+        }
+
+        public async Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName, int order)
         {
             return await this.dbManager.InsertWorkoutAsync(workoutPlanId, new WorkoutDbRecord
             {
-                Name = workoutName
+                Name = workoutName,
+                Order = order
             });
         }
 
-        public async Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false)
+        public async Task<long> InsertWorkoutPlanAsync(string userId, string workoutPlanName, bool isActive = false)
         {
-            return await this.dbManager.InsertWorkoutPlanAsync(new WorkoutPlanDbRecord
+            return await this.dbManager.InsertWorkoutPlanAsync(userId, new WorkoutPlanDbRecord
             {
                 Name = workoutPlanName,
                 IsActive = isActive
@@ -97,6 +113,11 @@ namespace bb_project.Infrastructure.BLL
                 sDb.WorkoutId = workoutId;
                 return sDb;
             }));
+        }
+
+        Task<IEnumerable<SeriesGroup>> IWorkoutsDataStore.GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

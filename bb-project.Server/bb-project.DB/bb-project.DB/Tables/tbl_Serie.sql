@@ -5,6 +5,4 @@
     [Rest] SMALLINT NULL, 
     [fk_ExerciseId] BIGINT NOT NULL, 
     [fk_WorkoutId] BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_Workout(Id), 
-    [ExerciseMethod] SMALLINT NOT NULL DEFAULT 1
-
 )
