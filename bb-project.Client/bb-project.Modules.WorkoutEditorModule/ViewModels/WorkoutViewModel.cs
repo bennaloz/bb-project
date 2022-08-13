@@ -12,14 +12,14 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 {
     public class WorkoutViewModel
     {
-        private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IWorkoutsManagementService workoutsDataStore;
         public  Workout Workout { get; internal set; }
 
         public ICommand GetWorkoutExercises { get; set; }
 
         public string Name => this.Workout?.Name;
 
-        public WorkoutViewModel(IWorkoutsDataStore workoutsDataStore)
+        public WorkoutViewModel(IWorkoutsManagementService workoutsDataStore)
         {
             this.workoutsDataStore = workoutsDataStore;
 
@@ -28,7 +28,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         private async void loadExercises()
         {
-            var workoutSeries = await this.workoutsDataStore.GetWorkoutSeriesAsync(this.Workout.Id, "1");
+            var workoutSeries = await this.workoutsDataStore.GetWorkoutSeriesGroupsAsync(this.Workout.Id, "1");
 
         }
     }

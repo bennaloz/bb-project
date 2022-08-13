@@ -20,7 +20,7 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
     internal class StartWorkoutViewModel : BindableBase, INavigationAware
     {
         private readonly IEventAggregator eventAggregator;
-        private readonly IWorkoutsDataStore workoutDataStore;
+        private readonly IWorkoutsManagementService workoutDataStore;
         private readonly IUserAuthenticatorService userAuthenticator;
 
         public ICommand StartWorkoutCommand { get; set; }
@@ -32,7 +32,7 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
         private IEnumerable<WorkoutExercise> Exercises { get; set; }
 
         public StartWorkoutViewModel(IEventAggregator eventAggregator,
-                                     IWorkoutsDataStore workoutDataStore,
+                                     IWorkoutsManagementService workoutDataStore,
                                      IUserAuthenticatorService userAuthenticator)
         {
             this.eventAggregator = eventAggregator;
@@ -61,7 +61,7 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
 
                 this.WorkoutName = nextWorkout.Name;
 
-                var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutSeriesAsync(nextWorkout.Id, userId);
+                var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(nextWorkout.Id, userId);
                 this.Exercises = nextWorkoutSeries.Select(ex =>
                 {
                     return new WorkoutExercise

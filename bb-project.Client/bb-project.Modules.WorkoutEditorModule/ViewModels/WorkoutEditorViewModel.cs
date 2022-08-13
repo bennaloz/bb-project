@@ -15,10 +15,10 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 {
     public class WorkoutEditorViewModel : BindableBase
     {
-        private readonly IWorkoutsDataStore workoutDataStore;
+        private readonly IWorkoutsManagementService workoutDataStore;
 
         public ObservableCollection<WorkoutPlanViewModel> WorkoutPlansViewModels { get; private set; }
-        public WorkoutEditorViewModel(IWorkoutsDataStore workoutDataStore)
+        public WorkoutEditorViewModel(IWorkoutsManagementService workoutDataStore)
         {
             this.workoutDataStore = workoutDataStore;
             this.WorkoutPlansViewModels = new ObservableCollection<WorkoutPlanViewModel>();

@@ -14,7 +14,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
 {
     public class WorkoutAssistantViewModel : BindableBase
     {
-        private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IWorkoutsManagementService workoutsDataStore;
         private readonly IRegionManager regionManager;
 
         private WorkoutPlan selectedWorkoutPlan;
@@ -26,7 +26,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
                 SetProperty(ref selectedWorkoutPlan, value);
             }
         }
-        public WorkoutAssistantViewModel(IWorkoutsDataStore workoutsDataStore,
+        public WorkoutAssistantViewModel(IWorkoutsManagementService workoutsDataStore,
                                          IRegionManager regionManager)
         {
             this.workoutsDataStore = workoutsDataStore;

@@ -15,7 +15,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
 {
     internal class WorkoutPlanSummaryViewModel : BindableBase
     {
-        private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IWorkoutsManagementService workoutsDataStore;
         private readonly IRegionManager regionManager;
         private WorkoutPlan selectedWorkoutPlan;
 
@@ -34,7 +34,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
             set{SetProperty(ref selectedWorkoutPlan, value);}
         }
 
-        public WorkoutPlanSummaryViewModel(IWorkoutsDataStore workoutsDataStore,
+        public WorkoutPlanSummaryViewModel(IWorkoutsManagementService workoutsDataStore,
                                            IRegionManager regionManager)
         {
             this.workoutsDataStore = workoutsDataStore;

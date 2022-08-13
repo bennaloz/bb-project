@@ -13,7 +13,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 {
     public class WorkoutPlanViewModel : BindableBase
     {
-        private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IWorkoutsManagementService workoutsDataStore;
         private WorkoutPlan workoutPlan;
 
         public string Name => this.workoutPlan?.Name;
@@ -23,7 +23,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         public ICommand GetWorkoutsCommand { get; set; }
 
-        public WorkoutPlanViewModel(IWorkoutsDataStore workoutsDataStore)
+        public WorkoutPlanViewModel(IWorkoutsManagementService workoutsDataStore)
         {
             this.workoutsDataStore = workoutsDataStore;
 

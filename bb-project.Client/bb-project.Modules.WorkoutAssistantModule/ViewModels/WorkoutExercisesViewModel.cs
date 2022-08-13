@@ -18,13 +18,13 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
     internal class WorkoutExercisesViewModel : BindableBase
     {
         private readonly IRegionManager regionManager;
-        private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IWorkoutsManagementService workoutsDataStore;
         private readonly Workout currentWorkout;
 
         public ICommand StartWorkoutCommand { get; set; }
 
         public WorkoutExercisesViewModel(IRegionManager regionManager,
-                                         IWorkoutsDataStore workoutsDataStore)
+                                         IWorkoutsManagementService workoutsDataStore)
         {
             this.regionManager = regionManager;
             this.workoutsDataStore = workoutsDataStore;

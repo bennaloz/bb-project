@@ -12,9 +12,9 @@ namespace bb_project.Client.Modules.HomeModule
     public class HomeModule : IModule
     {
         private readonly IRegionManager regionManager;
-        private readonly IWorkoutsDataStore workoutDatStore;
+        private readonly IWorkoutsManagementService workoutDatStore;
 
-        public  HomeModule(IRegionManager regionManager, IWorkoutsDataStore workoutDatStore)
+        public  HomeModule(IRegionManager regionManager, IWorkoutsManagementService workoutDatStore)
         {
             this.regionManager = regionManager;
             this.workoutDatStore = workoutDatStore;

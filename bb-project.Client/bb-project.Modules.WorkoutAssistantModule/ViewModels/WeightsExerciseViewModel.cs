@@ -12,7 +12,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
 {
     internal class WeightsExerciseViewModel : BindableBase
     {
-        private readonly IWorkoutsDataStore dataStore;
+        private readonly IWorkoutsManagementService dataStore;
         private readonly Serie serie;
 
         public string Reps
@@ -38,7 +38,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
         }
 
 
-        public WeightsExerciseViewModel(IWorkoutsDataStore dataStore)
+        public WeightsExerciseViewModel(IWorkoutsManagementService dataStore)
         {
             this.dataStore = dataStore;
 
