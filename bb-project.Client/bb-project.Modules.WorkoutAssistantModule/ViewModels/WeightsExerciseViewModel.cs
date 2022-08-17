@@ -24,7 +24,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
         {
             get
             {
-                TimeSpan t = TimeSpan.FromSeconds(serie.Rest);
+                TimeSpan t = serie.Rest;
 
                 return string.Format("{0:D2}m:{1:D2}s",
                                 t.Minutes,

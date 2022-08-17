@@ -62,7 +62,7 @@ namespace bb_project.Client.Services
                     new Workout(1){Name = "Scheda B"},
                     new Workout(1){Name = "Scheda C"}
                 };
-                this.workoutPlanChildren.Add(item.ID, workouts);
+                this.workoutPlanChildren.Add(item.Id, workouts);
             }
 
         }
