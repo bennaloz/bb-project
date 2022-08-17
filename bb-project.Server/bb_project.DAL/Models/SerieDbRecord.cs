@@ -1,5 +1,6 @@
 ﻿using bb_project.Infrastructure.Models.Data;
 using bb_project.Infrastructure.Models.Enums;
+using System;
 
 namespace bb_project.Infrastructure.DAL.Models
 {
@@ -9,7 +10,7 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public int Reps { get; set; }
 
-        public int Rest { get; set; }
+        public TimeSpan Rest { get; set; }
 
         public long SeriesGroupId { get; set; }
 

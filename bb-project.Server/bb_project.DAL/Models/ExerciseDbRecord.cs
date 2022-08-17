@@ -1,14 +1,36 @@
-﻿using bb_project.Infrastructure.Models.Enums;
+﻿using bb_project.Infrastructure.Models.Data;
+using bb_project.Infrastructure.Models.Enums;
 
 namespace bb_project.Infrastructure.DAL.Models
 {
     public class ExerciseDbRecord
     {
-        public long ID { get; internal set; }
+        public long Id { get; internal set; }
 
         public string Name { get; set; }
 
         public ExerciseType Type { get; set; }
+
+        public InvolvedMuscles InvolvedMuscles { get; set; }
+
+        public static implicit operator ExerciseDbRecord(ExerciseDefinition exercise)
+        {
+            var result = new ExerciseDbRecord();
+            result.Type = exercise.Type;
+            result.Name = exercise.Name;
+            result.InvolvedMuscles = exercise.InvolvedMuscles;
+            return result;
+
+        }
+
+        public static implicit operator ExerciseDefinition(ExerciseDbRecord exercise)
+        {
+            var result = new ExerciseDefinition(exercise.Id);
+            result.Type = exercise.Type;
+            result.Name = exercise.Name;
+            result.InvolvedMuscles = exercise.InvolvedMuscles;
+            return result;
+        }
 
     }
 }

@@ -14,7 +14,7 @@ namespace bb_project.DAL
 {
     public class WorkoutsDbManager
     {
-        private string connectionString = "";
+        private readonly string connectionString = "";
 
         public WorkoutsDbManager(string connectionString)
         {
@@ -30,6 +30,13 @@ namespace bb_project.DAL
             parameters.Add("from", from == default ? DateTime.MinValue : from);
             parameters.Add("to", to == default ? DateTime.MaxValue : to);
             return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<WorkoutHistoryDbRecord>("spr_GetWorkoutHistory", parameters, commandType: CommandType.StoredProcedure));
+        }
+
+        public async Task<IEnumerable<ExerciseDbRecord>> GetExercisesAsync(string userId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("userId", userId);
+            return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<ExerciseDbRecord>("spr_GetExercises", param: parameters, commandType: CommandType.StoredProcedure));
         }
 
         public async Task<bool> HasActiveWorkoutPlanAsync()
@@ -119,8 +126,8 @@ namespace bb_project.DAL
         public async Task<long> InsertWorkoutSeriesGroupAsync(ExerciseMethodology exerciseMethod)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("exerciseMethod", (int)exerciseMethod);
-            parameters.Add("seriesGroupId", direction: ParameterDirection.Output);
+            parameters.Add("exerciseMethod", (int)exerciseMethod, DbType.Int32);
+            parameters.Add("seriesGroupId", dbType: DbType.Int64, direction: ParameterDirection.Output);
             await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeriesGroup", parameters, commandType: CommandType.StoredProcedure));
             return parameters.Get<long>("seriesGroupId");
         }
@@ -135,7 +142,7 @@ namespace bb_project.DAL
                 parameters.Add("workoutId", workoutId);
                 parameters.Add("definitionExerciseId", serie.DefinitionExerciseId);
                 parameters.Add("seriesGroupId", serie.SeriesGroupId);
-                parameters.Add("serieId", direction:ParameterDirection.Output);
+                parameters.Add("serieId", dbType: DbType.Int64, direction:ParameterDirection.Output);
 
                 await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeries", parameters, commandType: CommandType.StoredProcedure));
                 serie.Id = parameters.Get<long>("serieId");
@@ -177,6 +184,7 @@ namespace bb_project.DAL
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("name", exercise.Name, dbType: DbType.String);
                 parameters.Add("type", exercise.Type, dbType: DbType.Int16);
+                parameters.Add("involvedMuscles", exercise.InvolvedMuscles, dbType: DbType.Int16);
                 parameters.Add("userId", userId);
                 parameters.Add("exerciseId", dbType: DbType.Int64, direction: ParameterDirection.Output);
                 await conn.QueryAsync("spw_InsertExercise", parameters, commandType: CommandType.StoredProcedure);

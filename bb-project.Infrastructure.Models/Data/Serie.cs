@@ -1,5 +1,6 @@
 ﻿
 using bb_project.Infrastructure.Models.Enums;
+using System;
 
 namespace bb_project.Infrastructure.Models.Data
 {
@@ -7,11 +8,17 @@ namespace bb_project.Infrastructure.Models.Data
     {
         public long ID { get; }
 
-        public ExerciseDefinition ExerciseDefinition { get; set; }
+        public ExerciseDefinition ExerciseDefinition { get; }
 
         public int Reps { get; set; }
 
-        public int Rest { get; set; }
+        public TimeSpan Rest { get; set; }
+
+        public Serie(ExerciseDefinition exerciseDefinition)
+            : this(0, exerciseDefinition)
+        {
+
+        }
 
         public Serie(long id, ExerciseDefinition exerciseDefinition)
         {

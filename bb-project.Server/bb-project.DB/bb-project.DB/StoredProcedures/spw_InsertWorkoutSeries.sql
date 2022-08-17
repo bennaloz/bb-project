@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spw_InsertWorkoutSeries]
     @reps INT,
-    @rest INT,
+    @rest TIME,
     @workoutId BIGINT,
     @definitionExerciseId BIGINT,
     @seriesGroupId BIGINT,

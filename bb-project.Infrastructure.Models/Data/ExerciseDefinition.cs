@@ -11,6 +11,8 @@ namespace bb_project.Infrastructure.Models.Data
 
         public ExerciseType Type { get; set; }
 
+        public InvolvedMuscles InvolvedMuscles { get; set; }
+
         public ExerciseDefinition()
         {
 

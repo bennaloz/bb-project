@@ -18,6 +18,12 @@ namespace bb_project.Infrastructure.BLL
             return (await this.dbManager.GetActiveWorkoutsAsync()).Cast<Workout>();
         }
 
+        public async Task<IEnumerable<ExerciseDefinition>> GetExerciseDefinitionsAsync(string userId)
+        {
+            var exercises = await this.dbManager.GetExercisesAsync(userId);
+            return exercises.Select(e => (ExerciseDefinition)e);
+        }
+
         public async Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId)
         {
             var activeWorkouts = await this.GetActiveWorkoutsAsync();
@@ -65,11 +71,7 @@ namespace bb_project.Infrastructure.BLL
 
         public async Task<long> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exerciseDefinition)
         {
-            return await this.dbManager.InsertExerciseAsync(userId, new ExerciseDbRecord
-            {
-                Name = exerciseDefinition.Name,
-                Type = exerciseDefinition.Type
-            });
+            return await this.dbManager.InsertExerciseAsync(userId, (ExerciseDbRecord)exerciseDefinition);
         }
 
         public async Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups)

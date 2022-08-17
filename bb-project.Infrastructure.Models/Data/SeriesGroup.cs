@@ -13,6 +13,12 @@ namespace bb_project.Infrastructure.Models.Data
 
         public List<Serie> Series { get; } = new List<Serie>();
 
+        public SeriesGroup(ExerciseMethodology exerciseMethod)
+            : this(0, exerciseMethod)
+        {
+
+        }
+
         public SeriesGroup(long id, ExerciseMethodology exerciseMethod)
         {
             this.Id = id;

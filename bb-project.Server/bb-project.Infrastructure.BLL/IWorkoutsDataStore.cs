@@ -7,6 +7,8 @@ namespace bb_project.Infrastructure.BLL
 {
     public interface IWorkoutsDataStore
     {
+        Task<IEnumerable<ExerciseDefinition>> GetExerciseDefinitionsAsync(string userId);
+
         Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutPlanId = null, long? workoutId = null, DateTime from = default, DateTime to = default);
 
         Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null);
