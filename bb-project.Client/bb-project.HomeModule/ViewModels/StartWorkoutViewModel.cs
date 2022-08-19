@@ -54,10 +54,10 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
                 var activeWOPlan = workoutPlans.FirstOrDefault(wop => wop.IsActive);
                 this.WorkoutPlanName = activeWOPlan?.Name;
                 var userId = this.userAuthenticator.UserId;
-                var userWorkoutsHistory = await this.workoutDataStore.GetWorkoutHistoryItems(userId, workoutPlanId: activeWOPlan.ID, from: DateTime.Now.AddDays(-14));
+                var userWorkoutsHistory = await this.workoutDataStore.GetWorkoutHistoryItems(userId, workoutPlanId: activeWOPlan.Id, from: DateTime.Now.AddDays(-14));
                 var previousWorkoutId = (userWorkoutsHistory?.Count() ?? 0) > 0 ? userWorkoutsHistory.OrderBy(woh => woh.StartDate).Last().WorkoutId
                                                                             : 0;
-                var nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan.ID);
+                var nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan.Id);
 
                 this.WorkoutName = nextWorkout.Name;
 

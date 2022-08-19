@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
@@ -18,8 +19,9 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
     {
         public long Id { get; set; }
         public string Name { get; set; }
+
     }
-    public class WorkoutEditorViewModel :  BindableBase
+    public class WorkoutEditorViewModel : BindableBase
     {
         private readonly IWorkoutsManagementService workoutDataStore;
 
@@ -43,7 +45,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             {
                 this.Items.Add(new WorkoutEditorListItemViewModel
                 {
-                    Id = wop.ID,
+                    Id = wop.Id,
                     Name = wop.Name
                 });
             }
@@ -55,21 +57,13 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             switch (this.currentState)
             {
                 case Models.Enums.ViewState.WorkoutPlan:
-                    var wo = await this.workoutDataStore.GetWorkoutsAsync(item.Id);
-                    foreach (var w in wo)
-                    {
-                        this.Items.Add(new WorkoutEditorListItemViewModel
-                        {
-                            Id = w.Id,
-                            Name = w.Name
-                        });
-                    }
+                    await ShowWorkouts(item);
                     this.parent = item;
-                    this.currentState = Models.Enums.ViewState.Workout;
+
                     break;
                 case Models.Enums.ViewState.Workout:
-                    break;
                 case Models.Enums.ViewState.Exercises:
+                    await ShowExercises(item);
                     break;
                 default:
                     break;
@@ -82,23 +76,66 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             switch (this.currentState)
             {
                 case Models.Enums.ViewState.WorkoutPlan:
-                    break;
                 case Models.Enums.ViewState.Workout:
-                    var woPlans = this.workoutDataStore.GetWorkoutPlansAsync().GetAwaiter().GetResult();
-                    foreach (var wop in woPlans)
-                    {
-                        this.Items.Add(new WorkoutEditorListItemViewModel
-                        {
-                            Id = wop.ID,
-                            Name = wop.Name
-                        });
-                    }
+                    await ShowWorkoutPlans();
                     break;
                 case Models.Enums.ViewState.Exercises:
+                    await ShowWorkouts(parent);
                     break;
                 default:
                     break;
             }
+        }
+
+        private async Task ShowWorkoutPlans()
+        {
+            var woPlans = await this.workoutDataStore.GetWorkoutPlansAsync();
+            foreach (var wop in woPlans)
+            {
+                this.Items.Add(new WorkoutEditorListItemViewModel
+                {
+                    Id = wop.Id,
+                    Name = wop.Name
+                });
+            }
+            this.currentState = Models.Enums.ViewState.WorkoutPlan;
+        }
+
+        private async Task ShowExercises(WorkoutEditorListItemViewModel item)
+        {
+            var seriesGroup = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(item.Id, "Pigna");
+            foreach (var sg in seriesGroup)
+            {
+                List<string> names = new List<string>();
+                int numberOfSeries = 0;
+                int differentExercises = 0;
+                string name = string.Empty;
+                foreach (var serie in sg.Series)
+                {
+                    if(!name.Contains(serie.ExerciseDefinition.Name))
+                    {
+                        name += serie.ExerciseDefinition.Name + "\n";
+                        differentExercises++;
+                    }
+                }
+                this.Items.Add(new WorkoutEditorListItemViewModel { Id = sg.Id, Name = name });
+
+            }
+        }
+
+        private async Task ShowWorkouts(WorkoutEditorListItemViewModel item)
+        {
+            var wo = await this.workoutDataStore.GetWorkoutsAsync(item.Id);
+            foreach (var w in wo)
+            {
+                this.Items.Add(new WorkoutEditorListItemViewModel
+                {
+                    Id = w.Id,
+                    Name = w.Name
+                });
+            }
+
+            this.currentState = Models.Enums.ViewState.Workout;
         }
     }
 }
