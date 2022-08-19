@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace bb_project.Client.Modules.WorkoutEditorModule.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class WorkoutsListView : ContentView
+    public partial class EditorView : ContentView
     {
-        public WorkoutsListView()
+        public EditorView()
         {
             InitializeComponent();
         }

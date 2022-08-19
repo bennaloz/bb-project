@@ -2,9 +2,9 @@
 
 namespace bb_project.Client.Modules.WorkoutEditorModule.Views
 {
-    public partial class WorkoutEditorView : ContentView
+    public partial class WorkoutEditorSummaryView : ContentView
     {
-        public WorkoutEditorView()
+        public WorkoutEditorSummaryView()
         {
 
             InitializeComponent();

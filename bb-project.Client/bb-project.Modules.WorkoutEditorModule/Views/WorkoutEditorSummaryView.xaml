@@ -2,30 +2,32 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit" 
-             x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorView"
+             x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorSummaryView"
              x:Name="root" >
 
     <StackLayout Orientation="Vertical">
 
 
         <CollectionView 
-            ItemsSource="{Binding Items,Mode=OneWay, UpdateSourceEventName=PropertyChanged}" SelectionMode="Single" >
+            ItemsSource="{Binding Items,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}" SelectionMode="Single" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Black"
                            BackgroundColor="SkyBlue"
                             CornerRadius="10"
                            HasShadow="True"
-                           ctrl:TouchEffect.PressedScale="1.5"
+                           ctrl:TouchEffect.PressedScale="1.2"
                            ctrl:TouchEffect.PressedBackgroundColor="Yellow"
-                           ctrl:TouchEffect.Command="{Binding BindingContext.NextStateCommand, Source={x:Reference root}}"
-                           ctrl:TouchEffect.CommandParameter="{Binding}"
+                           ctrl:TouchEffect.Command ="{Binding BindingContext.NextStateCommand, Source={x:Reference root}}"
+                           ctrl:TouchEffect.CommandParameter ="{Binding}"
                            >
                         <Label   Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"  HorizontalTextAlignment="Center" />
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <Button Text="EDIT" Command="{Binding EditCommand}"/>
         <Button Text="BACK" Command="{Binding PreviousStateCommand}"/>
     </StackLayout>
 

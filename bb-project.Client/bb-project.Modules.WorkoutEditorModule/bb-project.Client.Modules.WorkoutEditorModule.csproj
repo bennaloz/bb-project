@@ -19,8 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\WorkoutEditorView.xaml.cs">
-      <DependentUpon>WorkoutEditorView.xaml</DependentUpon>
+    <Compile Update="Views\EditorMainContentView.xaml.cs">
+      <DependentUpon>EditorMainContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\WorkoutEditorSummaryView.xaml.cs">
+      <DependentUpon>WorkoutEditorSummaryView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -28,15 +31,19 @@
     <EmbeddedResource Update="UserControls\WorkoutsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\WorkoutEditorView.xaml">
+    <EmbeddedResource Update="Views\EditorMainContentView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\WorkoutPlansSummaryView.xaml">
+    <EmbeddedResource Update="Views\EditorView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\WorkoutsSummaryView.xaml">
+    <EmbeddedResource Update="Views\WorkoutEditorSummaryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Enums\" />
   </ItemGroup>
 
 </Project>

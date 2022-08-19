@@ -15,7 +15,7 @@ namespace bb_project.Client.Services
 
         Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId);
 
-        Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false);
+        Task<long> InsertWorkoutPlanAsync(string workoutPlanName,long id , bool isActive = false);
 
         Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName);
 

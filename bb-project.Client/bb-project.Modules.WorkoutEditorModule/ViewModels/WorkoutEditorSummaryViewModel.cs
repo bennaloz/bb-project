@@ -1,10 +1,14 @@
 ﻿
+using bb_project.Client.Modules.WorkoutEditorModule.Views;
 using bb_project.Client.Services;
 using bb_project.Infrastructure.Models.Data;
+using bb_project.Infrastructure.Models.Events;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,11 +25,12 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         public string Name { get; set; }
 
     }
-    public class WorkoutEditorViewModel : BindableBase
+    public class WorkoutEditorSummaryViewModel : BindableBase
     {
         private readonly IWorkoutsManagementService workoutDataStore;
-
-        private Models.Enums.ViewState currentState = Models.Enums.ViewState.WorkoutPlan;
+        private readonly IRegionManager regionManager;
+        private readonly IEventAggregator eventAggregator;
+        private Infrastructure.Models.Enums.ViewState currentState = Infrastructure.Models.Enums.ViewState.WorkoutPlan;
 
         private WorkoutEditorListItemViewModel parent;
 
@@ -33,13 +38,19 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         public ICommand NextStateCommand { get; set; }
         public ICommand PreviousStateCommand { get; set; }
+        public ICommand EditCommand { get; set; }
 
-        public WorkoutEditorViewModel(IWorkoutsManagementService workoutDataStore)
+
+
+        public WorkoutEditorSummaryViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             this.workoutDataStore = workoutDataStore;
-
+            this.regionManager = regionManager;
+            this.eventAggregator = eventAggregator;
             this.NextStateCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.nextViewModel);
             this.PreviousStateCommand = new DelegateCommand(this.previousViewModel);
+            this.EditCommand = new DelegateCommand(this.goToEditView);
+
             var woPlans = this.workoutDataStore.GetWorkoutPlansAsync().GetAwaiter().GetResult();
             foreach (var wop in woPlans)
             {
@@ -51,18 +62,24 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             }
         }
 
+        private void goToEditView()
+        {
+            this.regionManager.RequestNavigate("EditorContentRegion", nameof(EditorView));
+            this.eventAggregator.GetEvent<EditEvent>().Publish(this.currentState);
+        }
+
         private async void nextViewModel(WorkoutEditorListItemViewModel item)
         {
             this.Items.Clear();
             switch (this.currentState)
             {
-                case Models.Enums.ViewState.WorkoutPlan:
+                case Infrastructure.Models.Enums.ViewState.WorkoutPlan:
                     await ShowWorkouts(item);
                     this.parent = item;
 
                     break;
-                case Models.Enums.ViewState.Workout:
-                case Models.Enums.ViewState.Exercises:
+                case Infrastructure.Models.Enums.ViewState.Workout:
+                case Infrastructure.Models.Enums.ViewState.Exercises:
                     await ShowExercises(item);
                     break;
                 default:
@@ -75,11 +92,11 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             this.Items.Clear();
             switch (this.currentState)
             {
-                case Models.Enums.ViewState.WorkoutPlan:
-                case Models.Enums.ViewState.Workout:
+                case Infrastructure.Models.Enums.ViewState.WorkoutPlan:
+                case Infrastructure.Models.Enums.ViewState.Workout:
                     await ShowWorkoutPlans();
                     break;
-                case Models.Enums.ViewState.Exercises:
+                case Infrastructure.Models.Enums.ViewState.Exercises:
                     await ShowWorkouts(parent);
                     break;
                 default:
@@ -98,7 +115,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                     Name = wop.Name
                 });
             }
-            this.currentState = Models.Enums.ViewState.WorkoutPlan;
+            this.currentState = Infrastructure.Models.Enums.ViewState.WorkoutPlan;
         }
 
         private async Task ShowExercises(WorkoutEditorListItemViewModel item)
@@ -135,7 +152,10 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                 });
             }
 
-            this.currentState = Models.Enums.ViewState.Workout;
+            this.currentState = Infrastructure.Models.Enums.ViewState.Workout;
         }
+
+
+
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bb_project.Client.Modules.WorkoutEditorModule.Models.Enums
+namespace bb_project.Infrastructure.Models.Enums
 {
-    internal enum ViewState
+    public enum ViewState
     {
         WorkoutPlan,
         Workout,

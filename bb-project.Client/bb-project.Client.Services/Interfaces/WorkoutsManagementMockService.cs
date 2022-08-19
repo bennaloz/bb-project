@@ -126,9 +126,21 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task<long> InsertWorkoutPlanAsync(string workoutPlanName, bool isActive = false)
+        public Task<long> InsertWorkoutPlanAsync(string workoutPlanName,long id, bool isActive = false)
         {
-            throw new NotImplementedException();
+            var plan = plans.First(o => o.Id == id);
+            
+            if(plan == default)
+            {
+                plans.ToList().Add(new WorkoutPlan(id) { IsActive = isActive, Name= workoutPlanName});    
+            }
+            else
+            {
+                plan.Name = workoutPlanName;
+            }
+
+            return Task.FromResult((long)0);
+        
         }
     }
 }

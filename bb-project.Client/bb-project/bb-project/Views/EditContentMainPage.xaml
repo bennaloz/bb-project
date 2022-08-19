@@ -4,5 +4,5 @@
              x:Class="bb_project.Client.Views.EditContentMainPage"
              xmlns:prism="http://prismlibrary.com"
              prism:ViewModelLocator.AutowireViewModel="True">
-    <ContentView prism:RegionManager.RegionName="EditMainPageRegion" />
+    <ContentView prism:RegionManager.RegionName="EditorMainPageRegion" />
 </ContentPage>
