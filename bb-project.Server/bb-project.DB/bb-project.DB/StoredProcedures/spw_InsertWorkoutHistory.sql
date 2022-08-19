@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spw_InsertWorkoutHistory]
-    @startDate DATETIME2,
+    @startDate DATETIME2, 
     @endDate DATETIME2,
     @fkWorkoutId BIGINT,
     @fkWorkoutPlanId BIGINT,

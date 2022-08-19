@@ -1,4 +1,5 @@
-﻿using bb_project.Infrastructure.Models.Data;
+﻿using bb_project.Infrastructure.DAL.Models;
+using bb_project.Infrastructure.Models.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace bb_project.Infrastructure.BLL
         Task<IEnumerable<ExerciseDefinition>> GetExerciseDefinitionsAsync(string userId);
 
         Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutPlanId = null, long? workoutId = null, DateTime from = default, DateTime to = default);
+        Task<long> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, long workoutId, long workoutPlanId, string userId);
+        Task InsertWorkoutDataAsync(long workoutHistoryId, long serieId, params WorkoutDataDbRecord[] workoutData);
 
         Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null);
 

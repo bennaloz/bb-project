@@ -1,12 +1,14 @@
 ﻿CREATE PROCEDURE [dbo].[spr_GetWorkoutSeriesGroup]
     @workoutId BIGINT,
     @userId UNIQUEIDENTIFIER,
-    @seriesGroupId BIGINT
+    @seriesGroupId BIGINT = 0
 AS
     SELECT tbl_Serie.*,
-           tbl_Exercise.Id AS OwnerExerciseId,
-           tbl_Exercise.Name AS OwnerExerciseName,
-           tbl_Exercise.Type AS OwnerExerciseType,
+           tbl_Exercise.Id AS DefinitionExerciseId,
+           tbl_Exercise.Name AS DefinitionExerciseName,
+           tbl_Exercise.Type AS DefinitionExerciseType,
+           tbl_Exercise.InvolvedMuscles AS InvolvedMuscles,
+           tbl_SeriesGroup.Id AS SeriesGroupId,
            tbl_SeriesGroup.ExerciseMethod AS ExerciseMethod
     FROM tbl_Serie
     INNER JOIN tbl_Exercise ON tbl_Exercise.Id = tbl_Serie.fk_ExerciseId

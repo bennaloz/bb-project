@@ -59,11 +59,20 @@ namespace bb_project.Infrastructure.BLL
             return workouts.Select(w=>(Workout)w);
         }
 
-        public async Task<IEnumerable<Serie>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null)
+        public async Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null)
         {
-            var workouts = await this.dbManager.GetWorkoutSeriesGroupsAsync(workoutId, userId, seriesGroupId);
+            var seriesRecords = await this.dbManager.GetWorkoutSeriesGroupsAsync(workoutId, userId, seriesGroupId);
 
-            return workouts.Cast<Serie>();
+            var groups = new Dictionary<long, SeriesGroup>();
+            foreach (var record in seriesRecords)
+            {
+                if (!groups.ContainsKey(record.SeriesGroupId))
+                    groups.Add(record.SeriesGroupId, new SeriesGroup(record.SeriesGroupId, record.ExerciseMethod));
+                var group = groups[record.SeriesGroupId];
+                group.Series.Add((Serie)record);
+            }
+
+            return groups.Values;
         }
 
         public async Task<bool?> HasActiveWorkoutPlanAsync()
@@ -96,6 +105,16 @@ namespace bb_project.Infrastructure.BLL
                 Name = workoutName,
                 Order = order
             });
+        }
+
+        public async Task InsertWorkoutDataAsync(long workoutHistoryId, long serieId, params WorkoutDataDbRecord[] workoutData)
+        {
+            await this.dbManager.InsertWorkoutDataAsync(workoutHistoryId, serieId, workoutData);
+        }
+
+        public async Task<long> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, long workoutId, long workoutPlanId, string userId)
+        {
+            return await this.dbManager.InsertWorkoutHistoryAsync(startDate, endDate, workoutId, workoutPlanId, userId);
         }
 
         public async Task<long> InsertWorkoutPlanAsync(string userId, string workoutPlanName, bool isActive = false)

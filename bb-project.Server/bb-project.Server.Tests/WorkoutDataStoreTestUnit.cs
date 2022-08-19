@@ -308,5 +308,34 @@ namespace bb_project.Server.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public async Task InsertWorkoutHistoryTestAsync()
+        {
+
+            var woPlanId = (await this.workoutsDataStore.GetWorkoutPlansAsync()).First().Id;
+            var woId = (await this.workoutsDataStore.GetWorkoutsAsync(woPlanId)).First().Id;
+
+            var workoutHistoryId = await this.workoutsDataStore.InsertWorkoutHistoryAsync(DateTime.Now, DateTime.Now.AddHours(1), woId, woPlanId, this.testUnitUserId);
+
+            var woSeries = await this.workoutsDataStore.GetWorkoutSeriesGroupsAsync(woId, this.testUnitUserId);
+
+            DateTime startTime = DateTime.Now;
+
+            foreach (var woSeriesGroup in woSeries)
+            {
+                foreach (var serie in woSeriesGroup.Series)
+                {
+                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutHistoryId, serie.Id, new Infrastructure.DAL.Models.WorkoutDataDbRecord
+                    {
+                        StartTime = startTime = startTime.AddMinutes(1),
+                        EndTime = startTime.AddMinutes(1),
+                        UsedKgs = 120.5
+                    });
+
+                }
+
+            }
+        }
     }
 }

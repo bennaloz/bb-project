@@ -20,6 +20,8 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public string DefinitionExerciseName { get; set; }
 
+        public ExerciseMethodology ExerciseMethod { get; set; }
+
         public ExerciseType DefinitionExerciseType { get; set; }
 
         public static implicit operator Serie(SerieDbRecord serieDbRecord)

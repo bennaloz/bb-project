@@ -6,7 +6,7 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class Serie
     {
-        public long ID { get; }
+        public long Id { get; }
 
         public ExerciseDefinition ExerciseDefinition { get; }
 
@@ -22,7 +22,7 @@ namespace bb_project.Infrastructure.Models.Data
 
         public Serie(long id, ExerciseDefinition exerciseDefinition)
         {
-            this.ID = id;
+            this.Id = id;
             this.ExerciseDefinition = exerciseDefinition;
         }
     }

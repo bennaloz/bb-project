@@ -81,6 +81,8 @@
     <Build Include="Tables\tbl_SeriesGroup_Serie.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutSeriesGroup.sql" />
     <Build Include="StoredProcedures\spr_GetWorkoutSeriesGroup.sql" />
+    <Build Include="StoredProcedures\spr_GetExercises.sql" />
+    <Build Include="StoredProcedures\spw_InsertWorkoutData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="bb-project.DB.refactorlog" />
