@@ -22,8 +22,8 @@ namespace bb_project.Client
 
         protected override void OnInitialized()
         {
-            var result = NavigationService.NavigateAsync("AppShell").Result;
-            if (!result.Success)
+            var result = NavigationService.NavigateAsync(nameof(MenuPage) + "/" + nameof(NavigationPage) + "/" + nameof(ContentMainPage));
+            if (!result.GetAwaiter().GetResult().Success)
             {
                 System.Diagnostics.Debugger.Break();
             }
@@ -31,9 +31,17 @@ namespace bb_project.Client
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<AppShell>("AppShell");
+
+            containerRegistry.RegisterForNavigation<ContentMainPage>(nameof(ContentMainPage));
+            containerRegistry.RegisterForNavigation<EditContentMainPage>(nameof(EditContentMainPage));
+            containerRegistry.RegisterForNavigation<MenuPage>(nameof(MenuPage));
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+
+
             containerRegistry.RegisterSingleton<IWorkoutsManagementService, WorkoutsManagementMockService>();
             containerRegistry.RegisterSingleton<IUserAuthenticatorService, UserAuthenticatorService>();
             containerRegistry.RegisterRegionServices();
+            
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
