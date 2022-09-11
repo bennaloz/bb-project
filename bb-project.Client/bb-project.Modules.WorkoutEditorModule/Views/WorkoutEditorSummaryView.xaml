@@ -22,11 +22,7 @@
                     <Frame BorderColor="Black"
                            BackgroundColor="SkyBlue"
                            CornerRadius="10"
-                           HasShadow="True"
-                           ctrl:TouchEffect.PressedScale="1.2"
-                           ctrl:TouchEffect.PressedBackgroundColor="Yellow"
-                           ctrl:TouchEffect.Command="{Binding BindingContext.NextStateCommand, Source={x:Reference root}}"
-                           ctrl:TouchEffect.CommandParameter="{Binding}">
+                            HasShadow="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8.5*" />
@@ -43,7 +39,7 @@
                             </StackLayout>
                             <Button Grid.Column="1"
                                     Text="Edit"
-                                    Command="{Binding EditCommand}"
+                                    Command="{Binding BindingContext.EditCommand, Source={x:Reference root}}"
                                     CommandParameter="{Binding}" />
                         </Grid>
                     </Frame>
