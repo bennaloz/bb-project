@@ -6,17 +6,17 @@ namespace bb_project.Infrastructure.DAL.Models
 {
     public class SerieDbRecord
     {
-        public long Id { get; internal set; }
+        public ulong Id { get; internal set; }
 
         public int Reps { get; set; }
 
         public TimeSpan Rest { get; set; }
 
-        public long SeriesGroupId { get; set; }
+        public ulong SeriesGroupId { get; set; }
 
-        public long WorkoutId { get; set; }
+        public ulong WorkoutId { get; set; }
 
-        public long DefinitionExerciseId { get; set; }
+        public ulong DefinitionExerciseId { get; set; }
 
         public string DefinitionExerciseName { get; set; }
 

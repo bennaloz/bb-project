@@ -10,8 +10,8 @@ namespace bb_project.Infrastructure.Models.Data
 
         public DateTime EndDate { get; set; }
 
-        public long WorkoutId { get; set; }
+        public ulong WorkoutId { get; set; }
 
-        public long UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

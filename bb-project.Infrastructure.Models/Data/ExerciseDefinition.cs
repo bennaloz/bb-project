@@ -5,7 +5,7 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class ExerciseDefinition
     {
-        public long Id { get; }
+        public ulong Id { get; }
 
         public string Name { get; set; }
 
@@ -18,7 +18,7 @@ namespace bb_project.Infrastructure.Models.Data
 
         }
 
-        public ExerciseDefinition(long id)
+        public ExerciseDefinition(ulong id)
         {
             this.Id = id;
         }
