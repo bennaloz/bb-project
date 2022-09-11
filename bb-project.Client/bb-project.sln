@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bb-project.Infrastructure.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bb_project.Client.Authentication", "bb_project.Authentication\bb_project.Client.Authentication.csproj", "{B3337AFF-5685-46DC-A5F5-D4090844F2C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bb-project.Client.Services", "bb-project.Client.Services\bb-project.Client.Services.csproj", "{9592B387-225F-4C52-9BD8-E23AA309A9EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bb-project.Client.Services", "bb-project.Client.Services\bb-project.Client.Services.csproj", "{9592B387-225F-4C52-9BD8-E23AA309A9EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

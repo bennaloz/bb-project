@@ -30,7 +30,76 @@ namespace bb_project.API.Controllers
             {
                 return new StatusCodeResult(500);
             }
-            return new BadRequestResult();
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetWorkoutsAsync([FromQuery] long workoutPlanId, [FromQuery] long? workoutId = null)
+        {
+            try
+            {
+                var workouts = await this.workoutsDataStore.GetWorkoutsAsync(workoutPlanId, workoutId);
+                return new OkObjectResult(workouts);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetWorkoutSeriesGroupsAsync([FromQuery] long workoutId, [FromQuery] string userId)
+        {
+            try
+            {
+                var workoutSeriesGroups = await this.workoutsDataStore.GetWorkoutSeriesGroupsAsync(workoutId, userId);
+                return new OkObjectResult(workoutSeriesGroups);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetActiveWorkoutsAsync()
+        {
+            try
+            {
+                var activeWorkouts = await this.workoutsDataStore.GetActiveWorkoutsAsync();
+                return new OkObjectResult(activeWorkouts);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetNextWorkoutAsync([FromQuery]string userId, [FromQuery] long activeWorkoutPlanId)
+        {
+            try
+            {
+                var activeWorkouts = await this.workoutsDataStore.GetNextWorkoutAsync(userId, activeWorkoutPlanId);
+                return new OkObjectResult(activeWorkouts);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> HasActiveWorkoutPlanAsync()
+        {
+            try
+            {
+                var hasActiveWorkoutPlan = await this.workoutsDataStore.HasActiveWorkoutPlanAsync();
+                return new OkObjectResult(hasActiveWorkoutPlan);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule
         {
             containerRegistry.RegisterForRegionNavigation<EditorMainContentView>(name: nameof(EditorMainContentView));
             containerRegistry.RegisterForRegionNavigation<WorkoutEditorSummaryView>(name: nameof(WorkoutEditorSummaryView));
-            containerRegistry.RegisterForRegionNavigation<EditorView, EditorViewModel>(name: nameof(EditorView));
+            containerRegistry.RegisterForRegionNavigation<WorkoutPlanEditorView, WorkoutPlanEditorViewModel>(name: nameof(WorkoutPlanEditorView));
         }
     }
 }

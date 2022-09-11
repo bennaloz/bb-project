@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctx="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutPlanEditorView">
+    <ContentView.Content>
+        <StackLayout Orientation="Vertical"
+                     x:Name="root">
+            <Editor Text="{Binding WorkoutPlanName, Mode=TwoWay}" />
+            <CollectionView ItemsSource="{Binding Workouts}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="Black"
+                               BackgroundColor="SkyBlue"
+                               CornerRadius="10"
+                               HasShadow="True">
+                            <ctx:Expander>
+                                <ctx:Expander.Header>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="8.5*" />
+                                            <ColumnDefinition Width="1.5*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding WorkoutName}" />
+                                        <Button Text="Delete"
+                                                Grid.Column="1"
+                                                Command="{Binding RemoveWorkout}" />
+                                    </Grid>
+                                </ctx:Expander.Header>
+                                <ctx:Expander.Content>
+                                <!--Exercises preview
+                                        Nome - Reps - Rest
+                                    -->
+                                </ctx:Expander.Content>
+                            </ctx:Expander>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Salva"
+                    Command="{Binding SaveCommand}" />
+            <Button Text="Annulla"
+                    Command="{Binding BackCommand}" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

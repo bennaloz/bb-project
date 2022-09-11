@@ -18,8 +18,6 @@ namespace bb_project.Client.Services
         Dictionary<long, IEnumerable<Workout>> workoutPlanChildren;
         public WorkoutsManagementMockService()
         {
-
-
             this.plans = new ObservableCollection<WorkoutPlan>()
             {
                new WorkoutPlan(1) { Name ="MASSA", IsActive=true},

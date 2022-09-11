@@ -1,34 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit"
              x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorSummaryView"
-             x:Name="root" >
+             x:Name="root">
 
     <StackLayout Orientation="Vertical">
 
-
-        <CollectionView 
-            ItemsSource="{Binding Items,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}" SelectionMode="Single" >
+        <Label Text="{Binding Title}"
+               HorizontalOptions="Center"
+               FontSize="24"
+               FontAttributes="Bold" />
+        <CollectionView ItemsSource="{Binding Items ,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}"
+                        SelectionMode="Single">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="16"
+                                   Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Black"
                            BackgroundColor="SkyBlue"
-                            CornerRadius="10"
+                           CornerRadius="10"
                            HasShadow="True"
                            ctrl:TouchEffect.PressedScale="1.2"
                            ctrl:TouchEffect.PressedBackgroundColor="Yellow"
-                           ctrl:TouchEffect.Command ="{Binding BindingContext.NextStateCommand, Source={x:Reference root}}"
-                           ctrl:TouchEffect.CommandParameter ="{Binding}"
-                           >
-                        <Label   Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"  HorizontalTextAlignment="Center" />
+                           ctrl:TouchEffect.Command="{Binding BindingContext.NextStateCommand, Source={x:Reference root}}"
+                           ctrl:TouchEffect.CommandParameter="{Binding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8.5*" />
+                                <ColumnDefinition Width="1.5*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout>
+                                <Label   Text="{Binding Name}"
+                                         FontAttributes="Bold"
+                                         FontSize="Medium"
+                                         HorizontalTextAlignment="Center"
+                                         VerticalOptions="Center" />
+                                <Label Text="{Binding Details}"
+                                       HorizontalOptions="Center" />
+                            </StackLayout>
+                            <Button Grid.Column="1"
+                                    Text="Edit"
+                                    Command="{Binding EditCommand}"
+                                    CommandParameter="{Binding}" />
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Button Text="EDIT" Command="{Binding EditCommand}"/>
-        <Button Text="BACK" Command="{Binding PreviousStateCommand}"/>
+        
+        <Button Text="BACK"
+                Command="{Binding PreviousStateCommand}" />
     </StackLayout>
 
 

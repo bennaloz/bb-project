@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AiForms.CollectionView" Version="0.3.23-pre" />
     <PackageReference Include="Prism.Forms.Regions" Version="8.1.97" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="2.0.4" />
@@ -22,19 +28,19 @@
     <Compile Update="Views\EditorMainContentView.xaml.cs">
       <DependentUpon>EditorMainContentView.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\WorkoutPlanEditorView.xaml.cs">
+      <DependentUpon>WorkoutPlanEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\WorkoutEditorSummaryView.xaml.cs">
       <DependentUpon>WorkoutEditorSummaryView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UserControls\WorkoutsView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\EditorMainContentView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditorView.xaml">
+    <EmbeddedResource Update="Views\WorkoutPlanEditorView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\WorkoutEditorSummaryView.xaml">
@@ -43,7 +49,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Enums\" />
+    <Folder Include="UserControls\" />
   </ItemGroup>
 
 </Project>

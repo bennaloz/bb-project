@@ -6,11 +6,11 @@
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True">
     <MasterDetailPage.Master>
-
         <NavigationPage Title="Menu">
             <x:Arguments>
                 <ContentPage Title="MyMenu">
                     <ListView ItemsSource="{Binding MenuItems}"
+                              SelectedItem="{Binding SelectedItem}"
                               SeparatorColor="Gray"
                               RowHeight="60"
                               SeparatorVisibility="Default">
@@ -18,22 +18,21 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Label Text="{Binding}"/>
+                                    <Label Text="{Binding}" />
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
 
                         <ListView.Behaviors>
-                            <b:EventToCommandBehavior
-                                EventName="ItemTapped"
-                                Command="{Binding NavigateCommand}" CommandParameter="{Binding}"/>
+                            <b:EventToCommandBehavior EventName="ItemTapped"
+                                                      Command="{Binding NavigateCommand}" />
                         </ListView.Behaviors>
-                        
+
                     </ListView>
 
                 </ContentPage>
             </x:Arguments>
         </NavigationPage>
-        
+
     </MasterDetailPage.Master>
 </MasterDetailPage>
