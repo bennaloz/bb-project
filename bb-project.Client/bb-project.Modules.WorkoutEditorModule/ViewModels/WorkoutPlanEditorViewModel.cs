@@ -71,7 +71,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         private void removeWorkout(object id)
         {
 
-            var workout = this.Workouts.First(o => o.Id == (long)id);
+            var workout = this.Workouts.First(o => o.Id == (ulong)id);
             if (workout != default)
             {
                 this.Workouts.Remove(workout);
@@ -132,7 +132,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         public async void OnNavigatedTo(INavigationContext navigationContext)
         {
-            navigationContext.Parameters.TryGetValue("workoutPlanId", out long planid);
+            navigationContext.Parameters.TryGetValue("workoutPlanId", out ulong planid);
             navigationContext.Parameters.TryGetValue("workoutPlanName", out string planName);
 
             this.WorkoutPlanName = planName;
