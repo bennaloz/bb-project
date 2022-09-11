@@ -21,7 +21,7 @@ namespace bb_project.DAL
             this.connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<WorkoutHistoryDbRecord>> GetWorkoutHistoryAsync(string userId, long? workoutId = null, long? workoutPlanId = null, DateTime from = default, DateTime to = default)
+        public async Task<IEnumerable<WorkoutHistoryDbRecord>> GetWorkoutHistoryAsync(string userId, ulong? workoutId = null, ulong? workoutPlanId = null, DateTime from = default, DateTime to = default)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("userId", userId);
@@ -32,7 +32,7 @@ namespace bb_project.DAL
             return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<WorkoutHistoryDbRecord>("spr_GetWorkoutHistory", parameters, commandType: CommandType.StoredProcedure));
         }
 
-        public async Task<long> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, long workoutId, long workoutPlanId, string userId)
+        public async Task<ulong> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, ulong workoutId, ulong workoutPlanId, string userId)
         {
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("startDate", startDate);
@@ -42,21 +42,18 @@ namespace bb_project.DAL
             parameters.Add("fkUserId", userId);
             parameters.Add("workoutHistoryId", dbType: DbType.Int64, direction: ParameterDirection.Output);
             await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutHistory", parameters, commandType: CommandType.StoredProcedure));
-            return parameters.Get<long>("workoutHistoryId");
+            return parameters.Get<ulong>("workoutHistoryId");
         }
 
-        public async Task InsertWorkoutDataAsync(long workoutHistoryId, long serieId, params WorkoutDataDbRecord[] workoutData)
+        public async Task InsertWorkoutDataAsync(ulong workoutHistoryId, ulong serieId, DateTime startTime, DateTime endTime, double? usedKgs)
         {
-            foreach (var data in workoutData)
-            {
                 var parameters = new DynamicParameters();
                 parameters.Add("workoutHistoryId", workoutHistoryId);
                 parameters.Add("serieId", serieId);
-                parameters.Add("startTime", data.StartTime);
-                parameters.Add("endTime", data.EndTime);
-                parameters.Add("usedKgs", data.UsedKgs);
+                parameters.Add("startTime", startTime);
+                parameters.Add("endTime", endTime);
+                parameters.Add("usedKgs", usedKgs);
                 await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutData", parameters, commandType: CommandType.StoredProcedure));
-            }
         }
 
         public async Task<IEnumerable<ExerciseDbRecord>> GetExercisesAsync(string userId)
@@ -84,7 +81,7 @@ namespace bb_project.DAL
             }
         }
 
-        public async Task<IEnumerable<WorkoutPlanDbRecord>> GetWorkoutPlansAsync(long? id = null)
+        public async Task<IEnumerable<WorkoutPlanDbRecord>> GetWorkoutPlansAsync(ulong? id = null)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -95,7 +92,7 @@ namespace bb_project.DAL
             }
         }
 
-        public async Task<IEnumerable<WorkoutDbRecord>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
+        public async Task<IEnumerable<WorkoutDbRecord>> GetWorkoutsAsync(ulong workoutPlanId, ulong? workoutId = null)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -107,7 +104,7 @@ namespace bb_project.DAL
             }
         }
 
-        public async Task<IEnumerable<SerieDbRecord>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null)
+        public async Task<IEnumerable<SerieDbRecord>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId, ulong? seriesGroupId = null)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -121,7 +118,7 @@ namespace bb_project.DAL
 
         }
 
-        public async Task<long> InsertWorkoutPlanAsync(string userId, WorkoutPlanDbRecord workoutPlan)
+        public async Task<ulong> InsertWorkoutPlanAsync(string userId, WorkoutPlanDbRecord workoutPlan)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -131,11 +128,11 @@ namespace bb_project.DAL
                 parameters.Add("userId", userId);
                 parameters.Add("workoutPlanId", dbType: DbType.Int64, direction: ParameterDirection.Output);
                 await conn.QueryAsync("spw_InsertWorkoutPlan", parameters, commandType: CommandType.StoredProcedure);
-                return parameters.Get<long>("workoutPlanId");
+                return parameters.Get<ulong>("workoutPlanId");
             }
         }
 
-        public async Task<long> InsertWorkoutAsync(long workoutPlanId, WorkoutDbRecord workout)
+        public async Task<ulong> InsertWorkoutAsync(ulong workoutPlanId, WorkoutDbRecord workout)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -145,20 +142,20 @@ namespace bb_project.DAL
                 parameters.Add("order", workout.Order);
                 parameters.Add("workoutId", dbType: DbType.Int64, direction: ParameterDirection.Output);
                 await conn.QueryAsync("spw_InsertWorkout", parameters, commandType: CommandType.StoredProcedure);
-                return parameters.Get<long>("workoutId");
+                return parameters.Get<ulong>("workoutId");
             }
         }
 
-        public async Task<long> InsertWorkoutSeriesGroupAsync(ExerciseMethodology exerciseMethod)
+        public async Task<ulong> InsertWorkoutSeriesGroupAsync(ExerciseMethodology exerciseMethod)
         {
             var parameters = new DynamicParameters();
             parameters.Add("exerciseMethod", (int)exerciseMethod, DbType.Int32);
             parameters.Add("seriesGroupId", dbType: DbType.Int64, direction: ParameterDirection.Output);
             await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeriesGroup", parameters, commandType: CommandType.StoredProcedure));
-            return parameters.Get<long>("seriesGroupId");
+            return parameters.Get<ulong>("seriesGroupId");
         }
 
-        public async Task InsertWorkoutSeriesAsync(long workoutId, IEnumerable<SerieDbRecord> series)
+        public async Task InsertWorkoutSeriesAsync(ulong workoutId, IEnumerable<SerieDbRecord> series)
         {
             foreach (var serie in series)
             {
@@ -171,7 +168,7 @@ namespace bb_project.DAL
                 parameters.Add("serieId", dbType: DbType.Int64, direction: ParameterDirection.Output);
 
                 await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeries", parameters, commandType: CommandType.StoredProcedure));
-                serie.Id = parameters.Get<long>("serieId");
+                serie.Id = parameters.Get<ulong>("serieId");
             }
             //using (var conn = new SqlConnection(this.connectionString))
             //{
@@ -203,7 +200,7 @@ namespace bb_project.DAL
             //}
         }
 
-        public async Task<long> InsertExerciseAsync(string userId, ExerciseDbRecord exercise)
+        public async Task<ulong> InsertExerciseAsync(string userId, ExerciseDbRecord exercise)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -214,7 +211,7 @@ namespace bb_project.DAL
                 parameters.Add("userId", userId);
                 parameters.Add("exerciseId", dbType: DbType.Int64, direction: ParameterDirection.Output);
                 await conn.QueryAsync("spw_InsertExercise", parameters, commandType: CommandType.StoredProcedure);
-                return parameters.Get<long>("@exerciseId");
+                return parameters.Get<ulong>("@exerciseId");
             }
         }
     }

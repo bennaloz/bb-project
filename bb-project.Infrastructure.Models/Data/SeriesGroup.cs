@@ -7,7 +7,7 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class SeriesGroup
     {
-        public long Id { get; set; }
+        public ulong Id { get; set; }
 
         public ExerciseMethodology ExerciseMethod { get; }
 
@@ -19,7 +19,7 @@ namespace bb_project.Infrastructure.Models.Data
 
         }
 
-        public SeriesGroup(long id, ExerciseMethodology exerciseMethod)
+        public SeriesGroup(ulong id, ExerciseMethodology exerciseMethod)
         {
             this.Id = id;
             ExerciseMethod = exerciseMethod;

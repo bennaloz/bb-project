@@ -6,13 +6,13 @@ namespace bb_project.Infrastructure.Models.Data
 {
     public class WorkoutPlan  : IEqualityComparer<WorkoutPlan>, IEquatable<WorkoutPlan>
     {
-        public long Id { get; }
+        public ulong Id { get; }
 
         public string Name { get; set; }
 
         public bool IsActive { get; set; }
 
-        public WorkoutPlan(long id)
+        public WorkoutPlan(ulong id)
         {
             this.Id = id;   
         }

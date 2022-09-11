@@ -1,6 +1,7 @@
 using bb_project.Infrastructure.BLL;
 using bb_project.Infrastructure.Models.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace bb_project.API.Controllers
 {
@@ -19,7 +20,7 @@ namespace bb_project.API.Controllers
         }
 
         [HttpGet(Name = "getWorkoutsPlans")]
-        public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] long? workoutPlanId = null)
+        public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] ulong? workoutPlanId = null)
         {
             try
             {
@@ -32,8 +33,8 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetWorkoutsAsync([FromQuery] long workoutPlanId, [FromQuery] long? workoutId = null)
+        [HttpGet(Name = "getWorkouts")]
+        public async Task<ActionResult> GetWorkoutsAsync([FromQuery] ulong workoutPlanId, [FromQuery] ulong? workoutId = null)
         {
             try
             {
@@ -46,8 +47,8 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetWorkoutSeriesGroupsAsync([FromQuery] long workoutId, [FromQuery] string userId)
+        [HttpGet(Name = "getWOSeriesGroups")]
+        public async Task<ActionResult> GetWorkoutSeriesGroupsAsync([FromQuery] ulong workoutId, [FromQuery] string userId)
         {
             try
             {
@@ -60,7 +61,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet(Name = "getActiveWO")]
         public async Task<ActionResult> GetActiveWorkoutsAsync()
         {
             try
@@ -74,8 +75,8 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetNextWorkoutAsync([FromQuery]string userId, [FromQuery] long activeWorkoutPlanId)
+        [HttpGet(Name = "getNextWO")]
+        public async Task<ActionResult> GetNextWorkoutAsync([FromQuery]string userId, [FromQuery] ulong activeWorkoutPlanId)
         {
             try
             {
@@ -88,13 +89,159 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet(Name = "hasActiveWO")]
         public async Task<ActionResult> HasActiveWorkoutPlanAsync()
         {
             try
             {
                 var hasActiveWorkoutPlan = await this.workoutsDataStore.HasActiveWorkoutPlanAsync();
                 return new OkObjectResult(hasActiveWorkoutPlan);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost(Name = "insertWOPlan")]
+        public async Task<ActionResult> InsertWorkoutPlanAsync([FromQuery] string userId, [FromBody] WorkoutPlan workoutPlan)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (string.IsNullOrWhiteSpace(userId))
+                    modelStateDictionary.AddModelError(nameof(userId), $"Invalid null or empty user id");
+                if (workoutPlan == default)
+                    modelStateDictionary.AddModelError(nameof(workoutPlan), $"Invalid workout plan data.");
+                if (string.IsNullOrWhiteSpace(workoutPlan.Name))
+                    modelStateDictionary.AddModelError(nameof(workoutPlan.Name), $"Invalid empty workout plan name.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var newWopId = await this.workoutsDataStore.InsertWorkoutPlanAsync(userId, workoutPlan.Name, workoutPlan.IsActive);
+
+                return Ok(newWopId);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost(Name = "insertWO")]
+        public async Task<ActionResult> InsertWorkoutAsync([FromQuery] ulong workoutPlanId, [FromBody] Workout workout)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (workoutPlanId == 0)
+                    modelStateDictionary.AddModelError(nameof(workoutPlanId), $"Invalid value for workout plan id");
+                if (workout == default)
+                    modelStateDictionary.AddModelError(nameof(workout), $"Invalid workout data.");
+                if (string.IsNullOrWhiteSpace(workout.Name))
+                    modelStateDictionary.AddModelError(nameof(workout.Name), $"Invalid empty workout name.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var newWoId = await this.workoutsDataStore.InsertWorkoutAsync(workoutPlanId, workout.Name, workout.Order);
+
+                return Ok(newWoId);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost(Name = "insertExercise")]
+        public async Task<ActionResult> InsertExerciseAsync([FromQuery] string userId, [FromBody] ExerciseDefinition exerciseDefinition)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (string.IsNullOrWhiteSpace(userId))
+                    modelStateDictionary.AddModelError(nameof(userId), $"Invalid null or empty user id");
+                if (exerciseDefinition == default)
+                    modelStateDictionary.AddModelError(nameof(exerciseDefinition), $"Invalid exercise definition data.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var newExId = await this.workoutsDataStore.InsertExerciseDefinitionAsync(userId, exerciseDefinition);
+
+                return Ok(newExId);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost(Name = "insertSeriesGroups")]
+        public async Task<ActionResult> InsertSeriesGroupsAsync([FromQuery] ulong workoutId, [FromBody] SeriesGroup[] seriesGroups)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (workoutId == 0)
+                    modelStateDictionary.AddModelError(nameof(workoutId), $"Invalid value for workout id");
+                if (seriesGroups == default)
+                    modelStateDictionary.AddModelError(nameof(seriesGroups), $"Invalid series group data.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                await this.workoutsDataStore.InsertSeriesGroupsAsync(workoutId, seriesGroups);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost(Name = "insertWOData")]
+        public async Task<ActionResult> InsertWorkoutDataAsync([FromBody] Models.InsertWorkoutDataDTO workoutData)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (workoutData == default)
+                    modelStateDictionary.AddModelError(nameof(workoutData), $"Invalid workout data.");
+                if (workoutData.WorkoutHistoryId == 0)
+                    modelStateDictionary.AddModelError(nameof(workoutData.WorkoutHistoryId), $"Invalid workout history id value.");
+                if (workoutData.SeriesData == default)
+                    modelStateDictionary.AddModelError(nameof(workoutData.SeriesData), $"Invalid workout data content.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                if (workoutData.SeriesData.Length == 0)
+                    return Ok();
+
+                foreach (var seriesData in workoutData.SeriesData)
+                {
+                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutData.WorkoutHistoryId, seriesData.SerieId, seriesData.StartTime, seriesData.EndTime, seriesData.UsedKgs);
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost(Name = "insertWOHistory")]
+        public async Task<ActionResult> InsertWorkoutHistoryAsync([FromBody] Models.InsertWorkoutHistoryDTO workoutHistoryDTO)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (workoutHistoryDTO == default)
+                    modelStateDictionary.AddModelError(nameof(workoutHistoryDTO), $"Invalid workout history data.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                 var newWOHistoryId = await this.workoutsDataStore.InsertWorkoutHistoryAsync(workoutHistoryDTO.StartDate, workoutHistoryDTO.EndDate, workoutHistoryDTO.WorkoutId, workoutHistoryDTO.WorkoutPlanId, workoutHistoryDTO.UserId);
+                return Ok(newWOHistoryId);
             }
             catch (Exception ex)
             {

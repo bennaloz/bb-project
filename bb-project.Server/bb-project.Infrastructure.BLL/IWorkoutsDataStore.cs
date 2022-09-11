@@ -10,27 +10,27 @@ namespace bb_project.Infrastructure.BLL
     {
         Task<IEnumerable<ExerciseDefinition>> GetExerciseDefinitionsAsync(string userId);
 
-        Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutPlanId = null, long? workoutId = null, DateTime from = default, DateTime to = default);
-        Task<long> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, long workoutId, long workoutPlanId, string userId);
-        Task InsertWorkoutDataAsync(long workoutHistoryId, long serieId, params WorkoutDataDbRecord[] workoutData);
+        Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, ulong? workoutPlanId = null, ulong? workoutId = null, DateTime from = default, DateTime to = default);
+        Task<ulong> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, ulong workoutId, ulong workoutPlanId, string userId);
+        Task InsertWorkoutDataAsync(ulong workoutHistoryId, ulong serieId, DateTime startTime, DateTime endTime, double? usedKgs);
 
-        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null);
+        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null);
 
-        Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null);
+        Task<IEnumerable<Workout>> GetWorkoutsAsync(ulong workoutPlanId, ulong? workoutId = null);
 
-        Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId, long? seriesGroupId = null);
+        Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId, ulong? seriesGroupId = null);
 
-        Task<long> InsertWorkoutPlanAsync(string userId, string workoutPlanName, bool isActive = false);
+        Task<ulong> InsertWorkoutPlanAsync(string userId, string workoutPlanName, bool isActive = false);
 
-        Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName, int order);
+        Task<ulong> InsertWorkoutAsync(ulong workoutPlanId, string workoutName, int order);
 
-        Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups);
+        Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups);
 
         Task<IEnumerable<Workout>> GetActiveWorkoutsAsync();
 
-        Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId);
+        Task<Workout> GetNextWorkoutAsync(string userId, ulong activeWorkoutPlanId);
 
-        Task<long> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exercise);
+        Task<ulong> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exercise);
 
         Task<bool?> HasActiveWorkoutPlanAsync();
     }

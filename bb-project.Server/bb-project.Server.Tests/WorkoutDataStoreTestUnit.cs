@@ -326,12 +326,11 @@ namespace bb_project.Server.Tests
             {
                 foreach (var serie in woSeriesGroup.Series)
                 {
-                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutHistoryId, serie.Id, new Infrastructure.DAL.Models.WorkoutDataDbRecord
-                    {
-                        StartTime = startTime = startTime.AddMinutes(1),
-                        EndTime = startTime.AddMinutes(1),
-                        UsedKgs = 120.5
-                    });
+                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutHistoryId, serie.Id, 
+                        startTime = startTime.AddMinutes(1),
+                        startTime.AddMinutes(1),
+                        120.5
+                    );
 
                 }
 
