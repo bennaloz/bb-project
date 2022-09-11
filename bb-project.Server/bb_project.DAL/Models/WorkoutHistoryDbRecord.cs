@@ -11,9 +11,9 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public DateTime EndDate { get; set; }
 
-        public long WorkoutId { get; set; }
+        public ulong WorkoutId { get; set; }
 
-        public long UserId { get; set; }
+        public string UserId { get; set; }
 
         public static implicit operator WorkoutHistoryItem(WorkoutHistoryDbRecord historyDbRecord)
         {

@@ -16,7 +16,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 {
     public class EditorListItemViewModel : BindableBase
     {
-        public long Id { get; set; }
+        public ulong Id { get; set; }
 
         private string name;
         public string Name

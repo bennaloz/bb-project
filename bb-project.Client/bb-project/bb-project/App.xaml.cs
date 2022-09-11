@@ -38,7 +38,7 @@ namespace bb_project.Client
             containerRegistry.RegisterForNavigation<NavigationPage>();
 
 
-            containerRegistry.RegisterSingleton<IWorkoutsManagementService, WorkoutsManagementMockService>();
+            containerRegistry.RegisterInstance<IWorkoutsManagementService>(new WorkoutsManagementService("https://192.168.0.11:7030"));
             containerRegistry.RegisterSingleton<IUserAuthenticatorService, UserAuthenticatorService>();
             containerRegistry.RegisterRegionServices();
             

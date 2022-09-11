@@ -19,7 +19,7 @@ namespace bb_project.API.Controllers
             this.workoutsDataStore = workoutsDataStore;
         }
 
-        [HttpGet(Name = "getWorkoutsPlans")]
+        [HttpGet(Name = "getWOPlans")]
         public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] ulong? workoutPlanId = null)
         {
             try

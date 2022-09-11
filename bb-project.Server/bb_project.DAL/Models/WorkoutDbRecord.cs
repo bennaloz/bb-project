@@ -7,7 +7,7 @@ namespace bb_project.Infrastructure.DAL.Models
 {
     public class WorkoutDbRecord
     {
-        public long Id { get; }
+        public ulong Id { get; }
 
         public string Name { get; set; }
 

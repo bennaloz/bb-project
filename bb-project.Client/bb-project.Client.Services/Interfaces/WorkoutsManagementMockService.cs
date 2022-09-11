@@ -15,7 +15,7 @@ namespace bb_project.Client.Services
         IEnumerable<Workout> workouts;
         IEnumerable<SeriesGroup> seriesGroups;
         IEnumerable<WorkoutPlan> plans;
-        Dictionary<long, IEnumerable<Workout>> workoutPlanChildren;
+        Dictionary<ulong, IEnumerable<Workout>> workoutPlanChildren;
         public WorkoutsManagementMockService()
         {
             this.plans = new ObservableCollection<WorkoutPlan>()
@@ -51,7 +51,7 @@ namespace bb_project.Client.Services
                 seriesGroup2
             };
 
-            this.workoutPlanChildren = new Dictionary<long, IEnumerable<Workout>>();
+            this.workoutPlanChildren = new Dictionary<ulong, IEnumerable<Workout>>();
             foreach (var item in this.plans)
             {
                 List<Workout> workouts = new List<Workout>()
@@ -71,22 +71,22 @@ namespace bb_project.Client.Services
             return await Task.FromResult(workouts);
         }
 
-        public Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId)
+        public Task<Workout> GetNextWorkoutAsync(string userId, ulong activeWorkoutPlanId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutPlanId = null, long? workoutId = null, DateTime from = default, DateTime to = default)
+        public Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, ulong? workoutPlanId = null, ulong? workoutId = null, DateTime from = default, DateTime to = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null)
+        public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null)
         {
             return await Task.FromResult(plans);
         }
 
-        public async Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null)
+        public async Task<IEnumerable<Workout>> GetWorkoutsAsync(ulong workoutPlanId, ulong? workoutId = null)
         {
             IEnumerable<Workout> result = new List<Workout>();
             foreach (var item in workoutPlanChildren)
@@ -99,7 +99,7 @@ namespace bb_project.Client.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId)
+        public async Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId)
         {
             return await Task.FromResult(seriesGroups);
         }
@@ -109,22 +109,22 @@ namespace bb_project.Client.Services
             return await Task.FromResult(this.plans.ToList().First(o => o.IsActive) != default); 
         }
 
-        public Task<long> InsertExerciseDefinitionAsync(ExerciseDefinition exercise)
+        public Task<ulong> InsertExerciseDefinitionAsync(ExerciseDefinition exercise)
         {
             throw new NotImplementedException();
         }
 
-        public Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups)
+        public Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups)
         {
             throw new NotImplementedException();
         }
 
-        public Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName)
+        public Task<ulong> InsertWorkoutAsync(ulong workoutPlanId, string workoutName)
         {
             throw new NotImplementedException();
         }
 
-        public Task<long> InsertWorkoutPlanAsync(string workoutPlanName,long id, bool isActive = false)
+        public Task<ulong> InsertWorkoutPlanAsync(string workoutPlanName,ulong id, bool isActive = false)
         {
             var plan = plans.First(o => o.Id == id);
             
@@ -137,7 +137,7 @@ namespace bb_project.Client.Services
                 plan.Name = workoutPlanName;
             }
 
-            return Task.FromResult((long)0);
+            return Task.FromResult((ulong)0);
         
         }
     }

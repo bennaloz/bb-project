@@ -175,8 +175,8 @@ namespace bb_project.DAL
             //    DataTable tbl = new DataTable();
             //    tbl.Columns.Add(new DataColumn("Reps", typeof(int)));
             //    tbl.Columns.Add(new DataColumn("Rest", typeof(int)));
-            //    tbl.Columns.Add(new DataColumn("fk_WorkoutId", typeof(long)));
-            //    tbl.Columns.Add(new DataColumn("fk_ExerciseId", typeof(long)));
+            //    tbl.Columns.Add(new DataColumn("fk_WorkoutId", typeof(ulong)));
+            //    tbl.Columns.Add(new DataColumn("fk_ExerciseId", typeof(ulong)));
 
             //    var objbulk = new SqlBulkCopy(conn);
             //    objbulk.DestinationTableName = "tbl_Serie";

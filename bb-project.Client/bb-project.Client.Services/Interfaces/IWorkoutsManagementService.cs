@@ -7,25 +7,25 @@ namespace bb_project.Client.Services
 {
     public interface IWorkoutsManagementService
     {
-        Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, long? workoutPlanId = null, long? workoutId = null, DateTime from = default, DateTime to = default);
+        Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, ulong? workoutPlanId = null, ulong? workoutId = null, DateTime from = default, DateTime to = default);
 
-        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(long? id = null);
+        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null);
 
-        Task<IEnumerable<Workout>> GetWorkoutsAsync(long workoutPlanId, long? workoutId = null);
+        Task<IEnumerable<Workout>> GetWorkoutsAsync(ulong workoutPlanId, ulong? workoutId = null);
 
-        Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(long workoutId, string userId);
+        Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId);
 
-        Task<long> InsertWorkoutPlanAsync(string workoutPlanName,long id , bool isActive = false);
+        Task<ulong> InsertWorkoutPlanAsync(string workoutPlanName,ulong id , bool isActive = false);
 
-        Task<long> InsertWorkoutAsync(long workoutPlanId, string workoutName);
+        Task<ulong> InsertWorkoutAsync(ulong workoutPlanId, string workoutName);
 
-        Task InsertSeriesGroupsAsync(long workoutId, IEnumerable<SeriesGroup> seriesGroups);
+        Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups);
 
         Task<IEnumerable<Workout>> GetActiveWorkoutsAsync();
 
-        Task<Workout> GetNextWorkoutAsync(string userId, long activeWorkoutPlanId);
+        Task<Workout> GetNextWorkoutAsync(string userId, ulong activeWorkoutPlanId);
 
-        Task<long> InsertExerciseDefinitionAsync(ExerciseDefinition exercise);
+        Task<ulong> InsertExerciseDefinitionAsync(ExerciseDefinition exercise);
         
         Task<bool?> HasActiveWorkoutPlanAsync();
     }
