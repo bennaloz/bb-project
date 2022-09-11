@@ -9,6 +9,7 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Regions;
+using Prism.Regions.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,11 +28,12 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         public string Details { get; set; }
 
     }
-    public class WorkoutEditorSummaryViewModel : BindableBase
+    public class WorkoutEditorSummaryViewModel : BindableBase, IRegionAware
     {
         private readonly IWorkoutsManagementService workoutDataStore;
         private readonly IRegionManager regionManager;
         private readonly IEventAggregator eventAggregator;
+        private readonly INavigationService service;
         private Infrastructure.Models.Enums.ViewState currentState = Infrastructure.Models.Enums.ViewState.WorkoutPlan;
 
         private WorkoutEditorListItemViewModel parent;
@@ -45,11 +47,12 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         public ICommand EditCommand { get; set; }
 
 
-        public WorkoutEditorSummaryViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator)
+        public WorkoutEditorSummaryViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator, INavigationService service)
         {
             this.workoutDataStore = workoutDataStore;
             this.regionManager = regionManager;
             this.eventAggregator = eventAggregator;
+            this.service = service;
             this.NextStateCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.nextViewModel);
             this.PreviousStateCommand = new DelegateCommand(this.previousViewModel);
             this.EditCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.goToEditView);
@@ -62,7 +65,10 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             switch (this.currentState)
             {
                 case Infrastructure.Models.Enums.ViewState.WorkoutPlan:
-                    this.regionManager.RequestNavigate("EditorContentRegion", nameof(Views.WorkoutPlanEditorView), new NavigationParameters($"workoutPlanId={item.Id}"));
+                    NavigationParameters pars = new NavigationParameters();
+                    pars.Add("workoutPlanId", item.Id);
+                    pars.Add("workoutPlanName", item.Name);
+                    this.regionManager.RequestNavigate("EditorContentRegion", nameof(Views.WorkoutPlanEditorView), pars);
                     break;
                 case Infrastructure.Models.Enums.ViewState.Workout:
                     break;
@@ -71,6 +77,10 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                 default:
                     break;
             }
+        }
+
+        private void GoodNav(IRegionNavigationResult obj)
+        {
         }
 
         private async void nextViewModel(WorkoutEditorListItemViewModel item)
@@ -168,6 +178,18 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         }
 
 
+        public void OnNavigatedTo(INavigationContext navigationContext)
+        {
+        }
 
+        public bool IsNavigationTarget(INavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(INavigationContext navigationContext)
+        {
+
+        }
     }
-}
+    }

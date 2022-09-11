@@ -1,5 +1,6 @@
 ﻿using bb_project.Client.Modules.WorkoutEditorModule.Views;
 using Prism.Mvvm;
+using Prism.Navigation;
 using Prism.Regions;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,6 @@ namespace bb_project.Client.ViewModels
         {
           
         }
+
     }
 }
