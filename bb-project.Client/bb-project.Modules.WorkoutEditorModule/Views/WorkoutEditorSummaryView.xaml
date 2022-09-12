@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit" xmlns:icon="clr-namespace:FontAwesome.Solid;assembly=FontAwesome.Solid"
              x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorSummaryView"
              x:Name="root">
 
@@ -37,10 +37,14 @@
                                 <Label Text="{Binding Details}"
                                        HorizontalOptions="Center" />
                             </StackLayout>
-                            <Button Grid.Column="1"
-                                    Text="Edit"
+                            <ImageButton Grid.Column="1" BackgroundColor="Transparent"
+                                         Margin="10"
                                     Command="{Binding BindingContext.EditCommand, Source={x:Reference root}}"
-                                    CommandParameter="{Binding}" />
+                                    CommandParameter="{Binding}">
+                                <ImageButton.Source>
+                                    <icon:IconSource Icon="Edit" Color="Black"/>
+                                </ImageButton.Source>
+                            </ImageButton> 
                         </Grid>
                     </Frame>
                 </DataTemplate>

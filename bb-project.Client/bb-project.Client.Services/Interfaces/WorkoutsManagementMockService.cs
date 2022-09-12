@@ -33,18 +33,18 @@ namespace bb_project.Client.Services
             };
 
             var seriesGroup1 = new SeriesGroup(1, ExerciseMethodology.Single);
-            seriesGroup1.Series.Add(new Serie(1, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
-            seriesGroup1.Series.Add(new Serie(2, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
-            seriesGroup1.Series.Add(new Serie(3, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
-            seriesGroup1.Series.Add(new Serie(4, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }));
+            seriesGroup1.Series.Add(new Serie(1, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 10 , Rest = new TimeSpan(0,1,30) });
+            seriesGroup1.Series.Add(new Serie(2, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 8, Rest = new TimeSpan(0, 1, 30) });
+            seriesGroup1.Series.Add(new Serie(3, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 8, Rest = new TimeSpan(0, 1, 30) }) ;
+            seriesGroup1.Series.Add(new Serie(4, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 6, Rest = new TimeSpan(0, 3, 0) });
 
             var seriesGroup2 = new SeriesGroup(2, ExerciseMethodology.JumpSet);
-            seriesGroup2.Series.Add(new Serie(5, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }));
-            seriesGroup2.Series.Add(new Serie(6, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }));
-            seriesGroup2.Series.Add(new Serie(7, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }));
-            seriesGroup2.Series.Add(new Serie(8, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio })); 
-            seriesGroup2.Series.Add(new Serie(9, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }));
-            seriesGroup2.Series.Add(new Serie(10, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }));
+            seriesGroup2.Series.Add(new Serie(5, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }) { Reps = 4, Rest = new TimeSpan(0, 1, 30) });
+            seriesGroup2.Series.Add(new Serie(6, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }) { Rest = new TimeSpan(0, 10, 0) });
+            seriesGroup2.Series.Add(new Serie(7, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }) { Reps = 4, Rest = new TimeSpan(0, 2, 30) });
+            seriesGroup2.Series.Add(new Serie(8, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }) { Rest = new TimeSpan(0, 5, 30) }); 
+            seriesGroup2.Series.Add(new Serie(9, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }) { Reps = 4, Rest = new TimeSpan(0, 1, 30) });
+            seriesGroup2.Series.Add(new Serie(10, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }) { Rest = new TimeSpan(0, 5, 30) });
             this.seriesGroups = new ObservableCollection<SeriesGroup>()
             {
                 seriesGroup1,

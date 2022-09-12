@@ -14,12 +14,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 {
     public class WorkoutItemViewModel : BindableBase
     {
+
+        public WorkoutItemViewModel()
+        {
+            this.ExerciseInfos = string.Empty;
+        }
+
         public ulong Id { get; set; }
 
         private string workoutName;
@@ -35,13 +42,20 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             }
 
         }
-        public struct Exercise
-        {
-            public string Name { get; set; }
-            public ObservableCollection<int> Reps { get; set; }
-        }
 
-        public ObservableCollection<Exercise> Exercises { get; set; } = new ObservableCollection<Exercise>();
+        private string exerciseInfos;
+
+        public string ExerciseInfos
+        {
+            get
+            {
+                return this.exerciseInfos;
+            }
+            set
+            {
+                SetProperty(ref this.exerciseInfos, value);
+            }
+        }
     }
 
     public class WorkoutPlanEditorViewModel : BindableBase, IRegionAware
@@ -103,61 +117,90 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             this.regionManager.RequestNavigate("EditorContentRegion", nameof(WorkoutEditorSummaryView));
         }
 
-        //private async void loadItems(ViewState state)
-        //{
-        //    this.state = state;
-        //    this.Items.Clear();
-        //    switch (state)
-        //    {
-        //        case ViewState.WorkoutPlan:
-        //            var wo = await this.workoutDataStore.GetWorkoutPlansAsync();
-        //            foreach (var w in wo)
-        //            {
-        //                Items.Add(new EditorListItemViewModel() { Id = w.Id, Name = w.Name });
-        //            }
-
-        //            break;
-        //        case ViewState.Workout:
-        //            break;
-        //        case ViewState.Exercises:
-        //            break;
-        //        default:
-        //            break;
-        //    }
-
-        //}
 
         public string WorkoutPlanName { get; set; }
 
 
         public async void OnNavigatedTo(INavigationContext navigationContext)
         {
+            this.Workouts.Clear();
             navigationContext.Parameters.TryGetValue("workoutPlanId", out ulong planid);
             navigationContext.Parameters.TryGetValue("workoutPlanName", out string planName);
+            await Load(planid, planName);
+        }
+
+        private async Task Load(ulong planid, string planName)
+        {
 
             this.WorkoutPlanName = planName;
             this.RaisePropertyChanged(nameof(this.WorkoutPlanName));
 
             var asyncWorkouts = await this.workoutDataStore.GetWorkoutsAsync(planid);
 
-            
-            foreach (var item in asyncWorkouts)
+
+            foreach (var workout in asyncWorkouts)
             {
-                var series = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(item.Id, "Pigna");
-                foreach (var seriesGroup in series)
+                var seriesGroups = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(workout.Id, "Pigna");
+
+
+                var tmp = new WorkoutItemViewModel
                 {
-                    WorkoutItemViewModel.Exercise exercise = new WorkoutItemViewModel.Exercise();
-                    exercise.Reps = new ObservableCollection<int>();
-                    foreach (var serie in seriesGroup.Series)
-                    {
-                        exercise.Name = serie.ExerciseDefinition.Name;
-                        exercise.Reps.Add(serie.Reps);
-                    }
+                    Id = workout.Id,
+                    WorkoutName = workout.Name
+                };
+                foreach (var serieGroup in seriesGroups)
+                {
+                    tmp.ExerciseInfos += GetExerciseFormat(serieGroup);
+
+                }
+                this.Workouts.Add(tmp);
+            }
+        }
+
+        private string GetExerciseFormat(SeriesGroup serieGroup)
+        {
+            Dictionary<string, string> exercisesInfo = new Dictionary<string, string>();
+            string result= string.Empty;
+            if(serieGroup.ExerciseMethod!= ExerciseMethodology.Single)
+            {
+                result += $"{serieGroup.ExerciseMethod}\n";
+
+            }
+            foreach (var serie in serieGroup.Series)
+            {
+
+
+                if(!exercisesInfo.ContainsKey(serie.ExerciseDefinition.Name))
+                {
+                    exercisesInfo.Add(serie.ExerciseDefinition.Name, string.Empty);
+                }
+                string detail = string.Empty;
+
+                switch (serie.ExerciseDefinition.Type)
+                {
+                    case ExerciseType.Cardio:
+                        detail = $"{serie.Rest.Minutes:00}:{serie.Rest.Seconds:00}  ";
+                        break;
+                    case ExerciseType.Weights:
+                        detail = $"{serie.Reps}  ";
+                        break;
+                    default:
+                        break;
                 }
 
-                this.Workouts.Add(new WorkoutItemViewModel() { Id = item.Id, WorkoutName = item.Name });
+
+                exercisesInfo[serie.ExerciseDefinition.Name] += $"{detail}";
             }
-           
+
+
+            foreach (var info in exercisesInfo)
+            {
+                result += $"{info.Key.ToUpper()}\t\t" +
+                    $"{info.Value}\n";
+            }
+            result += "\n";
+
+            return result;
         }
 
         public bool IsNavigationTarget(INavigationContext navigationContext)

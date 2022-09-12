@@ -7,8 +7,11 @@
 
   <ItemGroup>
     <Compile Remove="Models\**" />
+    <Compile Remove="UserControls\**" />
     <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="UserControls\**" />
     <None Remove="Models\**" />
+    <None Remove="UserControls\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +21,8 @@
     <PackageReference Include="Xamarin.CommunityToolkit.Markup" Version="2.0.4" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
     <PackageReference Include="Prism.Forms" Version="8.1.97" />
+    <PackageReference Include="Xamarin.Forms.FontAwesome.Regular" Version="1.0.0" />
+    <PackageReference Include="Xamarin.Forms.FontAwesome.Solid" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,10 +51,6 @@
     <EmbeddedResource Update="Views\WorkoutEditorSummaryView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="UserControls\" />
   </ItemGroup>
 
 </Project>

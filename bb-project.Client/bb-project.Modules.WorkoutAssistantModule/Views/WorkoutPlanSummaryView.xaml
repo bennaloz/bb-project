@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:conv="clr-namespace:bb_project.Client.Modules.WorkoutAssistantModule.Converters"
              xmlns:wm="clr-namespace:bb_project.Client.Modules.WorkoutAssistantModule.ViewModels"
-               xmlns:fa="clr-namespace:Xamarin.Forms.FontAwesome.Controls;assembly=Xamarin.Forms.FontAwesome"
              x:Class="bb_project.Client.Modules.WorkoutAssistantModule.Views.WorkoutPlanSummaryView"
              x:Name="summaryView">
 
@@ -42,14 +41,7 @@
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal" HeightRequest="50" Style="{StaticResource GridSelection}">
                             <Label Text="{Binding Name}" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" />
-                            <fa:Icon FaName="dumbbell" FaStyle="Solid"  VerticalOptions="Center" FontSize="Medium">
-                                <fa:Icon.IsVisible>
-                                    <MultiBinding Converter="{StaticResource visibleConverter}">
-                                        <Binding  Path="BindingContext.SelectedWorkoutPlan" Source="{x:Reference summaryView}"/>
-                                        <Binding/>
-                                    </MultiBinding>
-                                </fa:Icon.IsVisible> 
-                            </fa:Icon>
+                            
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

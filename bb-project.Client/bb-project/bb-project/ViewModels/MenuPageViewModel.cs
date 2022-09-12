@@ -41,7 +41,7 @@ namespace bb_project.Client.ViewModels
                     {
                         if (currentPage != Page.Home)
                         {
-                            this.navigationService.NavigateAsync(nameof(MenuPage) + "/" + nameof(NavigationPage) + "/" + nameof(ContentMainPage));
+                            await this.navigationService.NavigateAsync(nameof(MenuPage) + "/" + nameof(NavigationPage) + "/" + nameof(ContentMainPage));
                             currentPage = Page.Home;
                         }
                         break;
@@ -50,7 +50,7 @@ namespace bb_project.Client.ViewModels
                     {
                         if (currentPage != Page.Edit)
                         {
-                            this.navigationService.NavigateAsync(nameof(MenuPage) + "/" + nameof(NavigationPage) + "/" + nameof(EditContentMainPage));
+                            await this.navigationService.NavigateAsync(nameof(MenuPage) + "/" + nameof(NavigationPage) + "/" + nameof(EditContentMainPage));
                             currentPage = Page.Edit;
                         }
                         break;
