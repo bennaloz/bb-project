@@ -24,7 +24,8 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         public WorkoutItemViewModel()
         {
-            this.ExerciseInfos = string.Empty;
+            this.ExercisesInfo= new Dictionary<string, string>();
+            
         }
 
         public ulong Id { get; set; }
@@ -43,19 +44,34 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         }
 
-        private string exerciseInfos;
+        //private string exerciseInfos;
 
-        public string ExerciseInfos
+        //public string ExerciseInfos
+        //{
+        //    get
+        //    {
+        //        return this.exerciseInfos;
+        //    }
+        //    set
+        //    {
+        //        SetProperty(ref this.exerciseInfos, value);
+        //    }
+        //}
+
+
+        private Dictionary<string, string> exercisesInfo;
+        public Dictionary<string, string> ExercisesInfo
         {
             get
             {
-                return this.exerciseInfos;
+                return exercisesInfo;
             }
             set
             {
-                SetProperty(ref this.exerciseInfos, value);
+                SetProperty(ref exercisesInfo, value);
             }
         }
+
     }
 
     public class WorkoutPlanEditorViewModel : BindableBase, IRegionAware
@@ -63,23 +79,41 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         private readonly IWorkoutsManagementService workoutDataStore;
         private readonly IRegionManager regionManager;
         private readonly IEventAggregator eventAggregator;
+        private readonly INavigationService navigationService;
+
         public ObservableCollection<WorkoutItemViewModel> Workouts { get; set; }
         public ICommand BackCommand { get; set; }
         public ICommand SaveCommand { get; set; }
 
         public ICommand RemoveCommand { get; set; }
 
+        public ICommand OpenPopupCommand { get; }
+
         private ViewState state;
-        public WorkoutPlanEditorViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator)
+        public WorkoutPlanEditorViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator, INavigationService navigationService)
         {
             this.workoutDataStore = workoutDataStore;
             this.regionManager = regionManager;
             this.eventAggregator = eventAggregator;
+            this.navigationService = navigationService;
             this.BackCommand = new DelegateCommand(this.goBackCommand);
             this.SaveCommand = new DelegateCommand(this.saveCommand);
             this.Workouts = new ObservableCollection<WorkoutItemViewModel>();
             this.RemoveCommand = new DelegateCommand<object>(this.removeWorkout);
+            this.OpenPopupCommand = new DelegateCommand<object>(this.onOpenPopupSummaryCommand);
             //this.eventAggregator.GetEvent<EditEvent>().Subscribe(this.loadItems);
+        }
+
+        private void onOpenPopupSummaryCommand(object items)
+        {
+            if(!(items is Dictionary<string, string> exercises))
+            {
+                return;
+            }
+
+            NavigationParameters parameters = new NavigationParameters();
+            parameters.Add("items", exercises);
+            this.navigationService.NavigateAsync(nameof(PopupSummaryExerciseView), parameters);
         }
 
         private void removeWorkout(object id)
@@ -150,14 +184,20 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                 };
                 foreach (var serieGroup in seriesGroups)
                 {
-                    tmp.ExerciseInfos += GetExerciseFormat(serieGroup);
+                    foreach (var exInfo in GetExerciseFormat(serieGroup))
+                    {
+                        tmp.ExercisesInfo.Add(exInfo.Key,exInfo.Value);
+                    }
 
                 }
                 this.Workouts.Add(tmp);
             }
         }
 
-        private string GetExerciseFormat(SeriesGroup serieGroup)
+
+
+
+        private Dictionary<string, string> GetExerciseFormat(SeriesGroup serieGroup)
         {
             Dictionary<string, string> exercisesInfo = new Dictionary<string, string>();
             string result= string.Empty;
@@ -200,7 +240,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             }
             result += "\n";
 
-            return result;
+            return exercisesInfo;
         }
 
         public bool IsNavigationTarget(INavigationContext navigationContext)

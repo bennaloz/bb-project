@@ -13,43 +13,43 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Editor Grid.Row="0" Text="{Binding WorkoutPlanName, Mode=TwoWay}" />
-            <CollectionView Grid.Row="1" ItemsSource="{Binding Workouts}"
-                            SelectionMode="None">
+            <CollectionView ItemsSource="{Binding Workouts}" Grid.Row="1" SelectionMode="None" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="Black"
                                BackgroundColor="SkyBlue"
                                CornerRadius="10"
                                HasShadow="True">
-                            <ctx:Expander>
-                                <ctx:Expander.Header>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="8.5*" />
-                                            <ColumnDefinition Width="1.5*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding WorkoutName}"  FontAttributes="Bold" FontSize="Title"/>
-                                        <ImageButton 
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8.5*" />
+                                    <ColumnDefinition Width="0.75*" />
+                                    <ColumnDefinition Width="0.75*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding WorkoutName}"  FontAttributes="Bold" FontSize="Title"/>
+
+                                <ImageButton Grid.Column="1"
                                             BackgroundColor="Transparent"
-                                                Margin="10"
-                                                Grid.Column="1"
+                                                Margin="0,0,10,0"
                                                 Command="{Binding BindingContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding Id}" >
-                                            <ImageButton.Source>
-                                                <icon:IconSource  Icon="Trash"/>
-                                            </ImageButton.Source>
-                                        </ImageButton>
-                                    </Grid>
-                                </ctx:Expander.Header>
-                                <ctx:Expander.Content>
-                                    <Frame BorderColor="Black"
-                               BackgroundColor="LightGreen"
-                               CornerRadius="10"
-                               HasShadow="True">
-                                        <Label Text="{Binding ExerciseInfos}" />
-                                    </Frame>
-                                </ctx:Expander.Content>
-                            </ctx:Expander>
+                                    <ImageButton.Source>
+                                        <icon:IconSource  Icon="Trash"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+                                <ImageButton 
+                                            BackgroundColor="Transparent"
+                                                Margin="0,0,10,0"
+                                                Grid.Column="2"
+                                                Command="{Binding BindingContext.OpenPopupCommand, Source={x:Reference root}}" CommandParameter="{Binding ExercisesInfo}" >
+                                    <ImageButton.Source>
+                                        <icon:IconSource  Icon="Eye"/>
+                                    </ImageButton.Source>
+                                </ImageButton>
+                            </Grid>
+
                         </Frame>
+
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -74,6 +74,7 @@
                         <icon:IconSource Icon="ArrowLeft" />
                     </ImageButton.Source>
                         </ImageButton>
+                
             </Grid>
         </Grid>
     </ContentView.Content>

@@ -20,22 +20,34 @@ namespace bb_project.Client.ViewModels
             Edit
         }
 
+
+        public struct MenuItem
+        {
+            public MenuItem(string title, string iconName)
+            {
+                this.Title = title;
+                this.IconName = iconName;
+            }
+            public string Title { get; }
+            public string IconName { get; }
+        }
+
         private readonly INavigationService navigationService;
         private static Page currentPage = Page.Home;
 
-        public ObservableCollection<string> MenuItems { get; set; }
-        public string SelectedItem { get; set; }
-        public ICommand NavigateCommand { get; set; }
+        public ObservableCollection<MenuItem> MenuItems { get; set; }
+        public ICommand NavigateCommand { get; }
         public MenuPageViewModel(INavigationService navigationService)
         {
-            MenuItems = new ObservableCollection<string>() { "Home", "Edit workouts" };
-            NavigateCommand = new DelegateCommand(Navigate);
+            MenuItems = new ObservableCollection<MenuItem>()
+            {new MenuItem("Home", "Home") ,new MenuItem("Edit workouts", "Edit") };
+            NavigateCommand = new DelegateCommand<object>(Navigate);
             this.navigationService = navigationService;
         }
 
-        private async void Navigate()
+        private async void Navigate(object page)
         {
-            switch (this.SelectedItem)
+            switch (page)
             {
                 case "Home":
                     {
