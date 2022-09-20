@@ -10,5 +10,6 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.Views
             InitializeComponent();
 
         }
+
     }
 }

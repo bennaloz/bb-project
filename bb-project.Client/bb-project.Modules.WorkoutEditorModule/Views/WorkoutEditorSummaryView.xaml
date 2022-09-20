@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit" xmlns:icon="clr-namespace:FontAwesome.Solid;assembly=FontAwesome.Solid"
              x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorSummaryView"
-             x:Name="root">
+             x:Name="root"
+            >
 
     <StackLayout Orientation="Vertical">
 
@@ -11,19 +12,23 @@
                HorizontalOptions="Center"
                FontSize="24"
                FontAttributes="Bold" />
-        <CollectionView ItemsSource="{Binding Items ,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}"
+        <CollectionView x:Name="collection" ItemsSource="{Binding Items ,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}"
                         SelectionMode="Single">
+               
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="16"
+                <LinearItemsLayout ItemSpacing="5"
                                    Orientation="Vertical" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame BorderColor="Black"
-                           BackgroundColor="SkyBlue"
-                           CornerRadius="10"
-                            HasShadow="True">
-                        <Grid>
+                    <Frame 
+                        x:Name="frame"
+                        BorderColor="Black"
+                        HasShadow="True"
+                        ctrl:TouchEffect.Command="{Binding BindingContext.SelectionChanged , Source={x:Reference root}}"
+                        ctrl:TouchEffect.CommandParameter="{Binding Source={x:Reference frame}}">
+                      
+                        <Grid HeightRequest="40" VerticalOptions="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8.5*" />
                                 <ColumnDefinition Width="1.5*" />
@@ -38,13 +43,9 @@
                                        HorizontalOptions="Center" />
                             </StackLayout>
                             <ImageButton Grid.Column="1" BackgroundColor="Transparent"
-                                         Margin="10"
+                                         
                                     Command="{Binding BindingContext.EditCommand, Source={x:Reference root}}"
-                                    CommandParameter="{Binding}">
-                                <ImageButton.Source>
-                                    <icon:IconSource Icon="Edit" Color="Black"/>
-                                </ImageButton.Source>
-                            </ImageButton> 
+                                    CommandParameter="{Binding}" VerticalOptions="Center"  Source="Edit.png"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>

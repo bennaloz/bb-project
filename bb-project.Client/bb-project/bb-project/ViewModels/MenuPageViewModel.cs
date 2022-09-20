@@ -40,7 +40,7 @@ namespace bb_project.Client.ViewModels
         public MenuPageViewModel(INavigationService navigationService)
         {
             MenuItems = new ObservableCollection<MenuItem>()
-            {new MenuItem("Home", "Home") ,new MenuItem("Edit workouts", "Edit") };
+            {new MenuItem("Home", "home.png") ,new MenuItem("Edit workouts", "edit.png") };
             NavigateCommand = new DelegateCommand<object>(Navigate);
             this.navigationService = navigationService;
         }

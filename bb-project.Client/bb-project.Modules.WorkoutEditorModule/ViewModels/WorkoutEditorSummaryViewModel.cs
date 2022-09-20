@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 {
@@ -46,7 +47,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         public ICommand PreviousStateCommand { get; set; }
         public ICommand EditCommand { get; set; }
 
-
+        public ICommand SelectionChanged { get; set; }
         public WorkoutEditorSummaryViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator, INavigationService service)
         {
             this.workoutDataStore = workoutDataStore;
@@ -56,9 +57,10 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
             this.NextStateCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.nextViewModel);
             this.PreviousStateCommand = new DelegateCommand(this.previousViewModel);
             this.EditCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.goToEditView);
-
             this.ShowWorkoutPlans();
         }
+
+     
 
         private void goToEditView(WorkoutEditorListItemViewModel item)
         {

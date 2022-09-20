@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="bb_project.Client.Views.MenuPage"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+                  xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" xmlns:icon="clr-namespace:FontAwesome.Solid;assembly=FontAwesome.Solid"
                   prism:ViewModelLocator.AutowireViewModel="True">
 
@@ -10,50 +11,43 @@
 
 
         <ContentPage x:Name="root" Title="Menu">
-            <Grid>
+            <Grid  BackgroundColor="LightBlue">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="7*"/>
                 </Grid.RowDefinitions>
 
-                <Grid BackgroundColor="DarkCyan" Grid.Row="0" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="8*"/>
-                    </Grid.RowDefinitions>
-
-                    <Label Grid.Row="0" Text="bb-project" FontSize="Title" TextColor="White"/>
-                    <Image Grid.Row="1" Aspect="AspectFill"  VerticalOptions="Center" Source="xamarin_logo.png"/>
-                </Grid>
-
-                <StackLayout BindableLayout.ItemsSource="{Binding MenuItems}" Grid.Row="1" Orientation="Vertical">
-
-                    <BindableLayout.ItemTemplate>
+                <Image Grid.Row="0" Aspect="AspectFit"  VerticalOptions="Center" Source="logo_bb_project.png"/>
+                
+                
+                <CollectionView ItemsSource="{Binding MenuItems}" Grid.Row="1">
+                 
+                    <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid >
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BindingContext.NavigateCommand, Source={x:Reference root}}" CommandParameter="{Binding Title}"/>
-                                </Grid.GestureRecognizers>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="9*"/>
-                                </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0" BackgroundColor="Transparent" Aspect="AspectFit" Source="{Binding Icon}">
-                                </Image>
-                                <Label Text="{Binding Title}" Grid.Column="1"/>
-                            </Grid>
+                            <Frame
+                                BackgroundColor="Transparent"
+                                HeightRequest="30"
+                                BorderColor="Gray"
+                                 ctrl:TouchEffect.PressedBackgroundColor="WhiteSmoke"
+                                ctrl:TouchEffect.Command="{Binding BindingContext.NavigateCommand, Source={x:Reference root}}" 
+                                ctrl:TouchEffect.CommandParameter="{Binding Title}"
+                               HasShadow="True">
+
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="8*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" BackgroundColor="Transparent" VerticalOptions="Center"  Source="{Binding IconName}">
+                                    </Image>
+                                    <Label Text="{Binding Title}" VerticalOptions="Center" FontSize="Large" Grid.Column="1"/>
+                                </Grid>
+                            </Frame>
                         </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+                    </CollectionView.ItemTemplate>
 
-                    <ImageButton BackgroundColor="Transparent"
-                                     Margin="0,0,10,0"
-                                     Command="{Binding NavigateCommand}" CommandParameter="Edit" >
-                        <ImageButton.Source>
-                            <icon:IconSource  Icon="Edit"/>
-                        </ImageButton.Source>
-                    </ImageButton>
-                </StackLayout>
+                </CollectionView>
             </Grid>
 
         </ContentPage>
