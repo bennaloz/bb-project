@@ -83,6 +83,13 @@
     <Build Include="StoredProcedures\spr_GetWorkoutSeriesGroup.sql" />
     <Build Include="StoredProcedures\spr_GetExercises.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutData.sql" />
+    <Build Include="StoredProcedures\spw_UpdateWorkout.sql" />
+    <Build Include="StoredProcedures\spw_UpdateWorkoutPlan.sql" />
+    <Build Include="StoredProcedures\spw_DeleteExercise.sql" />
+    <Build Include="StoredProcedures\spw_UpdateExercise.sql" />
+    <Build Include="StoredProcedures\spw_IsExerciseUsedInAnyWorkout.sql" />
+    <Build Include="StoredProcedures\spw_DeleteWorkoutPlan.sql" />
+    <Build Include="StoredProcedures\spw_DeleteWorkout.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="bb-project.DB.refactorlog" />
