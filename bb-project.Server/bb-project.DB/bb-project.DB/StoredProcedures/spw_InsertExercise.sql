@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[spw_InsertExercise]
     @name VARCHAR(100),
-    @type SMALLINT,
+    @type SMALLINT, --Cardio or weights
     @involvedMuscles SMALLINT,
     @userId UNIQUEIDENTIFIER,
     @exerciseId BIGINT OUTPUT

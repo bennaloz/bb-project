@@ -3,5 +3,5 @@
 	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
     [Name] NVARCHAR(100) NOT NULL,
     [Order] SMALLINT NOT NULL,
-    [fk_WorkoutPlanId] BIGINT NOT NULL
+    [fk_WorkoutPlanId] BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_WorkoutPlan(Id)
 )
