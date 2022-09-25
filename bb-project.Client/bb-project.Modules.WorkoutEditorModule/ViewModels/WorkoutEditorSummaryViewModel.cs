@@ -48,28 +48,45 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         public ICommand EditCommand { get; set; }
 
         public ICommand SelectionChanged { get; set; }
+
+        private WorkoutEditorListItemViewModel selectedItem;
+
+        public WorkoutEditorListItemViewModel SelectedItem 
+        {
+            get
+            {
+                return this.selectedItem;
+            }
+
+            set
+            {
+                SetProperty(ref this.selectedItem, value);  
+            }
+        }  
+
         public WorkoutEditorSummaryViewModel(IWorkoutsManagementService workoutDataStore, IRegionManager regionManager, IEventAggregator eventAggregator, INavigationService service)
         {
             this.workoutDataStore = workoutDataStore;
             this.regionManager = regionManager;
             this.eventAggregator = eventAggregator;
             this.service = service;
-            this.NextStateCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.nextViewModel);
+            this.NextStateCommand = new DelegateCommand(this.nextViewModel);
             this.PreviousStateCommand = new DelegateCommand(this.previousViewModel);
-            this.EditCommand = new DelegateCommand<WorkoutEditorListItemViewModel>(this.goToEditView);
+            this.EditCommand = new DelegateCommand(this.goToEditView);
+            this.SelectedItem = new WorkoutEditorListItemViewModel();
             this.ShowWorkoutPlans();
         }
 
      
 
-        private void goToEditView(WorkoutEditorListItemViewModel item)
+        private void goToEditView()
         {
             switch (this.currentState)
             {
                 case Infrastructure.Models.Enums.ViewState.WorkoutPlan:
                     NavigationParameters pars = new NavigationParameters();
-                    pars.Add("workoutPlanId", item.Id);
-                    pars.Add("workoutPlanName", item.Name);
+                    pars.Add("workoutPlanId", this.SelectedItem.Id);
+                    pars.Add("workoutPlanName", this.SelectedItem.Name);
                     this.regionManager.RequestNavigate("EditorContentRegion", nameof(Views.WorkoutPlanEditorView), pars);
                     break;
                 case Infrastructure.Models.Enums.ViewState.Workout:
@@ -85,20 +102,20 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
         {
         }
 
-        private async void nextViewModel(WorkoutEditorListItemViewModel item)
+        private async void nextViewModel()
         {
             this.Items.Clear();
             switch (this.currentState)
             {
                 case Infrastructure.Models.Enums.ViewState.WorkoutPlan:
-                    this.Title = $"Allenamenti '{item.Name}'";
-                    await ShowWorkouts(item);
-                    this.parent = item;
+                    this.Title = $"Allenamenti '{this.SelectedItem.Name}'";
+                    await ShowWorkouts(this.SelectedItem);
+                    this.parent = this.SelectedItem;
 
                     break;
                 case Infrastructure.Models.Enums.ViewState.Workout:
-                    this.Title = $"Esercizi '{item.Name}'";
-                    await ShowExercises(item);
+                    this.Title = $"Esercizi '{this.SelectedItem.Name}'";
+                    await ShowExercises(this.SelectedItem);
                     break;
                 default:
                     break;
@@ -140,6 +157,8 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                     Details = $"Workouts: {workouts.Count()}"
                 });
             }
+            this.currentState = Infrastructure.Models.Enums.ViewState.WorkoutPlan;
+
         }
 
         private async Task ShowExercises(WorkoutEditorListItemViewModel item)
@@ -162,6 +181,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                 this.Items.Add(new WorkoutEditorListItemViewModel { Id = sg.Id, Name = name });
 
             }
+            this.currentState = Infrastructure.Models.Enums.ViewState.Exercises;
         }
 
         private async Task ShowWorkouts(WorkoutEditorListItemViewModel item)

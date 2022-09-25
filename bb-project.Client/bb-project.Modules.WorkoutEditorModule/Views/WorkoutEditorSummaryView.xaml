@@ -3,37 +3,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ctrl="http://xamarin.com/schemas/2020/toolkit" xmlns:icon="clr-namespace:FontAwesome.Solid;assembly=FontAwesome.Solid"
              x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorSummaryView"
-             x:Name="root"
-            >
+             x:Name="root">
 
-    <StackLayout Orientation="Vertical">
 
-        <Label Text="{Binding Title}"
+
+    <ContentView.Resources>
+        <Style x:Key="GridSelection" TargetType="Frame">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+    <!--<StackLayout Orientation="Vertical">-->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Text="{Binding Title}"
                HorizontalOptions="Center"
                FontSize="24"
                FontAttributes="Bold" />
-        <CollectionView x:Name="collection" ItemsSource="{Binding Items ,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}"
-                        SelectionMode="Single">
-               
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="5"
-                                   Orientation="Vertical" />
-            </CollectionView.ItemsLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Items ,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame 
-                        x:Name="frame"
-                        BorderColor="Black"
-                        HasShadow="True"
-                        ctrl:TouchEffect.Command="{Binding BindingContext.SelectionChanged , Source={x:Reference root}}"
-                        ctrl:TouchEffect.CommandParameter="{Binding Source={x:Reference frame}}">
-                      
-                        <Grid HeightRequest="40" VerticalOptions="Center">
+                    <Frame Style="{StaticResource GridSelection}" BorderColor="Black">
+                        <Grid   VerticalOptions="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8.5*" />
                                 <ColumnDefinition Width="1.5*" />
                             </Grid.ColumnDefinitions>
-                            <StackLayout>
+                            <StackLayout Grid.Column="0">
                                 <Label   Text="{Binding Name}"
                                          FontAttributes="Bold"
                                          FontSize="Medium"
@@ -42,20 +61,79 @@
                                 <Label Text="{Binding Details}"
                                        HorizontalOptions="Center" />
                             </StackLayout>
-                            <ImageButton Grid.Column="1" BackgroundColor="Transparent"
-                                         
-                                    Command="{Binding BindingContext.EditCommand, Source={x:Reference root}}"
-                                    CommandParameter="{Binding}" VerticalOptions="Center"  Source="Edit.png"/>
                         </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
+        </CollectionView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Frame Grid.Column="3"
+                   BorderColor="Black">
+                <ImageButton 
+                         HeightRequest="40"
+                Command="{Binding EditCommand}" BackgroundColor="Transparent"
+                VerticalOptions="Center"  Source="Edit.png" />
+            </Frame>
+
+            <Frame Grid.Column="2"
+                   BorderColor="Black">
+                <ImageButton 
+                         HeightRequest="40"
+                Command="{Binding NextStateCommand}" BackgroundColor="Transparent"
+                VerticalOptions="Center"  Source="view.png" />
+            </Frame>
+
+            <Frame Grid.Column="1"
+                   BorderColor="Black">
+                <ImageButton 
+                         HeightRequest="40"
+                Command="{Binding PreviousStateCommand}" BackgroundColor="Transparent"
+                VerticalOptions="Center"  Source="back.png" />
+            </Frame>
+
+        </Grid>
+
+    </Grid>
+    <!--<CollectionView x:Name="collection" ItemsSource="{Binding Items ,Mode=OneWay,  UpdateSourceEventName=PropertyChanged}"
+                        SelectionMode="Single">
+               
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="5"
+                                   Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+
+                    <Grid  HeightRequest="40" VerticalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="8.5*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+                        <StackLayout>
+                            <Label   Text="{Binding Name}"
+                                         FontAttributes="Bold"
+                                         FontSize="Medium"
+                                         HorizontalTextAlignment="Center"
+                                         VerticalOptions="Center" />
+                            <Label Text="{Binding Details}"
+                                       HorizontalOptions="Center" />
+                        </StackLayout>
+                        <ImageButton Grid.Column="1" BackgroundColor="Transparent"
+                                    Command="{Binding BindingContext.EditCommand, Source={x:Reference root}}"
+                                    CommandParameter="{Binding}" VerticalOptions="Center"  Source="Edit.png"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
         
-        <Button Text="BACK"
-                Command="{Binding PreviousStateCommand}" />
-    </StackLayout>
-
-
-
+       
+    </StackLayout>-->
 </ContentView>

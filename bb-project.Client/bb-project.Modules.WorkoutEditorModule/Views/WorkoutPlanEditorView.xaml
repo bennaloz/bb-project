@@ -2,9 +2,34 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ctx="http://xamarin.com/schemas/2020/toolkit"
-             xmlns:icon="clr-namespace:FontAwesome.Solid;assembly=FontAwesome.Solid"
              x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutPlanEditorView"
              x:Name="root">
+
+
+    <ContentView.Resources>
+        <Style x:Key="FrameSelection" TargetType="Frame">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentView.Resources>
+
+
     <ContentView.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -13,12 +38,11 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Editor Grid.Row="0" Text="{Binding WorkoutPlanName, Mode=TwoWay}" />
-            <CollectionView ItemsSource="{Binding Workouts}" Grid.Row="1" SelectionMode="None" >
+            
+            <CollectionView ItemsSource="{Binding Workouts}" Grid.Row="1" SelectionMode="Single" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BorderColor="Black"
-                               BackgroundColor="SkyBlue"
-                               CornerRadius="10"
+                        <Frame Style="{StaticResource FrameSelection}" BorderColor="Black"
                                HasShadow="True">
 
                             <Grid>
@@ -27,25 +51,9 @@
                                     <ColumnDefinition Width="0.75*" />
                                     <ColumnDefinition Width="0.75*" />
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Text="{Binding WorkoutName}"  FontAttributes="Bold" FontSize="Title"/>
+                                <Label Grid.Column="0" Text="{Binding WorkoutName}"  HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Title"/>
 
-                                <ImageButton Grid.Column="1"
-                                            BackgroundColor="Transparent"
-                                                Margin="0,0,10,0"
-                                                Command="{Binding BindingContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding Id}" >
-                                    <ImageButton.Source>
-                                        <icon:IconSource  Icon="Trash"/>
-                                    </ImageButton.Source>
-                                </ImageButton>
-                                <ImageButton 
-                                            BackgroundColor="Transparent"
-                                                Margin="0,0,10,0"
-                                                Grid.Column="2"
-                                                Command="{Binding BindingContext.OpenPopupCommand, Source={x:Reference root}}" CommandParameter="{Binding ExercisesInfo}" >
-                                    <ImageButton.Source>
-                                        <icon:IconSource  Icon="Eye"/>
-                                    </ImageButton.Source>
-                                </ImageButton>
+                             
                             </Grid>
 
                         </Frame>
@@ -54,28 +62,29 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            
+               <!--<ImageButton Grid.Column="1"
+                                            BackgroundColor="Transparent"
+                                                Margin="0,0,10,0"
+                                                Command="{Binding BindingContext.RemoveCommand, Source={x:Reference root}}" CommandParameter="{Binding Id}" >
+       
+                                </ImageButton>-->
+
+
+
             <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                        <ImageButton
-                Grid.Column="2" Margin="0,0,10,0"
-                    Command="{Binding SaveCommand}" BackgroundColor="Transparent">
-                            <ImageButton.Source>
-                                <icon:IconSource Icon="Save"/>
-                            </ImageButton.Source>
-                        </ImageButton>
-                        <ImageButton 
-                         Grid.Column="0" Margin="10,0,0,0"
-                         Command="{Binding BackCommand}" BackgroundColor="Transparent">
-                            <ImageButton.Source>
-                        <icon:IconSource Icon="ArrowLeft" />
-                    </ImageButton.Source>
-                        </ImageButton>
+                <ImageButton 
+                                            BackgroundColor="Transparent"
+                                                Margin="0,0,10,0"
+                                                Grid.Column="2"
+                                                Command="{Binding BindingContext.OpenPopupCommand, Source={x:Reference root}}" CommandParameter="{Binding ExercisesInfo}" >
+
+                </ImageButton>
+                
                 
             </Grid>
+                
+
         </Grid>
     </ContentView.Content>
 </ContentView>
