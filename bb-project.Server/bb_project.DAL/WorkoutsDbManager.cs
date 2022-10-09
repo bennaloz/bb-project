@@ -214,5 +214,47 @@ namespace bb_project.DAL
                 return parameters.Get<ulong>("@exerciseId");
             }
         }
+
+        public async Task<int> UpdateWorkoutPlanAsync(ulong workoutPlanId, string userId, string workoutPlanName, bool isActive, bool isArchived)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("workoutPlanId", workoutPlanId);
+            parameters.Add("userId", userId);
+            parameters.Add("workoutPlanName", workoutPlanName);
+            parameters.Add("isActive", isActive);
+            parameters.Add("isArchived", isArchived);
+            var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_UpdateWorkoutPlan", param: parameters, commandType: CommandType.StoredProcedure));
+            return updatedRecordsCount;
+        }
+
+        public async Task<int> UpdateWorkoutAsync(ulong workoutPlanId, ulong workoutId, string workoutName, int order)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("workoutPlanId", workoutPlanId);
+            parameters.Add("workoutId", workoutId);
+            parameters.Add("workoutName", workoutName);
+            parameters.Add("order", order);
+            var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_UpdateWorkout", param: parameters, commandType: CommandType.StoredProcedure));
+            return updatedRecordsCount;
+        }
+
+        public async Task<int> UpdateExerciseAsync(ulong exerciseId, string name, int exerciseType, int involvedMuscles)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("exerciseId", exerciseId);
+            parameters.Add("name", name);
+            parameters.Add("type", exerciseType);
+            parameters.Add("involvedMuscles", involvedMuscles);
+            var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_UpdateExercise", param: parameters, commandType: CommandType.StoredProcedure));
+            return updatedRecordsCount;
+        }
+
+        public async Task<int> DeleteWorkoutSeriesAsync(ulong workoutPlanId, ulong workoutId, params ulong[] seriesIds)
+        {
+            var serieGroups = await this.GetWorkoutSeriesGroupsAsync
+
+            var parameters = new DynamicParameters();
+
+        }
     }
 }

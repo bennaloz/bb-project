@@ -1,8 +1,8 @@
 ﻿CREATE PROCEDURE [dbo].[spw_UpdateExercise]
+    @exerciseId BIGINT,
     @name VARCHAR(100),
     @type SMALLINT, --Cardio or weights
-    @involvedMuscles SMALLINT,
-    @exerciseId BIGINT OUTPUT
+    @involvedMuscles SMALLINT
 AS
     UPDATE tbl_Exercise
     SET [Name] = @name, [Type] = @type, [InvolvedMuscles] = @involvedMuscles
