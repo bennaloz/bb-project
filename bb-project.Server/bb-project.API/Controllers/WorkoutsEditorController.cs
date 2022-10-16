@@ -52,7 +52,7 @@ namespace bb_project.API.Controllers
         {
             try
             {
-                var workoutSeriesGroups = await this.workoutsDataStore.GetWorkoutSeriesGroupsAsync(workoutId, userId);
+                var workoutSeriesGroups = await this.workoutsDataStore.GetWorkoutExercisesAsync(workoutId, userId);
                 return new OkObjectResult(workoutSeriesGroups);
             }
             catch (Exception ex)
@@ -177,7 +177,7 @@ namespace bb_project.API.Controllers
         }
 
         [HttpPost(Name = "insertSeriesGroups")]
-        public async Task<ActionResult> InsertSeriesGroupsAsync([FromQuery] ulong workoutId, [FromBody] SeriesGroup[] seriesGroups)
+        public async Task<ActionResult> InsertSeriesGroupsAsync([FromQuery] ulong workoutId, [FromBody] ExerciseGroup[] seriesGroups)
         {
             try
             {
@@ -219,7 +219,7 @@ namespace bb_project.API.Controllers
 
                 foreach (var seriesData in workoutData.SeriesData)
                 {
-                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutData.WorkoutHistoryId, seriesData.SerieId, seriesData.StartTime, seriesData.EndTime, seriesData.UsedKgs);
+                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutData.WorkoutHistoryId, seriesData.SerieId, seriesData.ExerciseId, seriesData.StartTime, seriesData.EndTime, seriesData.UsedKgs);
                 }
                 return Ok();
             }

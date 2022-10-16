@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spr_GetWorkoutPlans]
-    @workoutPlanId int = 0,
+    @workoutPlanId BIGINT = 0,
     @getArchived BIT = 0
 AS
     BEGIN

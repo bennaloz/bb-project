@@ -8,6 +8,8 @@
 
         public class SeriesDataDTO
         {
+            public ulong ExerciseId { get; set; }
+
             public ulong SerieId { get; set; }
 
             public DateTime StartTime { get; set; }
