@@ -59,17 +59,21 @@ namespace bb_project.Infrastructure.BLL
             return workouts.Select(w=>(Workout)w);
         }
 
-        public async Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId, ulong? seriesGroupId = null)
+        public async Task<IEnumerable<ExerciseGroup>> GetWorkoutExercisesAsync(ulong workoutId, string userId, ulong? seriesGroupId = null)
         {
             var seriesRecords = await this.dbManager.GetWorkoutSeriesGroupsAsync(workoutId, userId, seriesGroupId);
 
-            var groups = new Dictionary<ulong, SeriesGroup>();
+            var groups = new Dictionary<ulong, ExerciseGroup>();
             foreach (var record in seriesRecords)
             {
                 if (!groups.ContainsKey(record.SeriesGroupId))
-                    groups.Add(record.SeriesGroupId, new SeriesGroup(record.SeriesGroupId, record.ExerciseMethod));
-                var group = groups[record.SeriesGroupId];
-                group.Series.Add((Serie)record);
+                    groups.Add(record.SeriesGroupId, new ExerciseGroup(record.SeriesGroupId, record.ExerciseMethod));
+
+                if (!groups[record.SeriesGroupId].Exercises.ContainsKey(record.DefinitionExerciseId))
+                {
+                    groups[record.SeriesGroupId].Exercises.Add(record.DefinitionExerciseId, new Exercise(record.DefinitionExerciseId, record.DefinitionExerciseName));
+                }
+                groups[record.SeriesGroupId].Exercises[record.DefinitionExerciseId].Series.Add((Serie)record);
             }
 
             return groups.Values;
@@ -83,12 +87,12 @@ namespace bb_project.Infrastructure.BLL
             return await this.dbManager.InsertExerciseAsync(userId, (ExerciseDbRecord)exerciseDefinition);
         }
 
-        public async Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups)
+        public async Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<ExerciseGroup> exercisesGroups)
         {
-            foreach (var seriesGroup in seriesGroups)
+            foreach (var seriesGroup in exercisesGroups)
             {
                 var seriesGroupId = await this.dbManager.InsertWorkoutSeriesGroupAsync(seriesGroup.ExerciseMethod);
-                await this.dbManager.InsertWorkoutSeriesAsync(workoutId, seriesGroup.Series.Select(s =>
+                await this.dbManager.InsertWorkoutSeriesAsync(workoutId, seriesGroup.Exercises.Values.SelectMany(v=>v.Series).Select(s =>
                 {
                     var dbRecord = (SerieDbRecord)s;
                     dbRecord.SeriesGroupId = seriesGroupId;
@@ -107,9 +111,9 @@ namespace bb_project.Infrastructure.BLL
             });
         }
 
-        public async Task InsertWorkoutDataAsync(ulong workoutHistoryId, ulong serieId, DateTime startTime, DateTime endTime, double? usedKgs)
+        public async Task InsertWorkoutDataAsync(ulong workoutHistoryId, ulong serieId, ulong exerciseId, DateTime startTime, DateTime endTime, double? usedKgs)
         {
-            await this.dbManager.InsertWorkoutDataAsync(workoutHistoryId, serieId, startTime, endTime, usedKgs);
+            await this.dbManager.InsertWorkoutDataAsync(workoutHistoryId, serieId, exerciseId, startTime, endTime, usedKgs);
         }
 
         public async Task<ulong> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, ulong workoutId, ulong workoutPlanId, string userId)

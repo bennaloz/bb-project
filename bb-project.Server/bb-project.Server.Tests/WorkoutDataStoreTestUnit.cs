@@ -150,151 +150,158 @@ namespace bb_project.Server.Tests
                 var woPlanId = (await this.workoutsDataStore.GetWorkoutPlansAsync()).First().Id;
                 var woId = (await this.workoutsDataStore.GetWorkoutsAsync(woPlanId)).First().Id;
 
-                var seriesGroups = new List<SeriesGroup>();
-                var panca = new SeriesGroup(ExerciseMethodology.Single);
-                panca.Series.Add(new Serie(this.pancaPiana)
+                var seriesGroups = new List<ExerciseGroup>();
+                var panca = new ExerciseGroup(ExerciseMethodology.Single);
+                panca.Exercises.Add(0, new Exercise(0, this.pancaPiana.Name));
+                panca.Exercises[0].Series.Add(new Serie(this.pancaPiana)
                 {
                     Reps = 4,
                     Rest = TimeSpan.FromSeconds(120)
                 });
-                panca.Series.Add(new Serie(this.pancaPiana)
+                panca.Exercises[0].Series.Add(new Serie(this.pancaPiana)
                 {
                     Reps = 4,
                     Rest = TimeSpan.FromSeconds(120)
                 });
-                panca.Series.Add(new Serie(this.pancaPiana)
+                panca.Exercises[0].Series.Add(new Serie(this.pancaPiana)
                 {
                     Reps = 6,
                     Rest = TimeSpan.FromSeconds(120)
                 });
-                panca.Series.Add(new Serie(this.pancaPiana)
+                panca.Exercises[0].Series.Add(new Serie(this.pancaPiana)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(90)
                 });
-                panca.Series.Add(new Serie(this.pancaPiana)
+                panca.Exercises[0].Series.Add(new Serie(this.pancaPiana)
                 {
                     Reps = 10,
                     Rest = TimeSpan.FromSeconds(300)
                 });
                 seriesGroups.Add(panca);
 
-                var jumpset1 = new SeriesGroup(ExerciseMethodology.JumpSet);
-                jumpset1.Series.Add(new Serie(this.pancaInclManubri)
+                var jumpset1 = new ExerciseGroup(ExerciseMethodology.JumpSet);
+                jumpset1.Exercises.Add(1, new Exercise(1, this.pancaInclManubri.Name));
+                jumpset1.Exercises.Add(2, new Exercise(2, this.curlBicAlternati.Name));
+                jumpset1.Exercises[1].Series.Add(new Serie(this.pancaInclManubri)
                 {
                     Reps = 10,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.curlBicAlternati)
+                jumpset1.Exercises[2].Series.Add(new Serie(this.curlBicAlternati)
                 {
                     Reps = 6,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.pancaInclManubri)
+                jumpset1.Exercises[1].Series.Add(new Serie(this.pancaInclManubri)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.curlBicAlternati)
+                jumpset1.Exercises[2].Series.Add(new Serie(this.curlBicAlternati)
                 {
                     Reps = 6,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.pancaInclManubri)
+                jumpset1.Exercises[1].Series.Add(new Serie(this.pancaInclManubri)
                 {
                     Reps = 6,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.curlBicAlternati)
+                jumpset1.Exercises[2].Series.Add(new Serie(this.curlBicAlternati)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.pancaInclManubri)
+                jumpset1.Exercises[1].Series.Add(new Serie(this.pancaInclManubri)
                 {
                     Reps = 6,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset1.Series.Add(new Serie(this.curlBicAlternati)
+                jumpset1.Exercises[2].Series.Add(new Serie(this.curlBicAlternati)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(60)
                 });
                 seriesGroups.Add(jumpset1);
 
-                var crociCavi = new SeriesGroup(ExerciseMethodology.Single);
-                crociCavi.Series.Add(new Serie(this.crociCaviBasso)
+                var crociCavi = new ExerciseGroup(ExerciseMethodology.Single);
+                crociCavi.Exercises.Add(3, new Exercise(1, this.crociCaviBasso.Name));
+                crociCavi.Exercises[3].Series.Add(new Serie(this.crociCaviBasso)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
-                crociCavi.Series.Add(new Serie(this.crociCaviBasso)
+                crociCavi.Exercises[3].Series.Add(new Serie(this.crociCaviBasso)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
-                crociCavi.Series.Add(new Serie(this.crociCaviBasso)
+                crociCavi.Exercises[3].Series.Add(new Serie(this.crociCaviBasso)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
-                crociCavi.Series.Add(new Serie(this.crociCaviBasso)
+                crociCavi.Exercises[3].Series.Add(new Serie(this.crociCaviBasso)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
                 seriesGroups.Add(crociCavi);
 
-                var jumpset2 = new SeriesGroup(ExerciseMethodology.JumpSet);
-                jumpset2.Series.Add(new Serie(this.arnoldPress)
+                var jumpset2 = new ExerciseGroup(ExerciseMethodology.JumpSet);
+                jumpset2.Exercises.Add(4, new Exercise(4, this.arnoldPress.Name));
+                jumpset2.Exercises.Add(5, new Exercise(5, this.AlzateLaterali.Name));
+                jumpset2.Exercises[4].Series.Add(new Serie(this.arnoldPress)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset2.Series.Add(new Serie(this.AlzateLaterali)
+                jumpset2.Exercises[5].Series.Add(new Serie(this.AlzateLaterali)
                 {
                     Reps = 12,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset2.Series.Add(new Serie(this.arnoldPress)
+                jumpset2.Exercises[4].Series.Add(new Serie(this.arnoldPress)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset2.Series.Add(new Serie(this.AlzateLaterali)
+                jumpset2.Exercises[5].Series.Add(new Serie(this.AlzateLaterali)
                 {
                     Reps = 12,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset2.Series.Add(new Serie(this.arnoldPress)
+                jumpset2.Exercises[4].Series.Add(new Serie(this.arnoldPress)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(60)
                 });
-                jumpset2.Series.Add(new Serie(this.AlzateLaterali)
+                jumpset2.Exercises[5].Series.Add(new Serie(this.AlzateLaterali)
                 {
                     Reps = 12,
                     Rest = TimeSpan.FromSeconds(60)
                 });
                 seriesGroups.Add(jumpset2);
 
-                var hummerCurl = new SeriesGroup(ExerciseMethodology.Single);
-                hummerCurl.Series.Add(new Serie(this.hummerCurl)
+                var hummerCurl = new ExerciseGroup(ExerciseMethodology.Single);
+                hummerCurl.Exercises.Add(6, new Exercise(6, this.hummerCurl.Name));
+                hummerCurl.Exercises[6].Series.Add(new Serie(this.hummerCurl)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
-                hummerCurl.Series.Add(new Serie(this.hummerCurl)
+                hummerCurl.Exercises[6].Series.Add(new Serie(this.hummerCurl)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
-                hummerCurl.Series.Add(new Serie(this.hummerCurl)
+                hummerCurl.Exercises[6].Series.Add(new Serie(this.hummerCurl)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
                 });
-                hummerCurl.Series.Add(new Serie(this.hummerCurl)
+                hummerCurl.Exercises[6].Series.Add(new Serie(this.hummerCurl)
                 {
                     Reps = 8,
                     Rest = TimeSpan.FromSeconds(75)
@@ -318,15 +325,15 @@ namespace bb_project.Server.Tests
 
             var workoutHistoryId = await this.workoutsDataStore.InsertWorkoutHistoryAsync(DateTime.Now, DateTime.Now.AddHours(1), woId, woPlanId, this.testUnitUserId);
 
-            var woSeries = await this.workoutsDataStore.GetWorkoutSeriesGroupsAsync(woId, this.testUnitUserId);
+            var woExerciseGroups = await this.workoutsDataStore.GetWorkoutExercisesAsync(woId, this.testUnitUserId);
 
             DateTime startTime = DateTime.Now;
 
-            foreach (var woSeriesGroup in woSeries)
+            foreach (var woExerciseGroup in woExerciseGroups)
             {
-                foreach (var serie in woSeriesGroup.Series)
+                foreach (var serie in woExerciseGroup.Exercises.Values.SelectMany(e=>e.Series))
                 {
-                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutHistoryId, serie.Id, 
+                    await this.workoutsDataStore.InsertWorkoutDataAsync(workoutHistoryId, serie.Id, serie.ExerciseDefinition.Id, 
                         startTime = startTime.AddMinutes(1),
                         startTime.AddMinutes(1),
                         120.5

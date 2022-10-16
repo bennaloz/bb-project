@@ -5,21 +5,21 @@ using System.Text;
 
 namespace bb_project.Infrastructure.Models.Data
 {
-    public class SeriesGroup
+    public class ExerciseGroup
     {
         public ulong Id { get; set; }
 
         public ExerciseMethodology ExerciseMethod { get; }
 
-        public List<Serie> Series { get; } = new List<Serie>();
+        public Dictionary<ulong, Exercise> Exercises { get; } = new Dictionary<ulong, Exercise>();
 
-        public SeriesGroup(ExerciseMethodology exerciseMethod)
+        public ExerciseGroup(ExerciseMethodology exerciseMethod)
             : this(0, exerciseMethod)
         {
 
         }
 
-        public SeriesGroup(ulong id, ExerciseMethodology exerciseMethod)
+        public ExerciseGroup(ulong id, ExerciseMethodology exerciseMethod)
         {
             this.Id = id;
             ExerciseMethod = exerciseMethod;
