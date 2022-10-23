@@ -9,12 +9,13 @@ namespace bb_project.Infrastructure.Models.Data
         public ulong Id { get; }
 
         public string Name { get; }
+
         public List<Serie> Series { get; } = new List<Serie>();
 
-        public Exercise(ulong id, string name)
+        public Exercise(ExerciseDefinition definition)
         {
-            Id = id;
-            Name = name;
+            this.Id = definition.Id;
+            this.Name = definition.Name;
         }
     }
 }

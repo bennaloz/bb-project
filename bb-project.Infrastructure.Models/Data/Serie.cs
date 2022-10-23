@@ -8,22 +8,19 @@ namespace bb_project.Infrastructure.Models.Data
     {
         public ulong Id { get; }
 
-        public ExerciseDefinition ExerciseDefinition { get; }
-
         public int Reps { get; set; }
 
         public TimeSpan Rest { get; set; }
 
-        public Serie(ExerciseDefinition exerciseDefinition)
-            : this(0, exerciseDefinition)
+        public Serie()
+            : this(0)
         {
 
         }
 
-        public Serie(ulong id, ExerciseDefinition exerciseDefinition)
+        public Serie(ulong id)
         {
             this.Id = id;
-            this.ExerciseDefinition = exerciseDefinition;
         }
     }
 }
