@@ -24,13 +24,10 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public ExerciseType DefinitionExerciseType { get; set; }
 
+
         public static implicit operator Serie(SerieDbRecord serieDbRecord)
         {
-            var exercise = new ExerciseDefinition(serieDbRecord.DefinitionExerciseId);
-            exercise.Name = serieDbRecord.DefinitionExerciseName;
-            exercise.Type = serieDbRecord.DefinitionExerciseType;
-
-            Serie result = new Serie(serieDbRecord.Id, exercise);
+            Serie result = new Serie(serieDbRecord.Id);
             result.Rest = serieDbRecord.Rest;
             result.Reps = serieDbRecord.Reps;
             return result;
@@ -39,7 +36,6 @@ namespace bb_project.Infrastructure.DAL.Models
         public static implicit operator SerieDbRecord(Serie serie)
         {
             var result = new SerieDbRecord();
-            result.DefinitionExerciseId = serie.ExerciseDefinition.Id;
             result.Rest = serie.Rest;
             result.Reps = serie.Reps;
             return result;

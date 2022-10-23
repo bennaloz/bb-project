@@ -89,16 +89,22 @@ namespace bb_project.Infrastructure.BLL
 
         public async Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<ExerciseGroup> exercisesGroups)
         {
-            foreach (var seriesGroup in exercisesGroups)
+            foreach (var exercisesGroup in exercisesGroups)
             {
-                var seriesGroupId = await this.dbManager.InsertWorkoutSeriesGroupAsync(seriesGroup.ExerciseMethod);
-                await this.dbManager.InsertWorkoutSeriesAsync(workoutId, seriesGroup.Exercises.Values.SelectMany(v=>v.Series).Select(s =>
+                var seriesGroupId = await this.dbManager.InsertWorkoutSeriesGroupAsync(exercisesGroup.ExerciseMethod);
+                List<SerieDbRecord> series = new List<SerieDbRecord>();
+                foreach (var exercise in exercisesGroup.Exercises.Values)
                 {
-                    var dbRecord = (SerieDbRecord)s;
-                    dbRecord.SeriesGroupId = seriesGroupId;
-                    dbRecord.WorkoutId = workoutId;
-                    return dbRecord;
-                }));
+                    foreach (var serie in exercise.Series)
+                    {
+                        var dbRecord = (SerieDbRecord)serie;
+                        dbRecord.SeriesGroupId = seriesGroupId;
+                        dbRecord.WorkoutId = workoutId;
+                        dbRecord.DefinitionExerciseId = exercise.Id;
+                        series.Add(dbRecord);
+                    }
+                }
+                await this.dbManager.InsertWorkoutSeriesAsync(workoutId, series);
             }
         }
 

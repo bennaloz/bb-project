@@ -13,9 +13,14 @@ namespace bb_project.Infrastructure.Models.Data
         public List<Serie> Series { get; } = new List<Serie>();
 
         public Exercise(ExerciseDefinition definition)
+            : this(definition.Id, definition.Name)
         {
-            this.Id = definition.Id;
-            this.Name = definition.Name;
+        }
+
+        public Exercise(ulong id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
         }
     }
 }

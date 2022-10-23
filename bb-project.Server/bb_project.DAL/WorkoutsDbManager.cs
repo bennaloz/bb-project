@@ -48,11 +48,11 @@ namespace bb_project.DAL
         public async Task InsertWorkoutDataAsync(ulong workoutHistoryId, ulong serieId, ulong exerciseId, DateTime startTime, DateTime endTime, double? usedKgs)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("workoutHistoryId", workoutHistoryId);
-            parameters.Add("serieId", serieId);
+            parameters.Add("workoutHistoryId", (long)workoutHistoryId);
+            parameters.Add("serieId", (long)serieId);
             parameters.Add("startTime", startTime);
             parameters.Add("endTime", endTime);
-            parameters.Add("exerciseId", exerciseId);
+            parameters.Add("exerciseId", (long)exerciseId);
             parameters.Add("usedKgs", usedKgs);
             await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutData", parameters, commandType: CommandType.StoredProcedure));
         }
@@ -112,7 +112,7 @@ namespace bb_project.DAL
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("userId", userId);
-                parameters.Add("workoutId", workoutId);
+                parameters.Add("workoutId", (long)workoutId);
                 parameters.Add("seriesGroupId", seriesGroupId);
                 var workouts = await conn.QueryAsync<SerieDbRecord>("spr_GetWorkoutSeriesGroup", parameters, commandType: CommandType.StoredProcedure);
                 return workouts.Cast<SerieDbRecord>();
