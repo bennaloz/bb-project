@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[tbl_Exercise]
+﻿CREATE TABLE [dbo].[tbl_ExerciseDefinition]
 (
 	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
     [Name] VARCHAR(100) NOT NULL, 

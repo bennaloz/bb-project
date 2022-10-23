@@ -5,5 +5,5 @@
     EndTime DATETIME2 NOT NULL, -- Data ed ora di fine della serie
     UsedKgs FLOAT,
     fk_WorkoutHistoryId BIGINT FOREIGN KEY REFERENCES tbl_WorkoutHistory(Id),
-    fk_ExerciseId BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_Exercise(Id)
+    fk_ExerciseId BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_ExerciseDefinition(Id)
 )

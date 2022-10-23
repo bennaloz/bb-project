@@ -63,7 +63,7 @@
   <ItemGroup>
     <Build Include="Tables\tbl_WorkoutPlan.sql" />
     <Build Include="Tables\tbl_Workout.sql" />
-    <Build Include="Tables\tbl_Exercise.sql" />
+    <Build Include="Tables\tbl_ExerciseDefinition.sql" />
     <Build Include="Tables\tbl_Serie.sql" />
     <Build Include="Tables\tbl_User.sql" />
     <Build Include="StoredProcedures\spr_GetWorkoutPlans.sql" />
@@ -71,7 +71,7 @@
     <Build Include="StoredProcedures\spw_InsertWorkoutPlan.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkout.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutSeries.sql" />
-    <Build Include="StoredProcedures\spw_InsertExercise.sql" />
+    <Build Include="StoredProcedures\spw_InsertExerciseDefinition.sql" />
     <Build Include="StoredProcedures\spr_HasActiveWorkoutPlan.sql" />
     <Build Include="StoredProcedures\spr_GetActiveWorkouts.sql" />
     <Build Include="Tables\tbl_WorkoutHistory.sql" />
@@ -82,12 +82,12 @@
     <Build Include="Tables\tbl_SeriesGroup_Serie.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutSeriesGroup.sql" />
     <Build Include="StoredProcedures\spr_GetWorkoutSeriesGroup.sql" />
-    <Build Include="StoredProcedures\spr_GetExercises.sql" />
+    <Build Include="StoredProcedures\spr_GetExercisesDefinitions.sql" />
     <Build Include="StoredProcedures\spw_InsertWorkoutData.sql" />
     <Build Include="StoredProcedures\spw_UpdateWorkout.sql" />
     <Build Include="StoredProcedures\spw_UpdateWorkoutPlan.sql" />
     <Build Include="StoredProcedures\spw_DeleteExercise.sql" />
-    <Build Include="StoredProcedures\spw_UpdateExercise.sql" />
+    <Build Include="StoredProcedures\spw_UpdateExerciseDefinition.sql" />
     <Build Include="StoredProcedures\spw_IsExerciseUsedInAnyWorkout.sql" />
     <Build Include="StoredProcedures\spw_DeleteWorkoutPlan.sql" />
     <Build Include="StoredProcedures\spw_DeleteWorkout.sql" />
