@@ -1,6 +1,7 @@
 ﻿using bb_project.DAL;
 using bb_project.Infrastructure.DAL.Models;
 using bb_project.Infrastructure.Models.Data;
+using bb_project.Infrastructure.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace bb_project.Infrastructure.BLL
 
         public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null, bool getArchived = false)
         {
-            var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id);
+            var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id, getArchived);
 
             return workoutPlansDb.Select(wpdb=> (WorkoutPlan) wpdb);
         }
@@ -84,7 +85,7 @@ namespace bb_project.Infrastructure.BLL
 
         public async Task<ulong> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exerciseDefinition)
         {
-            return await this.dbManager.InsertExerciseAsync(userId, (ExerciseDbRecord)exerciseDefinition);
+            return await this.dbManager.InsertExerciseDefinitionAsync(userId, (ExerciseDbRecord)exerciseDefinition);
         }
 
         public async Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<ExerciseGroup> exercisesGroups)
@@ -134,6 +135,27 @@ namespace bb_project.Infrastructure.BLL
                 Name = workoutPlanName,
                 IsActive = isActive
             });
+        }
+
+        public async Task<int> UpdateWorkoutPlanAsync(ulong workoutPlanId, string userId, string workoutPlanName, bool isActive, bool isArchived)
+        {
+            return await this.dbManager.UpdateWorkoutPlanAsync(workoutPlanId, userId, workoutPlanName, isActive, isArchived);
+        }
+
+        public async Task<int> UpdateWorkoutAsync(ulong workoutPlanId, ulong workoutId, string workoutName, int order)
+        {
+            return await this.dbManager.UpdateWorkoutAsync(workoutPlanId, workoutId, workoutName, order);
+        }
+
+        public async Task<int> UpdateExerciseDefinitionAsync(ulong exerciseId, string name, ExerciseType exerciseType, InvolvedMuscles
+            involvedMuscles)
+        {
+            return await this.dbManager.UpdateExerciseDefinitionAsync(exerciseId, name, (int)exerciseType, (int)involvedMuscles);
+        }
+
+        public async Task<int> DeleteWorkoutSeriesAsync(ulong workoutPlanId, ulong workoutId, params ulong[] seriesIds)
+        {
+            return await this.dbManager.DeleteWorkoutSeriesAsync(workoutPlanId: workoutPlanId, workoutId: workoutId, seriesIds: seriesIds);
         }
     }
 }

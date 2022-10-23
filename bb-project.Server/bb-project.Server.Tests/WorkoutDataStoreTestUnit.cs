@@ -354,5 +354,105 @@ namespace bb_project.Server.Tests
                 Assert.Fail(ex.Message);
             }
         }
+
+        [TestMethod]
+        public async Task UpdateExerciseDefinitionTestAsync()
+        {
+            try
+            {
+                await this.loadExercises();
+                var modifiedExercisesCount = await this.workoutsDataStore.UpdateExerciseDefinitionAsync(this.pancaPiana.Id, $"{this.pancaPiana.Name}_2", ExerciseType.Cardio, InvolvedMuscles.Hamstrings);
+
+                Assert.IsTrue(modifiedExercisesCount == 1);
+                var pancaPianaModified = (await this.workoutsDataStore.GetExerciseDefinitionsAsync(this.testUnitUserId)).FirstOrDefault(e=>e.Id == this.pancaPiana.Id);
+                Assert.IsNotNull(pancaPianaModified);
+                Assert.IsTrue(pancaPianaModified.InvolvedMuscles == InvolvedMuscles.Hamstrings);
+                Assert.IsTrue(pancaPianaModified.Type == ExerciseType.Cardio);
+                Assert.IsTrue(pancaPianaModified.Name == $"{this.pancaPiana.Name}_2");
+
+                modifiedExercisesCount = await this.workoutsDataStore.UpdateExerciseDefinitionAsync(this.pancaPiana.Id, this.pancaPiana.Name, this.pancaPiana.Type, this.pancaPiana.InvolvedMuscles);
+                Assert.IsTrue(modifiedExercisesCount == 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task UpdateWorkoutPlanTestAsync()
+        {
+            try
+            {
+                var woPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync()).First();
+                Assert.IsNotNull(woPlan);
+
+                var updatedWorkoutPlansCount = await this.workoutsDataStore.UpdateWorkoutPlanAsync(woPlan.Id, this.testUnitUserId, $"{woPlan.Name}_2", false, false);
+                Assert.IsTrue(updatedWorkoutPlansCount == 1);
+
+                var modifiedWoPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(id: woPlan.Id)).First();
+                Assert.AreNotEqual(woPlan.Name, modifiedWoPlan.Name);
+                Assert.IsTrue(modifiedWoPlan.Name == $"{woPlan.Name}_2");
+                Assert.IsFalse(modifiedWoPlan.IsActive);
+
+                updatedWorkoutPlansCount = await this.workoutsDataStore.UpdateWorkoutPlanAsync(woPlan.Id, this.testUnitUserId, woPlan.Name, woPlan.IsActive, true);
+                Assert.IsTrue(updatedWorkoutPlansCount == 1);
+
+                modifiedWoPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(woPlan.Id)).FirstOrDefault();
+                Assert.IsNull(modifiedWoPlan);
+
+                modifiedWoPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(woPlan.Id, true)).FirstOrDefault();
+                Assert.IsNotNull(modifiedWoPlan);
+
+                updatedWorkoutPlansCount = await this.workoutsDataStore.UpdateWorkoutPlanAsync(woPlan.Id, this.testUnitUserId, woPlan.Name, woPlan.IsActive, false);
+                Assert.IsTrue(updatedWorkoutPlansCount == 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task UpdateWorkoutTestAsync()
+        {
+            try
+            {
+                var woPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync()).First();
+                var wo = (await this.workoutsDataStore.GetWorkoutsAsync(woPlan.Id)).First();
+
+                var updatedWorkoutRecordsCount = await this.workoutsDataStore.UpdateWorkoutAsync(woPlan.Id, wo.Id, $"{wo.Name}_2", wo.Order + 1);
+                Assert.IsTrue(updatedWorkoutRecordsCount == 1);
+
+                var modifiedWo = (await this.workoutsDataStore.GetWorkoutsAsync(woPlan.Id, wo.Id)).First();
+                Assert.IsNotNull(modifiedWo);
+                Assert.IsTrue(modifiedWo.Name == $"{wo.Name}_2");
+                Assert.IsTrue(modifiedWo.Order == wo.Order + 1);
+
+                updatedWorkoutRecordsCount = await this.workoutsDataStore.UpdateWorkoutAsync(woPlan.Id, wo.Id, wo.Name, wo.Order);
+                Assert.IsTrue(updatedWorkoutRecordsCount == 1);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
+        public async Task DeleteWorkoutSeriesTestAsync()
+        {
+            try
+            {
+                Assert.Fail("Ultimare i test.");
+                /*
+                 * La stored procedure sembra funzionare
+                 * Ho aggiunto all'inizio un controllo di coerenza in modo da verificare che gli id delle serie che mi sono stati passati facciano parte del workout e del workoutplan che mi vengono passati contestualmente
+                 */
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using bb_project.Infrastructure.DAL.Models;
 using bb_project.Infrastructure.Models.Data;
+using bb_project.Infrastructure.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,5 +34,13 @@ namespace bb_project.Infrastructure.BLL
         Task<ulong> InsertExerciseDefinitionAsync(string userId, ExerciseDefinition exercise);
 
         Task<bool?> HasActiveWorkoutPlanAsync();
+
+        Task<int> UpdateWorkoutPlanAsync(ulong workoutPlanId, string userId, string workoutPlanName, bool isActive, bool isArchived);
+
+        Task<int> UpdateWorkoutAsync(ulong workoutPlanId, ulong workoutId, string workoutName, int order);
+
+        Task<int> UpdateExerciseDefinitionAsync(ulong exerciseId, string name, ExerciseType exerciseType, InvolvedMuscles involvedMuscles);
+
+        Task<int> DeleteWorkoutSeriesAsync(ulong workoutPlanId, ulong workoutId, params ulong[] seriesIds);
     }
 }

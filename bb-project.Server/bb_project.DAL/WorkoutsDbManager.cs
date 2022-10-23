@@ -61,7 +61,7 @@ namespace bb_project.DAL
         {
             var parameters = new DynamicParameters();
             parameters.Add("userId", userId);
-            return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<ExerciseDbRecord>("spr_GetExercises", param: parameters, commandType: CommandType.StoredProcedure));
+            return await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync<ExerciseDbRecord>("spr_GetExercisesDefinitions", param: parameters, commandType: CommandType.StoredProcedure));
         }
 
         public async Task<bool> HasActiveWorkoutPlanAsync()
@@ -172,37 +172,9 @@ namespace bb_project.DAL
                 await ConnectionHelper.ConnectAsync(this.connectionString, c => c.QueryAsync("spw_InsertWorkoutSeries", parameters, commandType: CommandType.StoredProcedure));
                 serie.Id = (ulong)parameters.Get<long>("serieId");
             }
-            //using (var conn = new SqlConnection(this.connectionString))
-            //{
-            //    DataTable tbl = new DataTable();
-            //    tbl.Columns.Add(new DataColumn("Reps", typeof(int)));
-            //    tbl.Columns.Add(new DataColumn("Rest", typeof(int)));
-            //    tbl.Columns.Add(new DataColumn("fk_WorkoutId", typeof(ulong)));
-            //    tbl.Columns.Add(new DataColumn("fk_ExerciseId", typeof(ulong)));
-
-            //    var objbulk = new SqlBulkCopy(conn);
-            //    objbulk.DestinationTableName = "tbl_Serie";
-            //    objbulk.ColumnMappings.Add("Reps", "Reps");
-            //    objbulk.ColumnMappings.Add("Rest", "Rest");
-            //    objbulk.ColumnMappings.Add("fk_WorkoutId", "fk_WorkoutId");
-            //    objbulk.ColumnMappings.Add("fk_ExerciseId", "fk_ExerciseId");
-
-            //    foreach (var serie in series)
-            //    {
-            //        DataRow dr = tbl.NewRow();
-            //        dr["Reps"] = serie.Reps;
-            //        dr["Rest"] = serie.Rest;
-            //        dr["fk_WorkoutId"] = serie.WorkoutId;
-            //        dr["fk_ExerciseId"] = serie.OwnerExerciseId;
-
-            //        tbl.Rows.Add(dr);
-            //    }
-
-            //    objbulk.WriteToServer(tbl);
-            //}
         }
 
-        public async Task<ulong> InsertExerciseAsync(string userId, ExerciseDbRecord exercise)
+        public async Task<ulong> InsertExerciseDefinitionAsync(string userId, ExerciseDbRecord exercise)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
@@ -212,7 +184,7 @@ namespace bb_project.DAL
                 parameters.Add("involvedMuscles", exercise.InvolvedMuscles, dbType: DbType.Int16);
                 parameters.Add("userId", userId);
                 parameters.Add("exerciseId", dbType: DbType.Int64, direction: ParameterDirection.Output);
-                await conn.QueryAsync("spw_InsertExercise", parameters, commandType: CommandType.StoredProcedure);
+                await conn.QueryAsync("spw_InsertExerciseDefinition", parameters, commandType: CommandType.StoredProcedure);
                 return (ulong)parameters.Get<long>("@exerciseId");
             }
         }
@@ -220,7 +192,7 @@ namespace bb_project.DAL
         public async Task<int> UpdateWorkoutPlanAsync(ulong workoutPlanId, string userId, string workoutPlanName, bool isActive, bool isArchived)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("workoutPlanId", workoutPlanId);
+            parameters.Add("workoutPlanId", (long)workoutPlanId);
             parameters.Add("userId", userId);
             parameters.Add("workoutPlanName", workoutPlanName);
             parameters.Add("isActive", isActive);
@@ -232,30 +204,30 @@ namespace bb_project.DAL
         public async Task<int> UpdateWorkoutAsync(ulong workoutPlanId, ulong workoutId, string workoutName, int order)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("workoutPlanId", workoutPlanId);
-            parameters.Add("workoutId", workoutId);
+            parameters.Add("workoutPlanId", (long)workoutPlanId);
+            parameters.Add("workoutId", (long)workoutId);
             parameters.Add("workoutName", workoutName);
             parameters.Add("order", order);
             var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_UpdateWorkout", param: parameters, commandType: CommandType.StoredProcedure));
             return updatedRecordsCount;
         }
 
-        public async Task<int> UpdateExerciseAsync(ulong exerciseId, string name, int exerciseType, int involvedMuscles)
+        public async Task<int> UpdateExerciseDefinitionAsync(ulong exerciseId, string name, int exerciseType, int involvedMuscles)
         {
             DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("exerciseId", exerciseId);
+            parameters.Add("exerciseId", (long)exerciseId);
             parameters.Add("name", name);
             parameters.Add("type", exerciseType);
             parameters.Add("involvedMuscles", involvedMuscles);
-            var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_UpdateExercise", param: parameters, commandType: CommandType.StoredProcedure));
+            var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_UpdateExerciseDefinition", param: parameters, commandType: CommandType.StoredProcedure));
             return updatedRecordsCount;
         }
 
         public async Task<int> DeleteWorkoutSeriesAsync(ulong workoutPlanId, ulong workoutId, params ulong[] seriesIds)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("workoutPlanId", workoutPlanId);
-            parameters.Add("workoutId", workoutId);
+            parameters.Add("workoutPlanId", (long)workoutPlanId);
+            parameters.Add("workoutId", (long)workoutId);
             parameters.Add("serieIds", this.createIdsTable(seriesIds));
 
             var updatedRecordsCount = await ConnectionHelper.ConnectAsync(this.connectionString, c => c.ExecuteAsync("spw_DeleteWorkoutSeries", param: parameters, commandType: CommandType.StoredProcedure));
