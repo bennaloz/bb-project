@@ -163,7 +163,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         private async Task ShowExercises(WorkoutEditorListItemViewModel item)
         {
-            var seriesGroup = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(item.Id, "Pigna");
+            var seriesGroup = await this.workoutDataStore.GetWorkoutExercisesGroupsAsync(item.Id, "Pigna");
             foreach (var sg in seriesGroup)
             {
                 List<string> names = new List<string>();

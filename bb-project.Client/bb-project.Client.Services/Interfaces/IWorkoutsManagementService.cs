@@ -13,13 +13,13 @@ namespace bb_project.Client.Services
 
         Task<IEnumerable<Workout>> GetWorkoutsAsync(ulong workoutPlanId, ulong? workoutId = null);
 
-        Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId);
+        Task<IEnumerable<ExerciseGroup>> GetWorkoutExercisesGroupsAsync(ulong workoutId, string userId);
 
         Task<ulong> InsertWorkoutPlanAsync(string workoutPlanName,ulong id , bool isActive = false);
 
         Task<ulong> InsertWorkoutAsync(ulong workoutPlanId, string workoutName);
 
-        Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups);
+        Task InsertExercisesGroupsAsync(ulong workoutId, IEnumerable<ExerciseGroup> exercisesGroups);
 
         Task<IEnumerable<Workout>> GetActiveWorkoutsAsync();
 

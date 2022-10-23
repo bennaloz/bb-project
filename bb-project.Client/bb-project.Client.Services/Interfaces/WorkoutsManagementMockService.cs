@@ -114,7 +114,7 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task InsertSeriesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups)
+        public Task InsertExercisesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups)
         {
             throw new NotImplementedException();
         }

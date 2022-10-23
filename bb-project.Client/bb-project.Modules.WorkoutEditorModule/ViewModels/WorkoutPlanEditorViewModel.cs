@@ -174,7 +174,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
             foreach (var workout in asyncWorkouts)
             {
-                var seriesGroups = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(workout.Id, "Pigna");
+                var seriesGroups = await this.workoutDataStore.GetWorkoutExercisesGroupsAsync(workout.Id, "Pigna");
 
 
                 var tmp = new WorkoutItemViewModel

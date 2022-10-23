@@ -61,7 +61,7 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
 
                 this.WorkoutName = nextWorkout.Name;
 
-                var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutSeriesGroupsAsync(nextWorkout.Id, userId);
+                var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutExercisesGroupsAsync(nextWorkout.Id, userId);
                 this.Exercises = nextWorkoutSeries.Select(ex =>
                 {
                     return new WorkoutExercise
