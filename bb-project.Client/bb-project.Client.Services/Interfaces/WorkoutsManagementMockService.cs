@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace bb_project.Client.Services
 {
+
     public class WorkoutsManagementMockService : IWorkoutsManagementService
     {
-
-
+        IEnumerable<ExerciseGroup> exerciseGroups;
         IEnumerable<Workout> workouts;
-        IEnumerable<SeriesGroup> seriesGroups;
         IEnumerable<WorkoutPlan> plans;
         Dictionary<ulong, IEnumerable<Workout>> workoutPlanChildren;
         public WorkoutsManagementMockService()
@@ -32,24 +31,12 @@ namespace bb_project.Client.Services
                 new Workout(3) { Name ="Scheda C"}
             };
 
-            var seriesGroup1 = new SeriesGroup(1, ExerciseMethodology.Single);
-            seriesGroup1.Series.Add(new Serie(1, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 10 , Rest = new TimeSpan(0,1,30) });
-            seriesGroup1.Series.Add(new Serie(2, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 8, Rest = new TimeSpan(0, 1, 30) });
-            seriesGroup1.Series.Add(new Serie(3, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 8, Rest = new TimeSpan(0, 1, 30) }) ;
-            seriesGroup1.Series.Add(new Serie(4, new ExerciseDefinition(1) { Name = "Panca Piana", Type = ExerciseType.Weights }) { Reps = 6, Rest = new TimeSpan(0, 3, 0) });
 
-            var seriesGroup2 = new SeriesGroup(2, ExerciseMethodology.JumpSet);
-            seriesGroup2.Series.Add(new Serie(5, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }) { Reps = 4, Rest = new TimeSpan(0, 1, 30) });
-            seriesGroup2.Series.Add(new Serie(6, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }) { Rest = new TimeSpan(0, 10, 0) });
-            seriesGroup2.Series.Add(new Serie(7, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }) { Reps = 4, Rest = new TimeSpan(0, 2, 30) });
-            seriesGroup2.Series.Add(new Serie(8, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }) { Rest = new TimeSpan(0, 5, 30) }); 
-            seriesGroup2.Series.Add(new Serie(9, new ExerciseDefinition(1) { Name = "Squat", Type = ExerciseType.Weights }) { Reps = 4, Rest = new TimeSpan(0, 1, 30) });
-            seriesGroup2.Series.Add(new Serie(10, new ExerciseDefinition(1) { Name = "Tapis Roulant", Type = ExerciseType.Cardio }) { Rest = new TimeSpan(0, 5, 30) });
-            this.seriesGroups = new ObservableCollection<SeriesGroup>()
-            {
-                seriesGroup1,
-                seriesGroup2
-            };
+            ExerciseGroup benchGroup = BenchGroupFiller();
+            ExerciseGroup rowSquatGroup = RowSquatGroupFiller();
+
+            this.exerciseGroups = new List<ExerciseGroup>() { benchGroup, rowSquatGroup };
+
 
             this.workoutPlanChildren = new Dictionary<ulong, IEnumerable<Workout>>();
             foreach (var item in this.plans)
@@ -65,6 +52,63 @@ namespace bb_project.Client.Services
 
         }
 
+        private static ExerciseGroup RowSquatGroupFiller()
+        {
+            ExerciseGroup rowSquatGroup = new ExerciseGroup(2, ExerciseMethodology.SuperSet);
+            List<Serie> squatSerie = new List<Serie>()
+            {
+                new Serie(1) { Reps = 8, Rest = new TimeSpan(0,1,30) },
+                new Serie(1) { Reps = 8, Rest = new TimeSpan(0,1,30) },
+                new Serie(1) { Reps = 8, Rest = new TimeSpan(0,1,30) },
+            };
+
+            List<Serie> rowSerie = new List<Serie>()
+            {
+                new Serie(1) { Reps = 10, Rest = new TimeSpan(0,1,30) },
+                new Serie(1) { Reps = 10, Rest = new TimeSpan(0,1,30) },
+                new Serie(1) { Reps = 10, Rest = new TimeSpan(0,1,30) },
+            };
+
+            Exercise squatExercise = new Exercise(new ExerciseDefinition(2)
+            {
+                InvolvedMuscles = InvolvedMuscles.Quadriceps,
+                Name = "Squat",
+                Type = ExerciseType.Weights
+            });
+            squatExercise.Series.AddRange(squatSerie);
+
+            Exercise rowExercise = new Exercise(new ExerciseDefinition(2)
+            {
+                InvolvedMuscles = InvolvedMuscles.Quadriceps,
+                Name = "Row",
+                Type = ExerciseType.Weights
+            });
+            rowExercise.Series.AddRange(rowSerie);
+            
+            rowSquatGroup.Exercises.Add(3, squatExercise);
+            rowSquatGroup.Exercises.Add(4, rowExercise);
+            
+            return rowSquatGroup;
+        }
+
+        private static ExerciseGroup BenchGroupFiller()
+        {
+            ExerciseGroup benchGroup;
+            List<Serie> benchGroupSeries = new List<Serie>()
+            {
+                new Serie(1) { Reps = 10, Rest = new TimeSpan(0,1,30) },
+                new Serie(1) { Reps = 8, Rest = new TimeSpan(0,1,30) },
+                new Serie(1) { Reps = 6, Rest = new TimeSpan(0,1,30) },
+            };
+
+            Exercise benchGroupExercise = new Exercise(new ExerciseDefinition()
+            { Name = "Bench Press", Type = ExerciseType.Weights, InvolvedMuscles = InvolvedMuscles.Pectorals });
+            benchGroupExercise.Series.AddRange(benchGroupSeries);
+
+            benchGroup = new ExerciseGroup(1, ExerciseMethodology.Single);
+            benchGroup.Exercises.Add(1, benchGroupExercise);
+            return benchGroup;
+        }
 
         public async Task<IEnumerable<Workout>> GetActiveWorkoutsAsync()
         {
@@ -73,7 +117,12 @@ namespace bb_project.Client.Services
 
         public Task<Workout> GetNextWorkoutAsync(string userId, ulong activeWorkoutPlanId)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(workouts.First());
+        }
+
+        public async Task<IEnumerable<ExerciseGroup>> GetWorkoutExercisesGroupsAsync(ulong workoutId, string userId)
+        {
+            return await Task.FromResult(this.exerciseGroups);
         }
 
         public Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, ulong? workoutPlanId = null, ulong? workoutId = null, DateTime from = default, DateTime to = default)
@@ -99,14 +148,11 @@ namespace bb_project.Client.Services
             return await Task.FromResult(result);
         }
 
-        public async Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId)
-        {
-            return await Task.FromResult(seriesGroups);
-        }
+        
 
         public async Task<bool?> HasActiveWorkoutPlanAsync()
         {
-            return await Task.FromResult(this.plans.ToList().First(o => o.IsActive) != default); 
+            return await Task.FromResult(this.plans.ToList().First(o => o.IsActive) != default);
         }
 
         public Task<ulong> InsertExerciseDefinitionAsync(ExerciseDefinition exercise)
@@ -114,7 +160,8 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task InsertExercisesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups)
+
+        public Task InsertExercisesGroupsAsync(ulong workoutId, IEnumerable<ExerciseGroup> exercisesGroups)
         {
             throw new NotImplementedException();
         }
@@ -124,13 +171,13 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task<ulong> InsertWorkoutPlanAsync(string workoutPlanName,ulong id, bool isActive = false)
+        public Task<ulong> InsertWorkoutPlanAsync(string workoutPlanName, ulong id, bool isActive = false)
         {
             var plan = plans.First(o => o.Id == id);
-            
-            if(plan == default)
+
+            if (plan == default)
             {
-                plans.ToList().Add(new WorkoutPlan(id) { IsActive = isActive, Name= workoutPlanName});    
+                plans.ToList().Add(new WorkoutPlan(id) { IsActive = isActive, Name = workoutPlanName });
             }
             else
             {
@@ -138,7 +185,7 @@ namespace bb_project.Client.Services
             }
 
             return Task.FromResult((ulong)0);
-        
+
         }
     }
 }

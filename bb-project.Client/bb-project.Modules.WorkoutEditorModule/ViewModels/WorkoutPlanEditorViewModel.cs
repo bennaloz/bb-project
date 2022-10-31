@@ -184,10 +184,10 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                 };
                 foreach (var serieGroup in seriesGroups)
                 {
-                    foreach (var exInfo in GetExerciseFormat(serieGroup))
-                    {
-                        tmp.ExercisesInfo.Add(exInfo.Key,exInfo.Value);
-                    }
+                    //foreach (var exInfo in GetExerciseFormat(serieGroup))
+                    //{
+                    //    tmp.ExercisesInfo.Add(exInfo.Key,exInfo.Value);
+                    //}
 
                 }
                 this.Workouts.Add(tmp);
@@ -197,51 +197,51 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
 
 
-        private Dictionary<string, string> GetExerciseFormat(SeriesGroup serieGroup)
-        {
-            Dictionary<string, string> exercisesInfo = new Dictionary<string, string>();
-            string result= string.Empty;
-            if(serieGroup.ExerciseMethod!= ExerciseMethodology.Single)
-            {
-                result += $"{serieGroup.ExerciseMethod}\n";
+        //private Dictionary<string, string> GetExerciseFormat(SeriesGroup serieGroup)
+        //{
+        //    Dictionary<string, string> exercisesInfo = new Dictionary<string, string>();
+        //    string result= string.Empty;
+        //    if(serieGroup.ExerciseMethod!= ExerciseMethodology.Single)
+        //    {
+        //        result += $"{serieGroup.ExerciseMethod}\n";
 
-            }
-            foreach (var serie in serieGroup.Series)
-            {
-
-
-                if(!exercisesInfo.ContainsKey(serie.ExerciseDefinition.Name))
-                {
-                    exercisesInfo.Add(serie.ExerciseDefinition.Name, string.Empty);
-                }
-                string detail = string.Empty;
-
-                switch (serie.ExerciseDefinition.Type)
-                {
-                    case ExerciseType.Cardio:
-                        detail = $"{serie.Rest.Minutes:00}:{serie.Rest.Seconds:00}  ";
-                        break;
-                    case ExerciseType.Weights:
-                        detail = $"{serie.Reps}  ";
-                        break;
-                    default:
-                        break;
-                }
+        //    }
+        //    foreach (var serie in serieGroup.Series)
+        //    {
 
 
-                exercisesInfo[serie.ExerciseDefinition.Name] += $"{detail}";
-            }
+        //        if(!exercisesInfo.ContainsKey(serie.ExerciseDefinition.Name))
+        //        {
+        //            exercisesInfo.Add(serie.ExerciseDefinition.Name, string.Empty);
+        //        }
+        //        string detail = string.Empty;
+
+        //        switch (serie.ExerciseDefinition.Type)
+        //        {
+        //            case ExerciseType.Cardio:
+        //                detail = $"{serie.Rest.Minutes:00}:{serie.Rest.Seconds:00}  ";
+        //                break;
+        //            case ExerciseType.Weights:
+        //                detail = $"{serie.Reps}  ";
+        //                break;
+        //            default:
+        //                break;
+        //        }
 
 
-            foreach (var info in exercisesInfo)
-            {
-                result += $"{info.Key.ToUpper()}\t\t" +
-                    $"{info.Value}\n";
-            }
-            result += "\n";
+        //        exercisesInfo[serie.ExerciseDefinition.Name] += $"{detail}";
+        //    }
 
-            return exercisesInfo;
-        }
+
+        //    foreach (var info in exercisesInfo)
+        //    {
+        //        result += $"{info.Key.ToUpper()}\t\t" +
+        //            $"{info.Value}\n";
+        //    }
+        //    result += "\n";
+
+        //    return exercisesInfo;
+        //}
 
         public bool IsNavigationTarget(INavigationContext navigationContext)
         {

@@ -3,25 +3,70 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="bb_project.Client.Modules.HomeModule.Views.StartWorkoutView"
                xmlns:prism="http://prismlibrary.com">
-  <ContentView.Content>
-        <Grid>
+    <ContentView.Content>
+        <Grid >
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="75*"/>
+                <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <Label Text="Next workout:" />
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="5*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="{Binding WorkoutPlanName, FallbackValue=WorkoutPlan}" />
-                <Label Grid.Column="1"
-                       Text="{Binding WorkoutName, FallbackValue=WorkoutName}" />
-            </Grid>
-            <Button Grid.Row="3" Command="{Binding StartWorkoutCommand}" Text="Start your workout"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"  Text="Next workout:"  FontAttributes="Bold" FontSize="Medium"/>
+
+            <Label Grid.Row="1" Text="{Binding WorkoutPlanName, FallbackValue=WorkoutPlan}" VerticalOptions="Center" FontAttributes="Bold" FontSize="Medium" />
+            <Label Grid.Row="2"
+                       Text="{Binding WorkoutName, FallbackValue=WorkoutName}" VerticalOptions="Center" FontAttributes="Bold" FontSize="Medium" />
+
+            <CollectionView Grid.Row="3"  ItemsSource="{Binding Exercises, Mode=OneWay, UpdateSourceEventName=PropertyChanged}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <Frame BorderColor="Black">
+                                <StackLayout Orientation="Vertical" BindableLayout.ItemsSource="{Binding ViewExercises}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <ContentView>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="5*"/>
+                                                            <ColumnDefinition Width="2*"/>
+                                                            <ColumnDefinition Width="3*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Label Grid.Column="0" Text="{Binding ExerciseName}" FontAttributes="Bold" FontSize="Medium" />
+                                                        <Label Grid.Column="1">
+                                                            <Label.FormattedText>
+                                                                <FormattedString>
+                                                                    <Span Text="{Binding SeriesNumber }" TextColor="Blue" FontAttributes="Bold" FontSize="Medium" />
+                                                                    <Span Text=" x " TextColor="Blue" FontAttributes="Bold" FontSize="Medium"/>
+                                                                    <Span Text="{Binding Reps}" TextColor="Blue" FontAttributes="Bold" FontSize="Medium"/>
+                                                                </FormattedString>
+                                                            </Label.FormattedText>
+                                                        </Label>
+                                                        <Label Grid.Column="2" Text="{Binding Rest}" TextColor="Red" FontAttributes="Bold" FontSize="Medium"/>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </ContentView>
+
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Grid.Row="4" Command="{Binding StartWorkoutCommand}" Text="Start your workout"/>
         </Grid>
-  </ContentView.Content>
+    </ContentView.Content>
 </ContentView>

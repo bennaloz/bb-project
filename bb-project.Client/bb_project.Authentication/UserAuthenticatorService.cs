@@ -9,7 +9,7 @@ namespace bb_project.Authentication
     {
         public bool Authenticated => throw new NotImplementedException();
 
-        public string UserId => throw new NotImplementedException();
+        public string UserId => "Pigna";
 
         public async Task<bool> AuthenticateAsync()
         {

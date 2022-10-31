@@ -13,36 +13,29 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule.ViewModels
     internal class WeightsExerciseViewModel : BindableBase
     {
         private readonly IWorkoutsManagementService dataStore;
-        private readonly Serie serie;
 
         public string Reps
         {
-            get { return serie.Reps.ToString(); }
+            get { return ""; }
         }
 
         public string Rest
         {
             get
             {
-                TimeSpan t = serie.Rest;
-
-                return string.Format("{0:D2}m:{1:D2}s",
-                                t.Minutes,
-                                t.Seconds);
+               return "";
             }
         }
 
         public string Name
         {
-            get { return serie.ExerciseDefinition.Name; }
+            get { return ""; }
         }
 
 
         public WeightsExerciseViewModel(IWorkoutsManagementService dataStore)
         {
             this.dataStore = dataStore;
-
-            //serie = this.dataStore.GetWorkoutSeriesAsync(1,"a").GetAwaiter().GetResult().ToList().First();
 
         }
 

@@ -170,14 +170,14 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                 int numberOfSeries = 0;
                 int differentExercises = 0;
                 string name = string.Empty;
-                foreach (var serie in sg.Series)
-                {
-                    if (!name.Contains(serie.ExerciseDefinition.Name))
-                    {
-                        name += serie.ExerciseDefinition.Name + "\n";
-                        differentExercises++;
-                    }
-                }
+                //foreach (var serie in sg.Series)
+                //{
+                //    if (!name.Contains(serie.ExerciseDefinition.Name))
+                //    {
+                //        name += serie.ExerciseDefinition.Name + "\n";
+                //        differentExercises++;
+                //    }
+                //}
                 this.Items.Add(new WorkoutEditorListItemViewModel { Id = sg.Id, Name = name });
 
             }

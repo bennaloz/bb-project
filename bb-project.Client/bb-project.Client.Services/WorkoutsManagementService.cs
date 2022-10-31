@@ -41,6 +41,11 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<ExerciseGroup>> GetWorkoutExercisesGroupsAsync(ulong workoutId, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<WorkoutHistoryItem>> GetWorkoutHistoryItems(string userId, ulong? workoutPlanId = null, ulong? workoutId = null, DateTime from = default, DateTime to = default)
         {
             throw new NotImplementedException();
@@ -71,11 +76,6 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<SeriesGroup>> GetWorkoutSeriesGroupsAsync(ulong workoutId, string userId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<bool?> HasActiveWorkoutPlanAsync()
         {
             try
@@ -99,7 +99,7 @@ namespace bb_project.Client.Services
             throw new NotImplementedException();
         }
 
-        public Task InsertExercisesGroupsAsync(ulong workoutId, IEnumerable<SeriesGroup> seriesGroups)
+        public Task InsertExercisesGroupsAsync(ulong workoutId, IEnumerable<ExerciseGroup> exercisesGroups)
         {
             throw new NotImplementedException();
         }

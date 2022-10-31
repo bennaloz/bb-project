@@ -32,8 +32,7 @@
     </ContentView.Resources>
     
     <ContentView.Content>
-      
-      <!--//TODO: display workouts-->
+        <!--//TODO: display workouts-->
         <StackLayout Orientation="Vertical">
 
             <CollectionView  SelectionMode="Single" HeightRequest="400" ItemsSource="{Binding WorkoutPlans}" SelectedItem="{Binding SelectedWorkoutPlan, Mode=TwoWay}">
