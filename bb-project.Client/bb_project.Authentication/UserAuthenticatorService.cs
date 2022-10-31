@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bb_project.Authentication
+namespace bb_project.Client.Authentication
 {
     public class UserAuthenticatorService : IUserAuthenticatorService
     {

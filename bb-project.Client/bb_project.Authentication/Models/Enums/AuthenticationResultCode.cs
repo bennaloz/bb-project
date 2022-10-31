@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace bb_project.Authentication.Models.Enums
+namespace bb_project.Client.Authentication.Models.Enums
 {
     public enum AuthenticationResultCode
     {

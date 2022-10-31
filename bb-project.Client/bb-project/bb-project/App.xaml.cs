@@ -1,6 +1,4 @@
-﻿
-
-using bb_project.Authentication;
+﻿using bb_project.Client.Authentication;
 using bb_project.Client.Services;
 using bb_project.Client.Views;
 using Prism.Ioc;

@@ -77,3 +77,5 @@
 /bb-project.Server/bb-project.Server.Tests/bin/Debug/net6.0
 /bb-project.Server/bb-project.Server.Tests/obj
 /bb-project.Server/bb-project.DB/bb-project.DB/bb-project.DB.jfm
+/bb-project.Client/bb_project.Authentication_/bin/Debug/netstandard2.1
+/bb-project.Client/bb_project.Authentication_

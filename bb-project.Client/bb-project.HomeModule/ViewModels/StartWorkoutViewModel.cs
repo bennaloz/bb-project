@@ -1,4 +1,4 @@
-﻿using bb_project.Authentication;
+﻿using bb_project.Client.Authentication;
 using bb_project.Client.Services;
 
 using bb_project.HomeModule.Models;
@@ -83,46 +83,53 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
 
         private async void InitializeProperties()
         {
-            var hasActiveWorkoutPlan = await this.workoutDataStore.HasActiveWorkoutPlanAsync();
-            if (hasActiveWorkoutPlan ?? false)
+            try
             {
-                var workoutPlans = await this.workoutDataStore.GetWorkoutPlansAsync();
-                var activeWOPlan = workoutPlans.FirstOrDefault(wop => wop.IsActive);
-                WorkoutPlanName = activeWOPlan?.Name;
-                var userId = this.userAuthenticator.UserId;
-                //var userWorkoutsHistory = await this.workoutDataStore.GetWorkoutHistoryItems(userId, workoutPlanId: activeWOPlan?.Id, from: DateTime.Now.AddDays(-14));
-                //var previousWorkoutId = (userWorkoutsHistory?.Count() ?? 0) > 0 ? userWorkoutsHistory.OrderBy(woh => woh.StartDate).Last().WorkoutId : 0;
-                var nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan?.Id ?? 0);
 
-
-                this.WorkoutName = nextWorkout.Name;
-
-                var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutExercisesGroupsAsync(nextWorkout.Id, userId);
-
-
-
-                foreach (var item in nextWorkoutSeries)
+                var hasActiveWorkoutPlan = await this.workoutDataStore.HasActiveWorkoutPlanAsync();
+                if (hasActiveWorkoutPlan ?? false)
                 {
-                    ViewGroupExercise viewGroup = new ViewGroupExercise();
-                    foreach (var ex in item.Exercises)
+                    var workoutPlans = await this.workoutDataStore.GetWorkoutPlansAsync();
+                    var activeWOPlan = workoutPlans.FirstOrDefault(wop => wop.IsActive);
+                    WorkoutPlanName = activeWOPlan?.Name;
+                    var userId = this.userAuthenticator.UserId;
+                    //var userWorkoutsHistory = await this.workoutDataStore.GetWorkoutHistoryItems(userId, workoutPlanId: activeWOPlan?.Id, from: DateTime.Now.AddDays(-14));
+                    //var previousWorkoutId = (userWorkoutsHistory?.Count() ?? 0) > 0 ? userWorkoutsHistory.OrderBy(woh => woh.StartDate).Last().WorkoutId : 0;
+                    var nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan?.Id ?? 0);
+
+
+                    this.WorkoutName = nextWorkout.Name;
+
+                    var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutExercisesGroupsAsync(nextWorkout.Id, userId);
+
+
+
+                    foreach (var item in nextWorkoutSeries)
                     {
-                        ViewExercise viewExercise = new ViewExercise();
-                        viewExercise.ExerciseName = ex.Value.Name;
-                        int seriesCount = 0;
-                        foreach (var serie in ex.Value.Series)
+                        ViewGroupExercise viewGroup = new ViewGroupExercise();
+                        foreach (var ex in item.Exercises)
                         {
-                            viewExercise.Reps = serie.Reps.ToString();
-                            viewExercise.Rest = serie.Rest.ToString();
-                            seriesCount++;
+                            ViewExercise viewExercise = new ViewExercise();
+                            viewExercise.ExerciseName = ex.Value.Name;
+                            int seriesCount = 0;
+                            foreach (var serie in ex.Value.Series)
+                            {
+                                viewExercise.Reps = serie.Reps.ToString();
+                                viewExercise.Rest = serie.Rest.ToString();
+                                seriesCount++;
+                            }
+                            viewExercise.SeriesNumber = seriesCount.ToString();
+                            viewGroup.ViewExercises.Add(viewExercise);
                         }
-                        viewExercise.SeriesNumber = seriesCount.ToString();
-                        viewGroup.ViewExercises.Add(viewExercise);
+
+                        this.Exercises.Add(viewGroup);
+
                     }
 
-                    this.Exercises.Add(viewGroup);
-
                 }
-
+            }
+            catch (Exception ex)
+            {
             }
         }
 
