@@ -148,7 +148,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
 
         private void goBackCommand()
         {
-            this.regionManager.RequestNavigate("EditorContentRegion", nameof(WorkoutEditorSummaryView));
+            //this.regionManager.RequestNavigate("EditorContentRegion", nameof(WorkoutEditorSummaryView));
         }
 
 

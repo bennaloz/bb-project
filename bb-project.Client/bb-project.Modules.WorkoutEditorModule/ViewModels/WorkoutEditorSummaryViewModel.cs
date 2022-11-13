@@ -87,7 +87,7 @@ namespace bb_project.Client.Modules.WorkoutEditorModule.ViewModels
                     NavigationParameters pars = new NavigationParameters();
                     pars.Add("workoutPlanId", this.SelectedItem.Id);
                     pars.Add("workoutPlanName", this.SelectedItem.Name);
-                    this.regionManager.RequestNavigate("EditorContentRegion", nameof(Views.WorkoutPlanEditorView), pars);
+                    //this.regionManager.RequestNavigate("EditorContentRegion", nameof(Views.WorkoutPlanEditorView), pars);
                     break;
                 case Infrastructure.Models.Enums.ViewState.Workout:
                     break;

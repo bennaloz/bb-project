@@ -3,4 +3,4 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.EditorMainContentView"
              xmlns:prism="http://prismlibrary.com"
-             prism:RegionManager.RegionName="EditorContentRegion" />
+            prism:RegionManager.RegionName="EditorContentRegion"/> 

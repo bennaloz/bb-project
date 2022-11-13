@@ -17,7 +17,8 @@ namespace bb_project.Client.Modules.WorkoutEditorModule
         public void OnInitialized(IContainerProvider containerProvider)
         {
             this.regionManager.RegisterViewWithRegion("EditorMainPageRegion", nameof(EditorMainContentView));
-            this.regionManager.RegisterViewWithRegion("EditorContentRegion", nameof(WorkoutEditorSummaryView));
+            //this.regionManager.RegisterViewWithRegion("EditorContentRegion", nameof(WorkoutEditorSummaryView));
+            this.regionManager.RegisterViewWithRegion("EditorContentRegion", nameof(WorkoutEditorView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -26,6 +27,8 @@ namespace bb_project.Client.Modules.WorkoutEditorModule
             containerRegistry.RegisterPopupDialogService();
             containerRegistry.RegisterForRegionNavigation<EditorMainContentView>(name: nameof(EditorMainContentView));
             containerRegistry.RegisterForRegionNavigation<WorkoutEditorSummaryView>(name: nameof(WorkoutEditorSummaryView));
+            containerRegistry.RegisterForRegionNavigation<WorkoutEditorView>(name: nameof(WorkoutEditorView));
+            containerRegistry.RegisterForRegionNavigation<EditSpecificWorkoutView>(name: nameof(EditSpecificWorkoutView));
             containerRegistry.RegisterForRegionNavigation<WorkoutPlanEditorView, WorkoutPlanEditorViewModel>(name: nameof(WorkoutPlanEditorView));
             containerRegistry.RegisterForNavigation<PopupSummaryExerciseView, PopupSummaryExerciseViewModel>();
         }

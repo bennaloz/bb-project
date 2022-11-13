@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:tk="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="bb_project.Client.Modules.WorkoutEditorModule.Views.WorkoutEditorView"
+             x:Name="root">
+
+    <ScrollView>
+        <Frame BorderColor="Black">
+            <StackLayout Orientation="Vertical"  BindableLayout.ItemsSource="{Binding PlanStructures}" >
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <tk:Expander>
+                            
+                            <tk:Expander.Header>
+                                <Frame CornerRadius="2" BackgroundColor="LightGray">
+                                    <Label Grid.Row="0" Text="{Binding WorkoutPlan.Name}" FontSize="Medium" FontAttributes="Bold"/>
+                                </Frame>
+                            </tk:Expander.Header>
+
+                            <tk:Expander.Content>
+                                <StackLayout BindableLayout.ItemsSource="{Binding Workouts}"  Orientation="Vertical">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <tk:Expander>
+                                                <tk:Expander.Header>
+                                                    <Frame  BackgroundColor="White" CornerRadius="2">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="9*"/>
+                                                                <ColumnDefinition Width="1*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Label Text="{Binding Workout.Name}" FontSize="Medium" Grid.Column="0" FontAttributes="Bold"/>
+                                                            <ImageButton Grid.Column="1" VerticalOptions="Start" Source="Edit.png" BackgroundColor="Transparent" HeightRequest="40" 
+                                                                         Command="{Binding BindingContext.EditWorkoutCommand, Source={x:Reference root}}" CommandParameter="{Binding}"/>
+                                                        </Grid>
+                                                    </Frame>
+                                                </tk:Expander.Header>
+
+                                                <tk:Expander.Content>
+                                                    <Frame BackgroundColor="LightGray" CornerRadius="2">
+                                                        <StackLayout BindableLayout.ItemsSource="{Binding ExGroups}"  Orientation="Vertical">
+                                                            <BindableLayout.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <StackLayout BindableLayout.ItemsSource="{Binding Exercises}"  Orientation="Vertical">
+                                                                        <BindableLayout.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold"/>
+                                                                            </DataTemplate>
+                                                                        </BindableLayout.ItemTemplate>
+                                                                    </StackLayout>
+                                                                </DataTemplate>
+                                                            </BindableLayout.ItemTemplate>
+                                                        </StackLayout>
+                                                    </Frame>
+                                                </tk:Expander.Content>
+
+                                            </tk:Expander>
+
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+
+                            </tk:Expander.Content>
+
+                        </tk:Expander>
+
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </Frame>
+    </ScrollView>
+</ContentView>

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>$(MSBuildProjectName.Replace(" ", "_").Replace("-","_"))</RootNamespace>
+    <UserSecretsId>bc19e3ea-e238-4a20-ac9a-a546da5d9005</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,7 +47,13 @@
     <EmbeddedResource Update="Views\EditorMainContentView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\EditSpecificWorkoutView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\PopupSummaryExerciseView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\WorkoutEditorView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\WorkoutPlanEditorView.xaml">
