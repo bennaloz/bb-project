@@ -54,6 +54,7 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
         private readonly IEventAggregator eventAggregator;
         private readonly IWorkoutsManagementService workoutDataStore;
         private readonly IUserAuthenticatorService userAuthenticator;
+        private Workout nextWorkout;
 
         public ICommand StartWorkoutCommand { get; set; }
 
@@ -73,7 +74,11 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
 
             this.StartWorkoutCommand = new DelegateCommand(() =>
             {
-                this.eventAggregator.GetEvent<StartWorkoutEvent>().Publish();
+                this.eventAggregator.GetEvent<StartWorkoutEvent>().Publish(new StartWorkoutEvent.StartWorkoutEventData
+                {
+                    UserId = this.userAuthenticator.UserId,
+                    WorkoutId = this.nextWorkout.Id
+                });
             });
             this.Exercises = new ObservableCollection<ViewGroupExercise>();
 
@@ -95,14 +100,10 @@ namespace bb_project.Client.Modules.HomeModule.ViewModels
                     var userId = this.userAuthenticator.UserId;
                     //var userWorkoutsHistory = await this.workoutDataStore.GetWorkoutHistoryItems(userId, workoutPlanId: activeWOPlan?.Id, from: DateTime.Now.AddDays(-14));
                     //var previousWorkoutId = (userWorkoutsHistory?.Count() ?? 0) > 0 ? userWorkoutsHistory.OrderBy(woh => woh.StartDate).Last().WorkoutId : 0;
-                    var nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan?.Id ?? 0);
-
-
+                    this.nextWorkout = await this.workoutDataStore.GetNextWorkoutAsync(userId, activeWOPlan?.Id ?? 0);
                     this.WorkoutName = nextWorkout.Name;
 
                     var nextWorkoutSeries = await this.workoutDataStore.GetWorkoutExercisesGroupsAsync(nextWorkout.Id, userId);
-
-
 
                     foreach (var item in nextWorkoutSeries)
                     {

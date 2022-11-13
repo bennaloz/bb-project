@@ -2,19 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>bb_project.Client.Services</RootNamespace>
+    <RootNamespace>bb_project.Client.Data</RootNamespace>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="RestSharp" Version="108.0.1" />
+    <PackageReference Include="NuGet.Common" Version="6.4.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\bb-project.Infrastructure.Models\bb-project.Infrastructure.Models.csproj" />
-    <ProjectReference Include="..\bb-project.Client.Data\bb-project.Client.Data.csproj" />
   </ItemGroup>
 
 </Project>

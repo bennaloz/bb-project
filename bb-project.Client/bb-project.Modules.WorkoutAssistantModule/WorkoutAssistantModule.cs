@@ -10,7 +10,7 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule
 
     public class WorkoutAssistantModule : IModule
     {
-        public const string WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME = "MainWorkoutAssistantRegion";
+        internal const string WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME = "MainWorkoutAssistantRegion";
 
         private readonly IRegionManager regionManager;
 
@@ -21,14 +21,11 @@ namespace bb_project.Client.Modules.WorkoutAssistantModule
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            this.regionManager.RegisterViewWithRegion(WORKOUT_ASSISTANT_MODULE_MAIN_REGION_NAME, typeof(WorkoutPlanSummaryView));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForRegionNavigation<WorkoutAssistantView>(name: nameof(WorkoutAssistantView));
-            containerRegistry.RegisterForRegionNavigation<WorkoutPlanSummaryView>(name: nameof(WorkoutPlanSummaryView));
-            containerRegistry.RegisterForRegionNavigation<WorkoutExercisesView>(name: nameof(WorkoutExercisesView));
 
             containerRegistry.RegisterForRegionNavigation<CardioExerciseView>(name: nameof(CardioExerciseView));
             containerRegistry.RegisterForRegionNavigation<WeightsExerciseView>(name: nameof(WeightsExerciseView));

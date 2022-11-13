@@ -79,3 +79,5 @@
 /bb-project.Server/bb-project.DB/bb-project.DB/bb-project.DB.jfm
 /bb-project.Client/bb_project.Authentication_/bin/Debug/netstandard2.1
 /bb-project.Client/bb_project.Authentication_
+/bb-project.Client/bb-project.Client.Data/obj
+/bb-project.Client/bb-project.Client.Data/bin/Debug/netstandard2.1
