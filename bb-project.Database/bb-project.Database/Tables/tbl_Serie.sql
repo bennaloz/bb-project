@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[tbl_Serie]
+(
+	[Id] BIGINT NOT NULL PRIMARY KEY IDENTITY, 
+    [Reps] SMALLINT NOT NULL, 
+    [Rest] TIME(0) NULL, 
+    [fk_ExerciseId] BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_ExerciseDefinition(Id), 
+    [fk_WorkoutId] BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_Workout(Id), 
+)

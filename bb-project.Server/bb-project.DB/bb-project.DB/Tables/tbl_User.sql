@@ -1,5 +1,0 @@
-﻿CREATE TABLE [dbo].[tbl_User]
-(
-	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
-    [UserName] VARCHAR(50) NOT NULL
-)
