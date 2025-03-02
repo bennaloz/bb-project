@@ -1,13 +1,13 @@
-﻿using bb_project.Infrastructure.Models.Data;
-using bb_project.Infrastructure.Models.Enums;
+﻿using bb_project.app.Contracts.Models.Data;
+using bb_project.app.Contracts.Models.Enums;
 
-namespace bb_project.Infrastructure.DAL.Models
+namespace bb_project.app.DataAccess.Models
 {
     public class ExerciseDbRecord
     {
         public ulong Id { get; internal set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         public ExerciseType Type { get; set; }
 

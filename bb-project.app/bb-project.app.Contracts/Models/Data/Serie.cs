@@ -1,7 +1,4 @@
-﻿using bb_project.Infrastructure.Models.Enums;
-using System;
-
-namespace bb_project.app.Contracts.Models.Data
+﻿namespace bb_project.app.Contracts.Models.Data
 {
     public class Serie
     {

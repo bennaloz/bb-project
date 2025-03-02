@@ -1,9 +1,5 @@
 ﻿using bb_project.app.Contracts.Models.Data;
 using bb_project.app.Contracts.Models.Enums;
-using bb_project.Infrastructure.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace bb_project.app.Contracts.Interfaces
 {

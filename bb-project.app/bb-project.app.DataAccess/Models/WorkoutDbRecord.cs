@@ -1,15 +1,12 @@
-﻿using bb_project.Infrastructure.Models.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using bb_project.app.Contracts.Models.Data;
 
-namespace bb_project.Infrastructure.DAL.Models
+namespace bb_project.app.DataAccess.Models
 {
     public class WorkoutDbRecord
     {
         public ulong Id { get; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         public int Order { get; set; }
 

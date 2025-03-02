@@ -1,14 +1,9 @@
 ﻿using bb_project.DAL.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Data;
-using bb_project.Infrastructure.DAL.Models;
-using bb_project.Infrastructure.Models.Enums;
+using Dapper;
+using Microsoft.Data.SqlClient;
+using bb_project.app.DataAccess.Models;
+using bb_project.app.Contracts.Models.Enums;
 
 namespace bb_project.app.DataAccess
 {

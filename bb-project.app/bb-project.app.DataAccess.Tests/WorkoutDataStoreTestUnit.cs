@@ -1,6 +1,7 @@
+using bb_project.app.Contracts.Interfaces;
+using bb_project.app.Contracts.Models.Data;
+using bb_project.app.Contracts.Models.Enums;
 using bb_project.Infrastructure.BLL;
-using bb_project.Infrastructure.Models.Data;
-using bb_project.Infrastructure.Models.Enums;
 
 namespace bb_project.Server.Tests
 {

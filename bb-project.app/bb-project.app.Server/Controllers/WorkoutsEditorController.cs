@@ -1,5 +1,5 @@
-using bb_project.Infrastructure.BLL;
-using bb_project.Infrastructure.Models.Data;
+using bb_project.app.Contracts.Interfaces;
+using bb_project.app.Contracts.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 

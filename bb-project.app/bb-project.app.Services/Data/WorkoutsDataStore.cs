@@ -1,12 +1,8 @@
-﻿using bb_project.DAL;
-using bb_project.Infrastructure.DAL.Models;
-using bb_project.Infrastructure.Models.Data;
-using bb_project.Infrastructure.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using bb_project.app.Contracts.Interfaces;
+using bb_project.app.Contracts.Models.Data;
+using bb_project.app.Contracts.Models.Enums;
+using bb_project.app.DataAccess;
+using bb_project.app.DataAccess.Models;
 
 namespace bb_project.Infrastructure.BLL
 {

@@ -1,8 +1,7 @@
-﻿using bb_project.Infrastructure.Models.Data;
-using bb_project.Infrastructure.Models.Enums;
-using System;
+﻿using bb_project.app.Contracts.Models.Data;
+using bb_project.app.Contracts.Models.Enums;
 
-namespace bb_project.Infrastructure.DAL.Models
+namespace bb_project.app.DataAccess.Models
 {
     public class SerieDbRecord
     {
@@ -18,7 +17,7 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public ulong DefinitionExerciseId { get; set; }
 
-        public string DefinitionExerciseName { get; set; }
+        public string DefinitionExerciseName { get; set; } = "";
 
         public ExerciseMethodology ExerciseMethod { get; set; }
 

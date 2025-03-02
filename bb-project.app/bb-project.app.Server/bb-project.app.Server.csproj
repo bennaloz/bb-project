@@ -21,6 +21,7 @@
     <ProjectReference Include="..\bb-project.app.client\bb-project.app.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\bb-project.app.Contracts\bb-project.app.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

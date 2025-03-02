@@ -1,9 +1,6 @@
-﻿using bb_project.Infrastructure.Models.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using bb_project.app.Contracts.Models.Data;
 
-namespace bb_project.Infrastructure.DAL.Models
+namespace bb_project.app.DataAccess.Models
 {
     public class WorkoutHistoryDbRecord
     {
@@ -13,7 +10,7 @@ namespace bb_project.Infrastructure.DAL.Models
 
         public ulong WorkoutId { get; set; }
 
-        public string UserId { get; set; }
+        public string UserId { get; set; } = "";
 
         public static implicit operator WorkoutHistoryItem(WorkoutHistoryDbRecord historyDbRecord)
         {

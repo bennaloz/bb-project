@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\bb-project.app.Contracts\bb-project.app.Contracts.csproj" />
+    <ProjectReference Include="..\bb-project.app.DataAccess\bb-project.app.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
