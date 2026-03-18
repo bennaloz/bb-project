@@ -443,6 +443,20 @@ namespace bb_project.Server.Tests
         {
             try
             {
+                const int seriesCountToDelete = 2;
+
+                async Task<ulong[]> GetSeriesIdsToDeleteAsync(ulong workoutId)
+                {
+                    return (await this.workoutsDataStore.GetWorkoutExercisesAsync(workoutId, this.testUnitUserId))
+                        .SelectMany(g => g.Exercises.Values)
+                        .SelectMany(e => e.Series)
+                        .Select(s => s.Id)
+                        .Where(id => id > 0)
+                        .Distinct()
+                        .Take(seriesCountToDelete)
+                        .ToArray();
+                }
+
                 var woPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync()).FirstOrDefault();
                 if (woPlan == null)
                 {
@@ -457,14 +471,7 @@ namespace bb_project.Server.Tests
                     wo = (await this.workoutsDataStore.GetWorkoutsAsync(woPlan.Id, woId)).First();
                 }
 
-                var seriesIdsToDelete = (await this.workoutsDataStore.GetWorkoutExercisesAsync(wo.Id, this.testUnitUserId))
-                    .SelectMany(g => g.Exercises.Values)
-                    .SelectMany(e => e.Series)
-                    .Select(s => s.Id)
-                    .Where(id => id > 0)
-                    .Distinct()
-                    .Take(2)
-                    .ToArray();
+                var seriesIdsToDelete = await GetSeriesIdsToDeleteAsync(wo.Id);
 
                 if (!seriesIdsToDelete.Any())
                 {
@@ -486,20 +493,13 @@ namespace bb_project.Server.Tests
                     exerciseGroup.Exercises[exerciseDefinition.Id].Series.Add(new Serie { Reps = 8, Rest = TimeSpan.FromSeconds(60) });
                     await this.workoutsDataStore.InsertSeriesGroupsAsync(wo.Id, new[] { exerciseGroup });
 
-                    seriesIdsToDelete = (await this.workoutsDataStore.GetWorkoutExercisesAsync(wo.Id, this.testUnitUserId))
-                        .SelectMany(g => g.Exercises.Values)
-                        .SelectMany(e => e.Series)
-                        .Select(s => s.Id)
-                        .Where(id => id > 0)
-                        .Distinct()
-                        .Take(2)
-                        .ToArray();
+                    seriesIdsToDelete = await GetSeriesIdsToDeleteAsync(wo.Id);
                 }
 
-                Assert.IsTrue(seriesIdsToDelete.Length > 0);
+                Assert.IsTrue(seriesIdsToDelete.Length > 0, "No series IDs were found or created for deletion test.");
 
                 var deletedSeriesCount = await this.workoutsDataStore.DeleteWorkoutSeriesAsync(woPlan.Id, wo.Id, seriesIdsToDelete);
-                Assert.IsTrue(deletedSeriesCount > 0);
+                Assert.IsTrue(deletedSeriesCount > 0, "Expected at least one series to be deleted.");
 
                 var remainingSeriesIds = (await this.workoutsDataStore.GetWorkoutExercisesAsync(wo.Id, this.testUnitUserId))
                     .SelectMany(g => g.Exercises.Values)
@@ -509,7 +509,7 @@ namespace bb_project.Server.Tests
 
                 foreach (var seriesId in seriesIdsToDelete)
                 {
-                    Assert.IsFalse(remainingSeriesIds.Contains(seriesId));
+                    Assert.IsFalse(remainingSeriesIds.Contains(seriesId), $"Series ID {seriesId} should have been deleted but was found in remaining series.");
                 }
             }
             catch (Exception ex)
