@@ -1,4 +1,10 @@
-Welcome to Xamarin.Forms! Here are some tips to get started building your app.
+Welcome to Xamarin.Forms! This client is now considered legacy while the project moves to MAUI and a web app.
+
+New client projects:
+- /home/runner/work/bb-project/bb-project/bb-project.Client.MAUI
+- /home/runner/work/bb-project/bb-project/bb-project.WebApp
+
+Here are some tips if you still need to review the legacy Xamarin app.
 
 Building Your App UI
 --------------------
