@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "btNx9YMrhAY=",
+  "dgSpecHash": "sMN+pVR04lI=",
   "success": true,
   "projectFilePath": "/home/runner/work/bb-project/bb-project/bb-project.WebApp/bb-project.WebApp.csproj",
   "expectedPackageFiles": [
-    "/home/runner/.nuget/packages/prism.core/8.1.97/prism.core.8.1.97.nupkg.sha512"
+    "/tmp/codeql-scratch-8d9d7868ef85597a/dbs/csharp/working/packages/microsoft.netcore.app.ref/10.0.2/microsoft.netcore.app.ref.10.0.2.nupkg.sha512",
+    "/tmp/codeql-scratch-8d9d7868ef85597a/dbs/csharp/working/packages/microsoft.aspnetcore.app.ref/10.0.2/microsoft.aspnetcore.app.ref.10.0.2.nupkg.sha512",
+    "/tmp/codeql-scratch-8d9d7868ef85597a/dbs/csharp/working/packages/microsoft.netcore.app.host.linux-x64/10.0.2/microsoft.netcore.app.host.linux-x64.10.0.2.nupkg.sha512"
   ],
   "logs": []
 }
