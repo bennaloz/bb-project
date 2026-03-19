@@ -1,0 +1,45 @@
+name: Build MAUI iOS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Note: To sign and distribute the iOS app, add the following secrets to the repository:
+#   APPLE_CERTIFICATE_BASE64       - Base64-encoded Apple distribution certificate (.p12)
+#   APPLE_CERTIFICATE_PASSWORD     - Password for the distribution certificate
+#   APPLE_PROVISIONING_PROFILE     - Base64-encoded Apple provisioning profile (.mobileprovision)
+# Without these secrets, the build produces an unsigned archive suitable for simulator or
+# further signing outside of this workflow.
+
+jobs:
+  build-ios:
+    name: Build iOS
+    runs-on: macos-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install MAUI iOS workload
+        run: dotnet workload install maui-ios
+
+      - name: Restore dependencies
+        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj
+
+      - name: Build MAUI iOS (Release)
+        run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-ios -c Release
+
+      - name: Upload iOS build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: bb-project.Client.MAUI/bin/Release/net8.0-ios/
+          if-no-files-found: error

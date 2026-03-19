@@ -1,0 +1,38 @@
+name: Deploy Backend to Azure App Service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore dependencies
+        run: dotnet restore bb-project.app/bb-project.app.sln
+
+      - name: Build
+        run: dotnet build bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --no-restore --configuration Release
+
+      - name: Publish
+        run: dotnet publish bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --no-build --configuration Release --output ./publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'bb-project-api'
+          slot-name: 'Production'
+          package: ./publish
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_91706B8420444488A78CAB69A96544E2 }}
