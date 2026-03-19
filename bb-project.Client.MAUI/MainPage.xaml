@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bb_project.Client.MAUI.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="16">
+            <Label
+                Text="bb-project MAUI client"
+                FontSize="24"
+                FontAttributes="Bold" />
+            <Label
+                Text="This project replaces the Xamarin client and is ready for feature migration."
+                FontSize="16" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

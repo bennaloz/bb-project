@@ -443,11 +443,74 @@ namespace bb_project.Server.Tests
         {
             try
             {
-                Assert.Fail("Ultimare i test.");
-                /*
-                 * La stored procedure sembra funzionare
-                 * Ho aggiunto all'inizio un controllo di coerenza in modo da verificare che gli id delle serie che mi sono stati passati facciano parte del workout e del workoutplan che mi vengono passati contestualmente
-                 */
+                const int seriesCountToDelete = 2;
+
+                async Task<ulong[]> GetSeriesIdsToDeleteAsync(ulong workoutId)
+                {
+                    return (await this.workoutsDataStore.GetWorkoutExercisesAsync(workoutId, this.testUnitUserId))
+                        .SelectMany(g => g.Exercises.Values)
+                        .SelectMany(e => e.Series)
+                        .Select(s => s.Id)
+                        .Where(id => id > 0)
+                        .Distinct()
+                        .Take(seriesCountToDelete)
+                        .ToArray();
+                }
+
+                var woPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync()).FirstOrDefault();
+                if (woPlan == null)
+                {
+                    var woPlanId = await this.workoutsDataStore.InsertWorkoutPlanAsync(this.testUnitUserId, "DeleteSeriesTestPlan", isActive: true);
+                    woPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(id: woPlanId)).First();
+                }
+
+                var wo = (await this.workoutsDataStore.GetWorkoutsAsync(woPlan.Id)).FirstOrDefault();
+                if (wo == null)
+                {
+                    var woId = await this.workoutsDataStore.InsertWorkoutAsync(woPlan.Id, "DeleteSeriesTestWorkout", 1);
+                    wo = (await this.workoutsDataStore.GetWorkoutsAsync(woPlan.Id, woId)).First();
+                }
+
+                var seriesIdsToDelete = await GetSeriesIdsToDeleteAsync(wo.Id);
+
+                if (!seriesIdsToDelete.Any())
+                {
+                    var exerciseDefinition = (await this.workoutsDataStore.GetExerciseDefinitionsAsync(this.testUnitUserId)).FirstOrDefault();
+                    if (exerciseDefinition == null)
+                    {
+                        await this.workoutsDataStore.InsertExerciseDefinitionAsync(this.testUnitUserId, new ExerciseDefinition
+                        {
+                            Name = "DeleteSeriesTestExercise",
+                            Type = ExerciseType.Weights,
+                            InvolvedMuscles = InvolvedMuscles.Biceps
+                        });
+                        exerciseDefinition = (await this.workoutsDataStore.GetExerciseDefinitionsAsync(this.testUnitUserId)).First();
+                    }
+
+                    var exerciseGroup = new ExerciseGroup(ExerciseMethodology.Single);
+                    exerciseGroup.Exercises.Add(exerciseDefinition.Id, new Exercise(exerciseDefinition));
+                    exerciseGroup.Exercises[exerciseDefinition.Id].Series.Add(new Serie { Reps = 10, Rest = TimeSpan.FromSeconds(60) });
+                    exerciseGroup.Exercises[exerciseDefinition.Id].Series.Add(new Serie { Reps = 8, Rest = TimeSpan.FromSeconds(60) });
+                    await this.workoutsDataStore.InsertSeriesGroupsAsync(wo.Id, new[] { exerciseGroup });
+
+                    seriesIdsToDelete = await GetSeriesIdsToDeleteAsync(wo.Id);
+                }
+
+                Assert.IsTrue(seriesIdsToDelete.Length > 0, "No series IDs were found or created for deletion test.");
+
+                var deletedSeriesCount = await this.workoutsDataStore.DeleteWorkoutSeriesAsync(woPlan.Id, wo.Id, seriesIdsToDelete);
+                Assert.IsTrue(deletedSeriesCount > 0, "Expected at least one series to be deleted.");
+
+                var remainingSeriesIds = (await this.workoutsDataStore.GetWorkoutExercisesAsync(wo.Id, this.testUnitUserId))
+                    .SelectMany(g => g.Exercises.Values)
+                    .SelectMany(e => e.Series)
+                    .Select(s => s.Id)
+                    .ToHashSet();
+
+                foreach (var seriesId in seriesIdsToDelete)
+                {
+                    Assert.IsFalse(remainingSeriesIds.Contains(seriesId), $"Series ID {seriesId} should have been deleted but was found in remaining series.");
+                }
             }
             catch (Exception ex)
             {
