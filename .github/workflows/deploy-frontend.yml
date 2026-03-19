@@ -1,0 +1,59 @@
+# Deploy Frontend Workflow — deploys the Angular SPA to Azure Static Web Apps
+# Triggered on push to main.
+#
+# Required GitHub Secrets (Settings → Secrets and variables → Actions):
+#   AZURE_STATIC_WEB_APPS_API_TOKEN — Deployment token from Azure Portal
+#                                     (Static Web Apps → Overview → "Manage deployment token")
+
+name: Deploy Frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-frontend:
+    name: Build & Deploy Angular Frontend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js 20 for the Angular build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: bb-project.app/bb-project.app.client/package-lock.json
+
+      # 3. Install npm dependencies (clean install from package-lock.json)
+      - name: Install npm dependencies
+        run: npm ci
+        working-directory: bb-project.app/bb-project.app.client
+
+      # 4. Build the Angular app in production configuration.
+      #    Output is written to: dist/bb-project.app.client/browser (Angular 17+ default)
+      - name: Build Angular app (production)
+        run: npm run build -- --configuration production
+        working-directory: bb-project.app/bb-project.app.client
+
+      # 5. Deploy the built Angular app to Azure Static Web Apps.
+      #    - app_location: root of the Angular project (source files)
+      #    - output_location: folder containing the built files (relative to app_location)
+      #    - api_location: empty because the API is a separate Azure App Service
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          app_location: 'bb-project.app/bb-project.app.client'
+          output_location: 'dist/bb-project.app.client/browser'
+          api_location: ''
+          skip_app_build: true

@@ -1,0 +1,59 @@
+# Build MAUI Android Workflow — builds the .NET MAUI Android APK
+# Triggered on push to main and manually via workflow_dispatch.
+# The resulting APK can be downloaded from the Actions run artifacts
+# and sideloaded onto an Android device (enable "Install unknown apps" first).
+
+name: Build MAUI Android
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up .NET SDK (latest LTS — currently .NET 8)
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      # 3. Install the MAUI Android workload.
+      #    This downloads the Android SDK components required for .NET MAUI builds.
+      - name: Install MAUI Android workload
+        run: dotnet workload install maui-android
+
+      # 4. Set up Java 17, which is required by the Android build toolchain (Gradle).
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'microsoft'
+
+      # 5. Build the MAUI Android project in Release configuration.
+      #    Targets net8.0-android (the framework defined in the .csproj).
+      #    This generates an unsigned APK in the bin/Release/net8.0-android/ folder.
+      - name: Build MAUI Android (Release)
+        run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj \
+          -f net8.0-android \
+          --configuration Release
+
+      # 6. Upload the generated APK as a GitHub Actions artifact.
+      #    You can download it from the Actions run page → Artifacts → android-apk.
+      - name: Upload Android APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: bb-project.Client.MAUI/bin/Release/net8.0-android/**/*.apk
+          if-no-files-found: warn

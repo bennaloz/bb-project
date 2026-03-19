@@ -1,0 +1,99 @@
+# Deploy Backend Workflow — deploys the ASP.NET Core backend to Azure App Service
+# Triggered on push to main. Runs DB migrations via DbUp before deploying.
+#
+# Required GitHub Secrets (Settings → Secrets and variables → Actions):
+#   AZURE_WEBAPP_PUBLISH_PROFILE  — XML publish profile downloaded from Azure Portal
+#                                   (App Service → Overview → "Get publish profile")
+#   AZURE_SQL_CONNECTION_STRING   — Full Azure SQL connection string including password
+
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-backend:
+    name: Build, Migrate & Deploy Backend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up .NET SDK (latest LTS — currently .NET 8)
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      # 3. Restore NuGet packages for the entire solution
+      - name: Restore NuGet packages
+        run: dotnet restore bb-project.app/bb-project.app.sln
+
+      # 4. Build the solution in Release configuration
+      - name: Build solution (Release)
+        run: dotnet build bb-project.app/bb-project.app.sln --configuration Release --no-restore
+
+      # 5. Run database migrations via DbUp before deploying the app.
+      #    DbUp is integrated in the Server startup and is also triggered here
+      #    by running the published app once with a migration-only flag, OR
+      #    it runs automatically when the app starts on Azure App Service.
+      #    The connection string is injected via environment variable.
+      #    See bb-project.app.Server/MigrationRunner.cs for implementation details.
+      - name: Run database migrations (DbUp)
+        env:
+          ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        run: |
+          dotnet run --project bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj \
+            --configuration Release \
+            -- --migrate-only
+        continue-on-error: false
+
+      # 6. Publish the backend to a local folder for deployment
+      - name: Publish backend
+        run: dotnet publish bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj \
+          --configuration Release \
+          --no-restore \
+          -o ./publish
+
+      # 7. Copy SQL migration scripts into the publish output folder so that
+      #    MigrationRunner can find them at runtime (Migrations/Scripts/).
+      #    Scripts are sourced from bb-project.Database/bb-project.Database/.
+      #    This step runs after publish to ensure scripts are not overwritten.
+      - name: Copy migration scripts
+        run: |
+          mkdir -p ./publish/Migrations/Scripts
+          cp -r bb-project.Database/bb-project.Database/Tables/. ./publish/Migrations/Scripts/
+          cp -r bb-project.Database/bb-project.Database/StoredProcedures/. ./publish/Migrations/Scripts/
+
+      # 8. Deploy to Azure App Service using the publish profile secret.
+      #    The app is deployed to: https://bb-project-api.azurewebsites.net
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'bb-project-api'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./publish
+
+      # 9. Set the connection string as an App Setting on Azure App Service
+      #    so the running app can connect to Azure SQL without storing secrets in code.
+      #    The connection string can also be set manually in Azure Portal under
+      #    App Service → Configuration → Connection strings.
+      - name: Set Azure App Service connection string
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: 'bb-project-api'
+          connection-strings-json: |
+            [
+              {
+                "name": "DefaultConnection",
+                "value": "${{ secrets.AZURE_SQL_CONNECTION_STRING }}",
+                "type": "SQLAzure",
+                "slotSetting": false
+              }
+            ]

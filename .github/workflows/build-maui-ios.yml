@@ -1,0 +1,65 @@
+# Build MAUI iOS Workflow — builds the .NET MAUI iOS app
+# Triggered on push to main and manually via workflow_dispatch.
+# Requires macOS runner for Xcode toolchain (iOS builds cannot run on Linux/Windows).
+#
+# ⚠️  Apple signing certificates are NOT configured in this workflow.
+#     To produce a distributable signed IPA, configure these GitHub Secrets:
+#       APPLE_CERTIFICATE_BASE64      — Base64-encoded .p12 signing certificate
+#       APPLE_CERTIFICATE_PASSWORD    — Password for the .p12 certificate
+#       APPLE_PROVISIONING_PROFILE    — Base64-encoded .mobileprovision profile
+#     Without these, the build will succeed but produce an unsigned archive only
+#     (suitable for simulator or local testing via Xcode).
+
+name: Build MAUI iOS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    name: Build iOS App
+    runs-on: macos-latest
+    permissions:
+      contents: read
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up .NET SDK (latest LTS — currently .NET 8)
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      # 3. Install the MAUI iOS workload.
+      #    This downloads the iOS SDK components and bindings required for .NET MAUI iOS builds.
+      - name: Install MAUI iOS workload
+        run: dotnet workload install maui-ios
+
+      # 4. Build the MAUI iOS project in Release configuration.
+      #    Targets net8.0-ios (the framework defined in the .csproj).
+      #    Without signing certificates the output is an unsigned .app bundle.
+      #    To sign the build, install the certificate and provisioning profile
+      #    (see secrets listed above) and add codesign arguments here.
+      - name: Build MAUI iOS (Release)
+        run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj \
+          -f net8.0-ios \
+          --configuration Release \
+          -p:RuntimeIdentifier=ios-arm64
+
+      # 5. Upload the build output as a GitHub Actions artifact.
+      #    You can download it from the Actions run page → Artifacts → ios-build.
+      #    Note: Without signing the .ipa cannot be installed on a real device via TestFlight.
+      #    Configure the Apple signing secrets listed at the top of this file to produce
+      #    a fully signed distributable IPA.
+      - name: Upload iOS build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-build
+          path: bb-project.Client.MAUI/bin/Release/net8.0-ios/**/*.app
+          if-no-files-found: warn

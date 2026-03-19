@@ -1,0 +1,59 @@
+# CI Workflow — runs on Pull Requests targeting main or develop
+# Validates that the .NET solution builds and tests pass, and the Angular frontend compiles.
+# No deployment happens here — this is a safety gate for PRs.
+
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up .NET SDK (latest LTS — currently .NET 8)
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      # 3. Restore NuGet packages for the entire solution
+      - name: Restore NuGet packages
+        run: dotnet restore bb-project.app/bb-project.app.sln
+
+      # 4. Build the entire solution (no restore needed, already done above)
+      - name: Build solution
+        run: dotnet build bb-project.app/bb-project.app.sln --no-restore
+
+      # 5. Run unit tests in the DataAccess.Tests project
+      - name: Run tests
+        run: dotnet test bb-project.app/bb-project.app.DataAccess.Tests/bb-project.app.DataAccess.Tests.csproj --no-build --verbosity normal
+
+      # 6. Set up Node.js 20 for the Angular frontend
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: bb-project.app/bb-project.app.client/package-lock.json
+
+      # 7. Install npm dependencies (clean install from package-lock.json)
+      - name: Install npm dependencies
+        run: npm ci
+        working-directory: bb-project.app/bb-project.app.client
+
+      # 8. Build the Angular application to ensure it compiles successfully
+      - name: Build Angular app
+        run: npm run build
+        working-directory: bb-project.app/bb-project.app.client
