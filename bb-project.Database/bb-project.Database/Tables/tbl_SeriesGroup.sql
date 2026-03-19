@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[tbl_SeriesGroup]
+(
+    [Id] BIGINT NOT NULL PRIMARY KEY IDENTITY,
+    [ExerciseMethod] SMALLINT NOT NULL DEFAULT 1
+
+)
