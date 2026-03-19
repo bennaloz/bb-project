@@ -82,5 +82,6 @@
 /bb-project.Client/bb-project.Client.Data/obj
 /bb-project.Client/bb-project.Client.Data/bin/Debug/netstandard2.1
 /bb-project.app/.vs
-**/obj
+**/bin/
+**/obj/
 /bb-project.Database/.vs/bb-project.Database
