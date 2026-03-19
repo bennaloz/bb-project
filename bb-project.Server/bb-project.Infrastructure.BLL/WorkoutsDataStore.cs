@@ -72,7 +72,8 @@ namespace bb_project.Infrastructure.BLL
 
                 if (!groups[record.SeriesGroupId].Exercises.ContainsKey(record.DefinitionExerciseId))
                 {
-                    groups[record.SeriesGroupId].Exercises.Add(record.DefinitionExerciseId, new Exercise(record.DefinitionExerciseId, record.DefinitionExerciseName));
+                    groups[record.SeriesGroupId].Exercises.Add(record.DefinitionExerciseId,
+                        new Exercise(record.DefinitionExerciseId, record.DefinitionExerciseName, record.DefinitionExerciseType));
                 }
                 groups[record.SeriesGroupId].Exercises[record.DefinitionExerciseId].Series.Add((Serie)record);
             }
