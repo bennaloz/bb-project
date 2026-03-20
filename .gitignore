@@ -85,3 +85,21 @@
 **/bin/
 **/obj/
 /bb-project.Database/.vs/bb-project.Database
+
+# Visual Studio
+**/.vs/
+*.suo
+*.userosscache
+
+# Node
+node_modules/
+
+# Angular build
+dist/
+
+# .NET
+*.nupkg
+
+# MAUI / Android / iOS
+**/*.apk
+**/*.ipa

@@ -1,4 +1,3 @@
 <Solution>
   <Project Path="bb-project.Client.MAUI/bb-project.Client.MAUI.csproj" />
-  <Project Path="bb-project.Infrastructure.Models/bb-project.Infrastructure.Models.csproj" />
 </Solution>
