@@ -6,6 +6,7 @@ using bb_project.Infrastructure.BLL;
 namespace bb_project.Server.Tests
 {
     [TestClass]
+    [TestCategory("Integration")]
     public class WorkoutDataStoreTestUnit
     {
         private readonly IWorkoutsDataStore workoutsDataStore = new WorkoutsDataStore();
