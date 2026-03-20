@@ -103,3 +103,6 @@ dist/
 # MAUI / Android / iOS
 **/*.apk
 **/*.ipa
+
+# Angular client build artifacts
+bb-project.app/bb-project.app.client/obj*
