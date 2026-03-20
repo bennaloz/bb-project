@@ -1,0 +1,36 @@
+name: Build Angular
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: bb-project.app/bb-project.app.client/package-lock.json
+
+      - name: Install dependencies
+        working-directory: bb-project.app/bb-project.app.client
+        run: npm ci
+
+      - name: Build
+        working-directory: bb-project.app/bb-project.app.client
+        run: npm run build -- --configuration production
