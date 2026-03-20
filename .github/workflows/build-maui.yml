@@ -63,8 +63,8 @@ jobs:
       - name: Install MAUI iOS workload
         run: dotnet workload install maui-ios
 
-      - name: Restore (iOS only)
-        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -p:TargetFramework=net8.0-ios
+      - name: Restore (iOS simulator)
+        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -p:TargetFramework=net8.0-ios -p:RuntimeIdentifier=iossimulator-x64
 
       - name: Build iOS (simulator, no signing required)
         run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-ios -c Release --no-restore /p:RuntimeIdentifier=iossimulator-x64 /p:CheckEolTargetFrameworks=false
