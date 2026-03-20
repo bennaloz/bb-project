@@ -1,0 +1,45 @@
+name: Build Database
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  validate:
+    name: Validate Database Scripts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: List SQL scripts
+        run: |
+          echo "Tables:"
+          ls bb-project.Database/bb-project.Database/Tables/*.sql || echo 'No table scripts found'
+          echo "Stored Procedures:"
+          ls bb-project.Database/bb-project.Database/StoredProcedures/*.sql || echo 'No stored procedure scripts found'
+
+      - name: Verify SQL scripts exist
+        run: |
+          count=$(find bb-project.Database -name "*.sql" | wc -l)
+          echo "Found $count SQL script(s)"
+          if [ "$count" -eq 0 ]; then
+            echo "ERROR: No SQL scripts found in bb-project.Database/"
+            exit 1
+          fi
+
+      - name: Set up .NET 8.x
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Build Web API (validates compilation)
+        run: dotnet build bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --configuration Release

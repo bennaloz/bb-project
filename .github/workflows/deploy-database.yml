@@ -1,0 +1,52 @@
+name: Deploy Database
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+# NOTE: Database migrations are currently run at application startup via the Web API.
+# When a dedicated DbUp migration runner is added, update the steps below to execute
+# dotnet run against the migration project using the appropriate connection string secret.
+#
+# Required secrets (to be added when ready):
+#   - AZURE_SQL_CONNECTION_STRING_TEST  → Azure SQL TEST connection string
+#   - AZURE_SQL_CONNECTION_STRING       → Azure SQL PROD connection string
+
+jobs:
+  validate-and-notify:
+    name: Validate Database Scripts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: List SQL scripts
+        run: |
+          echo "Tables:"
+          ls bb-project.Database/bb-project.Database/Tables/*.sql || echo 'No table scripts found'
+          echo "Stored Procedures:"
+          ls bb-project.Database/bb-project.Database/StoredProcedures/*.sql || echo 'No stored procedure scripts found'
+
+      - name: Verify SQL scripts exist
+        run: |
+          count=$(find bb-project.Database -name "*.sql" | wc -l)
+          echo "Found $count SQL script(s)"
+          if [ "$count" -eq 0 ]; then
+            echo "ERROR: No SQL scripts found in bb-project.Database/"
+            exit 1
+          fi
+
+      - name: Set up .NET 8.x
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Build Web API (migrations run at startup)
+        run: |
+          echo "Database migrations are executed at API startup."
+          echo "Deploy the Web API to apply pending migrations."
+          dotnet build bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --configuration Release
