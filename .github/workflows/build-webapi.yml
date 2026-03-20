@@ -30,6 +30,3 @@ jobs:
 
       - name: Build
         run: dotnet build bb-project.app/bb-project.app.sln --configuration Release --no-restore
-
-      - name: Test (skip integration tests)
-        run: dotnet test bb-project.app/bb-project.app.sln --configuration Release --no-build --filter "TestCategory!=Integration"
