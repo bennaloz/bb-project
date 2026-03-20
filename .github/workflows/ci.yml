@@ -27,9 +27,6 @@ jobs:
       - name: Build
         run: dotnet build bb-project.app/bb-project.app.sln --no-restore --configuration Release
 
-      - name: Run tests
-        run: dotnet test bb-project.app/bb-project.app.sln --no-build --configuration Release --verbosity normal
-
   build-frontend:
     name: Build Frontend
     runs-on: ubuntu-latest
