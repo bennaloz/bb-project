@@ -18,7 +18,5 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\bb-project.Infrastructure.Models\bb-project.Infrastructure.Models.csproj" />
-  </ItemGroup>
+
 </Project>
