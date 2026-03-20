@@ -35,7 +35,7 @@ jobs:
           java-version: '17'
 
       - name: Restore (Android only)
-        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj --framework net8.0-android
+        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -p:TargetFramework=net8.0-android
 
       - name: Build Android APK
         run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-android -c Release --no-restore /p:CheckEolTargetFrameworks=false
@@ -64,7 +64,7 @@ jobs:
         run: dotnet workload install maui-ios
 
       - name: Restore (iOS only)
-        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj --framework net8.0-ios
+        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -p:TargetFramework=net8.0-ios
 
       - name: Build iOS (unsigned)
         run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-ios -c Release --no-restore /p:RuntimeIdentifier=ios-arm64 /p:CodesignKey="" /p:CodesignProvision="" /p:CheckEolTargetFrameworks=false
