@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build-backend:
+    name: Build and Test Backend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Build server
+        run: dotnet build bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --configuration Release
+
+      - name: Run tests (skip integration tests that require database)
+        run: dotnet test bb-project.app/bb-project.app.DataAccess.Tests/bb-project.app.DataAccess.Tests.csproj --configuration Release --filter "TestCategory!=Integration"
+
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: bb-project.app/bb-project.app.client/package-lock.json
+
+      - name: Install dependencies
+        working-directory: bb-project.app/bb-project.app.client
+        run: npm ci
+
+      - name: Build
+        working-directory: bb-project.app/bb-project.app.client
+        run: npm run build
