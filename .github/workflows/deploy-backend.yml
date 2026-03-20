@@ -1,0 +1,78 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Build
+        run: dotnet build bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --configuration Release
+
+      - name: Publish
+        run: dotnet publish bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --configuration Release --output ./publish
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-app
+          path: ./publish
+
+  deploy-test:
+    name: Deploy to TEST
+    if: github.ref == 'refs/heads/develop'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-app
+          path: ./publish
+
+      - name: Deploy to Azure Web App (TEST)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'bb-project-api-test'
+          slot-name: 'Production'
+          package: ./publish
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C09AB169D3204D129570A05F2A237266 }}
+
+  deploy-prod:
+    name: Deploy to PROD
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-app
+          path: ./publish
+
+      - name: Deploy to Azure Web App (PROD)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'bb-project-api'
+          slot-name: 'Production'
+          package: ./publish
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_91706B8420444488A78CAB69A96544E2 }}
