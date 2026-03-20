@@ -29,7 +29,7 @@ jobs:
         run: dotnet build bb-project.app/bb-project.app.Server/bb-project.app.Server.csproj --configuration Release
 
       - name: Run tests (skip integration tests that require database)
-        run: dotnet test bb-project.app/bb-project.app.DataAccess.Tests/bb-project.app.DataAccess.Tests.csproj --configuration Release --filter "Category!=Integration"
+        run: dotnet test bb-project.app/bb-project.app.DataAccess.Tests/bb-project.app.DataAccess.Tests.csproj --configuration Release --filter "TestCategory!=Integration"
 
   build-frontend:
     name: Build Frontend
