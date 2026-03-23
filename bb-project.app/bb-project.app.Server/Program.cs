@@ -1,3 +1,5 @@
+using bb_project.app.Server;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +10,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Run database migrations at startup using DbUp
+var connectionString = app.Configuration.GetConnectionString("DefaultConnection");
+if (!string.IsNullOrEmpty(connectionString))
+{
+    DatabaseMigrator.RunMigrations(connectionString);
+}
+else
+{
+    app.Logger.LogWarning("ConnectionStrings:DefaultConnection is not configured. Database migrations were not run.");
+}
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

@@ -27,11 +27,14 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Install MAUI iOS workload
-        run: dotnet workload install maui-ios
+      - name: Install MAUI workloads
+        run: dotnet workload install maui-ios maui-android
+
+      - name: Restore
+        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -p:TargetFramework=net8.0-ios -p:RuntimeIdentifier=iossimulator-x64
 
       - name: Build iOS (unsigned)
-        run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-ios -c Release
+        run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-ios -c Release --no-restore /p:RuntimeIdentifier=iossimulator-x64 /p:CheckEolTargetFrameworks=false
 
       - name: Upload iOS unsigned artifact
         uses: actions/upload-artifact@v4
