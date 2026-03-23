@@ -7,7 +7,7 @@ name: One-Shot Repository Cleanup
 on:
   push:
     branches:
-      - copilot/cleanup-develop-and-delete-stale-branches
+      - main
     paths:
       - '.github/workflows/cleanup-one-shot.yml'
   workflow_dispatch:
@@ -33,18 +33,24 @@ jobs:
       - name: Merge main into develop
         run: |
           git fetch origin main develop
-          git checkout develop
-          git merge origin/main -m "Merge main into develop to align with latest changes" || true
+          git checkout -b develop origin/develop
 
-          # Resolve conflicts by taking main's versions for the known conflicting files
-          if git diff --name-only --diff-filter=U | grep -q .; then
-            echo "Resolving conflicts by taking main's versions..."
-            git diff --name-only --diff-filter=U | xargs -I{} git checkout origin/main -- {}
-            git add .
-            git commit --no-edit -m "Merge main into develop to align with latest changes (conflicts resolved)"
+          # Check if develop already contains all of main's commits
+          if git merge-base --is-ancestor origin/main HEAD; then
+            echo "develop is already up to date with main — nothing to do."
+          else
+            # Try a clean merge first
+            if git merge origin/main -m "Merge main into develop to align with latest changes"; then
+              echo "Merged cleanly."
+            else
+              # Resolve conflicts by taking main's versions
+              echo "Conflicts detected — resolving by taking main's versions..."
+              git diff --name-only --diff-filter=U | xargs -r -I{} git checkout origin/main -- {}
+              git add .
+              git commit -m "Merge main into develop to align with latest changes (conflicts resolved)"
+            fi
+            git push origin HEAD:develop
           fi
-
-          git push origin develop
 
       - name: Delete stale copilot branches
         run: |
@@ -64,7 +70,7 @@ jobs:
             "copilot/update-secret-handling-logic"
           )
           for branch in "${stale_branches[@]}"; do
-            if git ls-remote --heads origin "$branch" | grep -q "$branch"; then
+            if git ls-remote --heads origin "$branch" | grep -qE "refs/heads/${branch}$"; then
               git push origin --delete "$branch"
               echo "Deleted branch: $branch"
             else
