@@ -5,6 +5,11 @@ name: One-Shot Repository Cleanup
 # 2. Delete all stale copilot/* branches
 
 on:
+  push:
+    branches:
+      - copilot/cleanup-develop-and-delete-stale-branches
+    paths:
+      - '.github/workflows/cleanup-one-shot.yml'
   workflow_dispatch:
 
 jobs:
