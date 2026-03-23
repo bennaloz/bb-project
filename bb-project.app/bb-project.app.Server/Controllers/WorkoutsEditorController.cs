@@ -248,5 +248,165 @@ namespace bb_project.API.Controllers
                 return new StatusCodeResult(500);
             }
         }
+
+        /// <summary>
+        /// Gets all exercise definitions for a given user.
+        /// </summary>
+        [HttpGet("exercise-definitions", Name = "getExerciseDefinitions")]
+        public async Task<ActionResult> GetExerciseDefinitionsAsync([FromQuery] string userId)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (string.IsNullOrWhiteSpace(userId))
+                    modelStateDictionary.AddModelError(nameof(userId), $"Invalid null or empty user id");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var exerciseDefinitions = await this.workoutsDataStore.GetExerciseDefinitionsAsync(userId);
+                return new OkObjectResult(exerciseDefinitions);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        /// <summary>
+        /// Gets workout/completed session history for a user, optionally filtered by plan, workout, and date range.
+        /// </summary>
+        [HttpGet("history", Name = "getWOHistory")]
+        public async Task<ActionResult> GetWorkoutHistoryAsync([FromQuery] string userId, [FromQuery] ulong? workoutPlanId = null, [FromQuery] ulong? workoutId = null, [FromQuery] DateTime? from = null, [FromQuery] DateTime? to = null)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (string.IsNullOrWhiteSpace(userId))
+                    modelStateDictionary.AddModelError(nameof(userId), $"Invalid null or empty user id");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var historyItems = await this.workoutsDataStore.GetWorkoutHistoryItems(userId, workoutPlanId, workoutId, from ?? default, to ?? default);
+                return new OkObjectResult(historyItems);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing workout plan (name, isActive, isArchived).
+        /// </summary>
+        [HttpPut("plans/{id}", Name = "updateWOPlan")]
+        public async Task<ActionResult> UpdateWorkoutPlanAsync([FromRoute] ulong id, [FromBody] Models.UpdateWorkoutPlanDTO dto)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (id == 0)
+                    modelStateDictionary.AddModelError(nameof(id), $"Invalid workout plan id.");
+                if (dto == default)
+                    modelStateDictionary.AddModelError(nameof(dto), $"Invalid workout plan data.");
+                if (dto != default && string.IsNullOrWhiteSpace(dto.UserId))
+                    modelStateDictionary.AddModelError(nameof(dto.UserId), $"Invalid null or empty user id.");
+                if (dto != default && string.IsNullOrWhiteSpace(dto.Name))
+                    modelStateDictionary.AddModelError(nameof(dto.Name), $"Invalid empty workout plan name.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var affected = await this.workoutsDataStore.UpdateWorkoutPlanAsync(id, dto.UserId, dto.Name, dto.IsActive, dto.IsArchived);
+                return Ok(affected);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing workout (name, order).
+        /// </summary>
+        [HttpPut("workouts/{id}", Name = "updateWO")]
+        public async Task<ActionResult> UpdateWorkoutAsync([FromRoute] ulong id, [FromBody] Models.UpdateWorkoutDTO dto)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (id == 0)
+                    modelStateDictionary.AddModelError(nameof(id), $"Invalid workout id.");
+                if (dto == default)
+                    modelStateDictionary.AddModelError(nameof(dto), $"Invalid workout data.");
+                if (dto != default && dto.WorkoutPlanId == 0)
+                    modelStateDictionary.AddModelError(nameof(dto.WorkoutPlanId), $"Invalid workout plan id.");
+                if (dto != default && string.IsNullOrWhiteSpace(dto.Name))
+                    modelStateDictionary.AddModelError(nameof(dto.Name), $"Invalid empty workout name.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var affected = await this.workoutsDataStore.UpdateWorkoutAsync(dto.WorkoutPlanId, id, dto.Name, dto.Order);
+                return Ok(affected);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing exercise definition (name, type, involved muscles).
+        /// </summary>
+        [HttpPut("exercises/{id}", Name = "updateExercise")]
+        public async Task<ActionResult> UpdateExerciseDefinitionAsync([FromRoute] ulong id, [FromBody] Models.UpdateExerciseDefinitionDTO dto)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (id == 0)
+                    modelStateDictionary.AddModelError(nameof(id), $"Invalid exercise definition id.");
+                if (dto == default)
+                    modelStateDictionary.AddModelError(nameof(dto), $"Invalid exercise definition data.");
+                if (dto != default && string.IsNullOrWhiteSpace(dto.Name))
+                    modelStateDictionary.AddModelError(nameof(dto.Name), $"Invalid empty exercise definition name.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var affected = await this.workoutsDataStore.UpdateExerciseDefinitionAsync(id, dto.Name, dto.Type, dto.InvolvedMuscles);
+                return Ok(affected);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        /// <summary>
+        /// Deletes workout series by their ids within a given workout plan and workout.
+        /// </summary>
+        [HttpDelete("series", Name = "deleteWOSeries")]
+        public async Task<ActionResult> DeleteWorkoutSeriesAsync([FromBody] Models.DeleteWorkoutSeriesDTO dto)
+        {
+            try
+            {
+                var modelStateDictionary = new ModelStateDictionary();
+                if (dto == default)
+                    modelStateDictionary.AddModelError(nameof(dto), $"Invalid series data.");
+                if (dto != default && dto.WorkoutPlanId == 0)
+                    modelStateDictionary.AddModelError(nameof(dto.WorkoutPlanId), $"Invalid workout plan id.");
+                if (dto != default && dto.WorkoutId == 0)
+                    modelStateDictionary.AddModelError(nameof(dto.WorkoutId), $"Invalid workout id.");
+                if (dto != default && (dto.SeriesIds == null || dto.SeriesIds.Length == 0))
+                    modelStateDictionary.AddModelError(nameof(dto.SeriesIds), $"Series ids must not be empty.");
+                if (modelStateDictionary.Count > 0)
+                    return new BadRequestObjectResult(modelStateDictionary);
+
+                var affected = await this.workoutsDataStore.DeleteWorkoutSeriesAsync(dto.WorkoutPlanId, dto.WorkoutId, dto.SeriesIds);
+                return Ok(affected);
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
     }
 }
