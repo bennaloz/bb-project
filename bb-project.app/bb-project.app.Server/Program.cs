@@ -19,7 +19,7 @@ if (!string.IsNullOrEmpty(connectionString))
 }
 else
 {
-    app.Logger.LogWarning("ConnectionStrings:DefaultConnection is not configured. Database migrations were not run.");
+    app.Logger.LogWarning("DefaultConnection connection string is not configured. Database migrations were not run.");
 }
 
 app.UseDefaultFiles();
