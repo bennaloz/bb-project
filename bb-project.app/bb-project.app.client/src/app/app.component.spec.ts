@@ -1,6 +1,9 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
+import { WorkoutSessionComponent } from './components/workout-session/workout-session.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -9,8 +12,8 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [HttpClientTestingModule]
+      declarations: [AppComponent, WorkoutSessionComponent],
+      imports: [HttpClientTestingModule, FormsModule, CommonModule]
     }).compileComponents();
   });
 
