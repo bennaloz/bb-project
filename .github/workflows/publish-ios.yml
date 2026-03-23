@@ -1,0 +1,43 @@
+name: Publish iOS (unsigned)
+
+# To enable signed iOS builds in the future, add the following secrets:
+#   - APPLE_CERTIFICATE_BASE64       → Base64-encoded .p12 certificate
+#   - APPLE_CERTIFICATE_PASSWORD     → Password for the .p12 certificate
+#   - APPLE_PROVISIONING_PROFILE     → Base64-encoded .mobileprovision file
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  workflow_dispatch:
+
+jobs:
+  publish-ios:
+    name: Publish iOS (unsigned)
+    runs-on: macos-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET 8.x
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install MAUI workloads
+        run: dotnet workload install maui-ios maui-android
+
+      - name: Restore
+        run: dotnet restore bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -p:TargetFramework=net8.0-ios -p:RuntimeIdentifier=iossimulator-x64
+
+      - name: Build iOS (unsigned)
+        run: dotnet build bb-project.Client.MAUI/bb-project.Client.MAUI.csproj -f net8.0-ios -c Release --no-restore /p:RuntimeIdentifier=iossimulator-x64 /p:CheckEolTargetFrameworks=false
+
+      - name: Upload iOS unsigned artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-unsigned
+          path: bb-project.Client.MAUI/bin/Release/net8.0-ios/
