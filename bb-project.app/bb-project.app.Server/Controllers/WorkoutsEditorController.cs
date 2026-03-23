@@ -19,7 +19,7 @@ namespace bb_project.API.Controllers
             this.workoutsDataStore = workoutsDataStore;
         }
 
-        [HttpGet(Name = "getWOPlans")]
+        [HttpGet("plans", Name = "getWOPlans")]
         public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] ulong? workoutPlanId = null)
         {
             try
@@ -33,7 +33,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet(Name = "getWorkouts")]
+        [HttpGet("workouts", Name = "getWorkouts")]
         public async Task<ActionResult> GetWorkoutsAsync([FromQuery] ulong workoutPlanId, [FromQuery] ulong? workoutId = null)
         {
             try
@@ -47,7 +47,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet(Name = "getWOSeriesGroups")]
+        [HttpGet("series-groups", Name = "getWOSeriesGroups")]
         public async Task<ActionResult> GetWorkoutSeriesGroupsAsync([FromQuery] ulong workoutId, [FromQuery] string userId)
         {
             try
@@ -61,7 +61,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet(Name = "getActiveWO")]
+        [HttpGet("active", Name = "getActiveWO")]
         public async Task<ActionResult> GetActiveWorkoutsAsync()
         {
             try
@@ -75,7 +75,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet(Name = "getNextWO")]
+        [HttpGet("next", Name = "getNextWO")]
         public async Task<ActionResult> GetNextWorkoutAsync([FromQuery]string userId, [FromQuery] ulong activeWorkoutPlanId)
         {
             try
@@ -89,7 +89,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpGet(Name = "hasActiveWO")]
+        [HttpGet("has-active", Name = "hasActiveWO")]
         public async Task<ActionResult> HasActiveWorkoutPlanAsync()
         {
             try
@@ -103,7 +103,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpPost(Name = "insertWOPlan")]
+        [HttpPost("plans", Name = "insertWOPlan")]
         public async Task<ActionResult> InsertWorkoutPlanAsync([FromQuery] string userId, [FromBody] WorkoutPlan workoutPlan)
         {
             try
@@ -128,7 +128,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpPost(Name = "insertWO")]
+        [HttpPost("workouts", Name = "insertWO")]
         public async Task<ActionResult> InsertWorkoutAsync([FromQuery] ulong workoutPlanId, [FromBody] Workout workout)
         {
             try
@@ -153,7 +153,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpPost(Name = "insertExercise")]
+        [HttpPost("exercises", Name = "insertExercise")]
         public async Task<ActionResult> InsertExerciseAsync([FromQuery] string userId, [FromBody] ExerciseDefinition exerciseDefinition)
         {
             try
@@ -176,7 +176,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpPost(Name = "insertSeriesGroups")]
+        [HttpPost("series-groups", Name = "insertSeriesGroups")]
         public async Task<ActionResult> InsertSeriesGroupsAsync([FromQuery] ulong workoutId, [FromBody] ExerciseGroup[] seriesGroups)
         {
             try
@@ -199,7 +199,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpPost(Name = "insertWOData")]
+        [HttpPost("data", Name = "insertWOData")]
         public async Task<ActionResult> InsertWorkoutDataAsync([FromBody] Models.InsertWorkoutDataDTO workoutData)
         {
             try
@@ -229,7 +229,7 @@ namespace bb_project.API.Controllers
             }
         }
 
-        [HttpPost(Name = "insertWOHistory")]
+        [HttpPost("history", Name = "insertWOHistory")]
         public async Task<ActionResult> InsertWorkoutHistoryAsync([FromBody] Models.InsertWorkoutHistoryDTO workoutHistoryDTO)
         {
             try
