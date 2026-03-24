@@ -5,5 +5,5 @@
     EndDate DATETIME2, --Data ed ora di fine
     fk_WorkoutId BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_Workout(Id),
     fk_WorkoutPlanId BIGINT NOT NULL FOREIGN KEY REFERENCES tbl_WorkoutPlan(Id),
-    fk_UserId UNIQUEIDENTIFIER NOT NULL FOREIGN KEY REFERENCES tbl_User(Id)
+    fk_UserId NVARCHAR(128) NOT NULL FOREIGN KEY REFERENCES tbl_User(Id)
 )

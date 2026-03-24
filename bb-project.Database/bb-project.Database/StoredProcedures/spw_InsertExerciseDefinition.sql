@@ -2,7 +2,7 @@
     @name VARCHAR(100),
     @type SMALLINT, --Cardio or weights
     @involvedMuscles SMALLINT,
-    @userId UNIQUEIDENTIFIER,
+    @userId NVARCHAR(128),
     @exerciseId BIGINT OUTPUT
 AS
     INSERT INTO tbl_ExerciseDefinition ([Name], [Type], [InvolvedMuscles], [fk_UserId])

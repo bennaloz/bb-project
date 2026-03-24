@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spr_GetExercisesDefinitions]
-    @userId UNIQUEIDENTIFIER
+    @userId NVARCHAR(128)
 AS
     SELECT *
     FROM tbl_ExerciseDefinition

@@ -11,18 +11,37 @@ namespace bb_project.API.Controllers
     {
         private readonly ILogger<WorkoutsEditorController> _logger;
         private readonly IWorkoutsDataStore workoutsDataStore;
+        private readonly IWebHostEnvironment _env;
 
         public WorkoutsEditorController(ILogger<WorkoutsEditorController> logger,
-            IWorkoutsDataStore workoutsDataStore)
+            IWorkoutsDataStore workoutsDataStore,
+            IWebHostEnvironment env)
         {
             _logger = logger;
             this.workoutsDataStore = workoutsDataStore;
+            _env = env;
+        }
+
+        private ActionResult HandleException(Exception ex, string operation)
+        {
+            _logger.LogError(ex, "Error in {Operation}: {Message}", operation, ex.Message);
+            if (!_env.IsProduction())
+                return Problem(
+                    detail: $"{ex.GetType().Name}: {ex.Message}",
+                    title: $"Error in {operation}",
+                    statusCode: 500);
+            return new StatusCodeResult(500);
         }
 
         /// <summary>
-        /// Gets workout plans. Optionally filter by workoutPlanId (specific plan) or userId (plans for a user).
+        /// Gets workout plans, optionally filtered by workoutPlanId or userId.
         /// </summary>
+        /// <param name="workoutPlanId">Optional: filter to a specific plan by its ID.</param>
+        /// <param name="userId">Required for user-scoped results: returns only plans belonging to this user.</param>
+        /// <returns>List of workout plans.</returns>
         [HttpGet("plans", Name = "getWOPlans")]
+        [ProducesResponseType(typeof(IEnumerable<WorkoutPlan>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] ulong? workoutPlanId = null, [FromQuery] string? userId = null)
         {
             try
@@ -32,7 +51,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetWorkoutsPlansAsync));
             }
         }
 
@@ -46,7 +65,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetWorkoutsAsync));
             }
         }
 
@@ -60,7 +79,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetWorkoutSeriesGroupsAsync));
             }
         }
 
@@ -74,7 +93,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetActiveWorkoutsAsync));
             }
         }
 
@@ -88,7 +107,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetNextWorkoutAsync));
             }
         }
 
@@ -102,14 +121,20 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(HasActiveWorkoutPlanAsync));
             }
         }
 
         /// <summary>
-        /// Creates a new workout plan for the specified user. userId (query param) and plan body are required.
+        /// Creates a new workout plan for the specified user.
         /// </summary>
+        /// <param name="userId">Required: the ID of the user who owns the plan.</param>
+        /// <param name="workoutPlan">Required: the plan body. Must include a non-empty Name.</param>
+        /// <returns>The ID of the newly created workout plan.</returns>
         [HttpPost("plans", Name = "insertWOPlan")]
+        [ProducesResponseType(typeof(ulong), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> InsertWorkoutPlanAsync([FromQuery] string userId, [FromBody] WorkoutPlan workoutPlan)
         {
             try
@@ -119,7 +144,7 @@ namespace bb_project.API.Controllers
                     modelStateDictionary.AddModelError(nameof(userId), $"Invalid null or empty user id");
                 if (workoutPlan == default)
                     modelStateDictionary.AddModelError(nameof(workoutPlan), $"Invalid workout plan data.");
-                if (string.IsNullOrWhiteSpace(workoutPlan.Name))
+                if (workoutPlan != default && string.IsNullOrWhiteSpace(workoutPlan.Name))
                     modelStateDictionary.AddModelError(nameof(workoutPlan.Name), $"Invalid empty workout plan name.");
                 if (modelStateDictionary.Count > 0)
                     return new BadRequestObjectResult(modelStateDictionary);
@@ -130,7 +155,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(InsertWorkoutPlanAsync));
             }
         }
 
@@ -144,7 +169,7 @@ namespace bb_project.API.Controllers
                     modelStateDictionary.AddModelError(nameof(workoutPlanId), $"Invalid value for workout plan id");
                 if (workout == default)
                     modelStateDictionary.AddModelError(nameof(workout), $"Invalid workout data.");
-                if (string.IsNullOrWhiteSpace(workout.Name))
+                if (workout != default && string.IsNullOrWhiteSpace(workout.Name))
                     modelStateDictionary.AddModelError(nameof(workout.Name), $"Invalid empty workout name.");
                 if (modelStateDictionary.Count > 0)
                     return new BadRequestObjectResult(modelStateDictionary);
@@ -155,7 +180,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(InsertWorkoutAsync));
             }
         }
 
@@ -178,7 +203,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(InsertExerciseAsync));
             }
         }
 
@@ -201,7 +226,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(InsertSeriesGroupsAsync));
             }
         }
 
@@ -231,7 +256,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(InsertWorkoutDataAsync));
             }
         }
 
@@ -251,7 +276,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(InsertWorkoutHistoryAsync));
             }
         }
 
@@ -274,7 +299,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetExerciseDefinitionsAsync));
             }
         }
 
@@ -297,7 +322,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(GetWorkoutHistoryAsync));
             }
         }
 
@@ -326,7 +351,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(UpdateWorkoutPlanAsync));
             }
         }
 
@@ -355,7 +380,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(UpdateWorkoutAsync));
             }
         }
 
@@ -382,7 +407,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(UpdateExerciseDefinitionAsync));
             }
         }
 
@@ -411,7 +436,7 @@ namespace bb_project.API.Controllers
             }
             catch (Exception ex)
             {
-                return new StatusCodeResult(500);
+                return HandleException(ex, nameof(DeleteWorkoutSeriesAsync));
             }
         }
     }
