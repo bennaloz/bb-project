@@ -1,78 +1,133 @@
-<div class="plans-header">
+<div class="page-header">
   <h2>Workout Plans</h2>
-  <button mat-raised-button color="primary" (click)="openAdd()">
-    <mat-icon>add</mat-icon> New Plan
-  </button>
+  <p-button label="New Plan" icon="pi pi-plus" (onClick)="openAddPlan()" />
 </div>
 
-<mat-accordion *ngIf="plans.length > 0; else noPlans">
-  <mat-expansion-panel
-    *ngFor="let plan of plans"
-    (opened)="onPlanOpened(plan)"
-  >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <mat-icon style="margin-right:8px">fitness_center</mat-icon>
-        {{ plan.name }}
-      </mat-panel-title>
-      <mat-panel-description>
-        <span [class.active-chip]="plan.isActive" [class.inactive-chip]="!plan.isActive">
-          {{ plan.isActive ? 'Active' : 'Inactive' }}
-        </span>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+<p-accordion (onOpen)="onPanelOpen($event)" *ngIf="plans.length > 0; else noPlans">
+  <p-accordion-panel *ngFor="let plan of plans" [value]="plan.id">
+    <p-accordion-header>
+      <span>{{ plan.name }}</span>
+      <p-tag
+        [value]="plan.isActive ? 'Active' : 'Inactive'"
+        [severity]="plan.isActive ? 'success' : 'secondary'"
+        styleClass="ml-2"
+      />
+    </p-accordion-header>
+    <p-accordion-content>
+      <div class="panel-actions">
+        <p-button
+          label="Edit Plan"
+          icon="pi pi-pencil"
+          severity="secondary"
+          size="small"
+          (onClick)="openEditPlan(plan)"
+        />
+      </div>
 
-    <!-- Plan actions -->
-    <div class="panel-actions">
-      <button mat-stroked-button color="primary" (click)="openEdit(plan, $event)">
-        <mat-icon>edit</mat-icon> Edit Plan
-      </button>
-    </div>
+      <p-divider />
 
-    <!-- Workouts section -->
-    <div class="workouts-section">
       <div class="workouts-header">
         <strong>Workouts</strong>
-        <button mat-button color="primary" (click)="openAddWorkout(plan, $event)">
-          <mat-icon>add</mat-icon> Add Workout
-        </button>
+        <p-button
+          label="Add Workout"
+          icon="pi pi-plus"
+          severity="secondary"
+          size="small"
+          (onClick)="openAddWorkout(plan)"
+        />
       </div>
 
       <ng-container *ngIf="workoutsMap[plan.id] as workouts; else loadingWorkouts">
-        <p *ngIf="workouts.length === 0" class="empty-msg">No workouts yet. Add one above.</p>
-
-        <table *ngIf="workouts.length > 0" mat-table [dataSource]="workouts" class="workouts-table">
-          <ng-container matColumnDef="order">
-            <th mat-header-cell *matHeaderCellDef>#</th>
-            <td mat-cell *matCellDef="let w">{{ w.order }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let w">{{ w.name }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let w">
-              <button mat-icon-button color="primary" title="Edit" (click)="openEditWorkout(plan, w, $event)">
-                <mat-icon>edit</mat-icon>
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="workoutColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: workoutColumns;"></tr>
-        </table>
+        <p *ngIf="workouts.length === 0" class="empty-msg">No workouts yet.</p>
+        <p-table *ngIf="workouts.length > 0" [value]="workouts" styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width:60px">#</th>
+              <th>Name</th>
+              <th style="width:80px"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-w>
+            <tr>
+              <td>{{ w.order }}</td>
+              <td>{{ w.name }}</td>
+              <td class="actions-col">
+                <p-button
+                  icon="pi pi-pencil"
+                  severity="secondary"
+                  [rounded]="true"
+                  [text]="true"
+                  size="small"
+                  pTooltip="Edit"
+                  (onClick)="openEditWorkout(plan, w)"
+                />
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </ng-container>
 
       <ng-template #loadingWorkouts>
-        <mat-spinner diameter="24" style="margin:8px auto"></mat-spinner>
+        <p-progressSpinner styleClass="loading-spinner" [style]="{width:'32px',height:'32px'}" />
       </ng-template>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+    </p-accordion-content>
+  </p-accordion-panel>
+</p-accordion>
 
 <ng-template #noPlans>
   <p class="empty-msg">No plans yet. Click <em>New Plan</em> to create one.</p>
 </ng-template>
+
+<!-- Plan Dialog -->
+<p-dialog
+  [(visible)]="planDialogVisible"
+  [header]="editingPlan ? 'Edit Plan' : 'New Plan'"
+  [modal]="true"
+  [style]="{width:'400px'}"
+  [draggable]="false"
+>
+  <form [formGroup]="planForm" class="dialog-form">
+    <div class="field">
+      <label for="planName">Name</label>
+      <input id="planName" pInputText formControlName="name" style="width:100%" />
+      <small class="error" *ngIf="planForm.get('name')?.invalid && planForm.get('name')?.dirty">
+        Name is required
+      </small>
+    </div>
+    <div class="field-row">
+      <p-checkbox formControlName="isActive" [binary]="true" inputId="planActive" />
+      <label for="planActive">Active</label>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="planDialogVisible = false" />
+    <p-button label="Save" (onClick)="submitPlan()" [disabled]="planForm.invalid" />
+  </ng-template>
+</p-dialog>
+
+<!-- Workout Dialog -->
+<p-dialog
+  [(visible)]="workoutDialogVisible"
+  [header]="editingWorkout ? 'Edit Workout' : 'Add Workout'"
+  [modal]="true"
+  [style]="{width:'400px'}"
+  [draggable]="false"
+>
+  <form [formGroup]="workoutForm" class="dialog-form">
+    <div class="field">
+      <label for="workoutName">Name</label>
+      <input id="workoutName" pInputText formControlName="name" style="width:100%" />
+      <small class="error" *ngIf="workoutForm.get('name')?.invalid && workoutForm.get('name')?.dirty">
+        Name is required
+      </small>
+    </div>
+    <div class="field">
+      <label for="workoutOrder">Order (day)</label>
+      <input id="workoutOrder" pInputText type="number" formControlName="order" style="width:100%" />
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancel" severity="secondary" (onClick)="workoutDialogVisible = false" />
+    <p-button label="Save" (onClick)="submitWorkout()" [disabled]="workoutForm.invalid" />
+  </ng-template>
+</p-dialog>

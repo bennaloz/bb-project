@@ -4,31 +4,35 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSelectModule } from '@angular/material/select';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatListModule } from '@angular/material/list';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
+import { MessageService } from 'primeng/api';
+import { SharedModule } from 'primeng/api';
+import { AccordionModule } from 'primeng/accordion';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { ListboxModule } from 'primeng/listbox';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SelectModule } from 'primeng/select';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { TextareaModule } from 'primeng/textarea';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TooltipModule } from 'primeng/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { PlansComponent } from './plans/plans.component';
-import { PlanDialogComponent } from './plans/plan-dialog.component';
 import { WorkoutsComponent } from './workouts/workouts.component';
-import { WorkoutDialogComponent } from './workouts/workout-dialog.component';
 import { ExercisesComponent } from './exercises/exercises.component';
-import { ExerciseDialogComponent } from './exercises/exercise-dialog.component';
 import { HistoryComponent } from './history/history.component';
 import { UserService } from './user.service';
 
@@ -37,11 +41,8 @@ import { UserService } from './user.service';
     AppComponent,
     UsersComponent,
     PlansComponent,
-    PlanDialogComponent,
     WorkoutsComponent,
-    WorkoutDialogComponent,
     ExercisesComponent,
-    ExerciseDialogComponent,
     HistoryComponent,
   ],
   imports: [
@@ -51,23 +52,31 @@ import { UserService } from './user.service';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatIconModule,
-    MatSnackBarModule,
-    MatCardModule,
-    MatChipsModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatListModule,
+    SharedModule,
+    AccordionModule,
+    ButtonModule,
+    CardModule,
+    CheckboxModule,
+    DialogModule,
+    DividerModule,
+    FloatLabelModule,
+    InputTextModule,
+    ListboxModule,
+    MultiSelectModule,
+    ProgressSpinnerModule,
+    SelectModule,
+    TableModule,
+    TagModule,
+    TextareaModule,
+    ToastModule,
+    ToolbarModule,
+    TooltipModule,
   ],
-  providers: [UserService],
+  providers: [
+    UserService,
+    MessageService,
+    providePrimeNG({ theme: { preset: Aura } }),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

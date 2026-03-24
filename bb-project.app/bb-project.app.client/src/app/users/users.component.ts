@@ -20,6 +20,7 @@ export class UsersComponent implements OnInit {
   }
 
   selectUser(userId: string): void {
+    if (!userId) return;
     this.userService.setCurrentUser(userId);
     this.currentUser = userId;
   }

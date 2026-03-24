@@ -1,7 +1,97 @@
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'primeicons/primeicons.css';
 
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: Roboto, Arial, sans-serif;
+  font-family: var(--p-font-family, system-ui, -apple-system, sans-serif);
 }
+
+.content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.app-toolbar {
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+  padding: 0 24px;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--p-primary-contrast-color);
+}
+
+.app-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.app-nav a {
+  color: var(--p-primary-contrast-color);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.app-nav a:hover,
+.app-nav a.active-link {
+  background: rgba(255,255,255,0.2);
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 320px;
+  padding: 8px 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.field small.error {
+  color: var(--p-red-500);
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.actions-col {
+  text-align: right;
+}
+
+.empty-msg {
+  color: var(--p-text-muted-color);
+  font-style: italic;
+  padding: 12px 0;
+}
+

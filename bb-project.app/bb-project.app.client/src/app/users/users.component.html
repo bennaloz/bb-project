@@ -1,26 +1,24 @@
-<mat-card>
-  <mat-card-title>Users</mat-card-title>
-  <mat-card-content>
+<p-card>
+  <ng-template pTemplate="title">Users</ng-template>
+  <ng-template pTemplate="content">
     <p><strong>Current user:</strong> {{ currentUser }}</p>
 
-    <mat-list>
-      <mat-list-item *ngFor="let user of users" (click)="selectUser(user)"
-        [style.font-weight]="user === currentUser ? 'bold' : 'normal'"
-        style="cursor:pointer">
-        {{ user }} <span *ngIf="user === currentUser"> ✓</span>
-      </mat-list-item>
-    </mat-list>
+    <p-listbox
+      [options]="users"
+      [(ngModel)]="currentUser"
+      (onChange)="selectUser($event.value)"
+      styleClass="user-list"
+    />
 
-    <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
-      <mat-form-field appearance="outline">
-        <mat-label>Custom username</mat-label>
-        <input matInput [(ngModel)]="customUser" placeholder="Enter username" />
-      </mat-form-field>
-      <button mat-raised-button color="accent" (click)="addCustomUser()">Add &amp; Select</button>
+    <p-divider />
+
+    <div class="field-row" style="margin-top:12px">
+      <input pInputText [(ngModel)]="customUser" placeholder="Custom username" style="flex:1" />
+      <p-button label="Add &amp; Select" severity="secondary" (onClick)="addCustomUser()" />
     </div>
 
     <div style="margin-top:16px">
-      <button mat-raised-button color="primary" (click)="goToPlans()">Go to Plans</button>
+      <p-button label="Go to Plans" icon="pi pi-arrow-right" iconPos="right" (onClick)="goToPlans()" />
     </div>
-  </mat-card-content>
-</mat-card>
+  </ng-template>
+</p-card>
