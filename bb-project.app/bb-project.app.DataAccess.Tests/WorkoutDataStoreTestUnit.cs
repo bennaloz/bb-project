@@ -403,7 +403,7 @@ namespace bb_project.Server.Tests
                 modifiedWoPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(woPlan.Id)).FirstOrDefault();
                 Assert.IsNull(modifiedWoPlan);
 
-                modifiedWoPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(woPlan.Id, true)).FirstOrDefault();
+                modifiedWoPlan = (await this.workoutsDataStore.GetWorkoutPlansAsync(woPlan.Id, getArchived: true)).FirstOrDefault();
                 Assert.IsNotNull(modifiedWoPlan);
 
                 updatedWorkoutPlansCount = await this.workoutsDataStore.UpdateWorkoutPlanAsync(woPlan.Id, this.testUnitUserId, woPlan.Name, woPlan.IsActive, false);
