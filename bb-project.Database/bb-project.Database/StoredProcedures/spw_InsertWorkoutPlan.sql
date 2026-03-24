@@ -2,7 +2,7 @@
     @workoutPlanName VARCHAR(100),
     @isActive bit = 0,
     @isArchived BIT = 0,
-    @userId UNIQUEIDENTIFIER,
+    @userId NVARCHAR(128),
     @workoutPlanId bigint OUTPUT
 AS
     INSERT INTO tbl_WorkoutPlan ([Name], IsActive, IsArchived, fk_UserId)

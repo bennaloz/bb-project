@@ -3,7 +3,7 @@
     @endDate DATETIME2,
     @fkWorkoutId BIGINT,
     @fkWorkoutPlanId BIGINT,
-    @fkUserId UNIQUEIDENTIFIER,
+    @fkUserId NVARCHAR(128),
     @workoutHistoryId BIGINT OUTPUT
 AS
     

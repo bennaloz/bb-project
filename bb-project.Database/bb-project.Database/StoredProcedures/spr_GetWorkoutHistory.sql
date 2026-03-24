@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[spr_GetWorkoutHistory]
-    @userId UNIQUEIDENTIFIER,
+    @userId NVARCHAR(128),
     @workoutId BIGINT,
     @workoutPlanId BIGINT,
     @from DATE,
