@@ -42,9 +42,9 @@ namespace bb_project.Infrastructure.BLL
             return (await this.dbManager.GetWorkoutHistoryAsync(userId, workoutId, workoutPlanId, from, to)).Cast<WorkoutHistoryItem>();
         }
 
-        public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null, bool getArchived = false)
+        public async Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null, string? userId = null, bool getArchived = false)
         {
-            var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id, getArchived);
+            var workoutPlansDb = await this.dbManager.GetWorkoutPlansAsync(id, userId, getArchived);
 
             return workoutPlansDb.Select(wpdb=> (WorkoutPlan) wpdb);
         }

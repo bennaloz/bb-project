@@ -19,12 +19,15 @@ namespace bb_project.API.Controllers
             this.workoutsDataStore = workoutsDataStore;
         }
 
+        /// <summary>
+        /// Gets workout plans. Optionally filter by workoutPlanId (specific plan) or userId (plans for a user).
+        /// </summary>
         [HttpGet("plans", Name = "getWOPlans")]
-        public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] ulong? workoutPlanId = null)
+        public async Task<ActionResult> GetWorkoutsPlansAsync([FromQuery] ulong? workoutPlanId = null, [FromQuery] string? userId = null)
         {
             try
             {
-                var workoutPlans = await this.workoutsDataStore.GetWorkoutPlansAsync(id:workoutPlanId);
+                var workoutPlans = await this.workoutsDataStore.GetWorkoutPlansAsync(id: workoutPlanId, userId: userId);
                 return new OkObjectResult(workoutPlans);
             }
             catch (Exception ex)
@@ -103,6 +106,9 @@ namespace bb_project.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Creates a new workout plan for the specified user. userId (query param) and plan body are required.
+        /// </summary>
         [HttpPost("plans", Name = "insertWOPlan")]
         public async Task<ActionResult> InsertWorkoutPlanAsync([FromQuery] string userId, [FromBody] WorkoutPlan workoutPlan)
         {

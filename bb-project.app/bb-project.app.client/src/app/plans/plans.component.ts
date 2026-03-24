@@ -48,7 +48,8 @@ export class PlansComponent implements OnInit {
   }
 
   loadPlans(): void {
-    this.api.getPlans().subscribe({
+    const userId = this.userService.getCurrentUser();
+    this.api.getPlans(userId).subscribe({
       next: plans => (this.plans = plans),
       error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to load plans' })
     });

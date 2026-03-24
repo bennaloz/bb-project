@@ -11,7 +11,7 @@ namespace bb_project.app.Contracts.Interfaces
         Task<ulong> InsertWorkoutHistoryAsync(DateTime startDate, DateTime endDate, ulong workoutId, ulong workoutPlanId, string userId);
         Task InsertWorkoutDataAsync(ulong workoutHistoryId, ulong serieId, ulong exerciseId, DateTime startTime, DateTime endTime, double? usedKgs);
 
-        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null, bool getArchived = false);
+        Task<IEnumerable<WorkoutPlan>> GetWorkoutPlansAsync(ulong? id = null, string? userId = null, bool getArchived = false);
 
         Task<IEnumerable<Workout>> GetWorkoutsAsync(ulong workoutPlanId, ulong? workoutId = null);
 
