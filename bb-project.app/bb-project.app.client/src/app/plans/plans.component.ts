@@ -55,6 +55,7 @@ export class PlansComponent implements OnInit {
   }
 
   onPanelOpen(event: { index: number }): void {
+    // event.index is the [value] bound to p-accordion-panel, which equals plan.id
     this.loadWorkoutsForPlan(event.index);
   }
 

@@ -90,7 +90,7 @@ export class ExercisesComponent implements OnInit {
   submit(): void {
     if (this.form.invalid) return;
     const value = this.form.value;
-    const mask = (value.involvedMuscles as number[]).reduce((acc: number, v: number) => acc | v, 0);
+    const mask = (value.involvedMuscles as number[]).reduce((acc, v) => acc | v, 0);
     const payload = { name: value.name, type: value.type, involvedMuscles: mask };
     if (this.editingExercise) {
       this.api.updateExercise(this.editingExercise.id, payload).subscribe({
