@@ -27,6 +27,7 @@ jobs:
           app_location: 'bb-project.app/bb-project.app.client'
           output_location: 'dist/bb-project.app.client/browser'
           skip_app_build: false
+          app_build_command: 'npm run build -- --configuration test'
 
   deploy-prod:
     name: Deploy to PROD

@@ -27,6 +27,12 @@ jobs:
         working-directory: bb-project.app/bb-project.app.client
         run: npm ci
 
-      - name: Build
+      - name: Build (test)
+        if: github.base_ref == 'develop'
+        working-directory: bb-project.app/bb-project.app.client
+        run: npm run build -- --configuration test
+
+      - name: Build (production)
+        if: github.base_ref != 'develop'
         working-directory: bb-project.app/bb-project.app.client
         run: npm run build -- --configuration production
