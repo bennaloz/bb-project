@@ -1,27 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { WorkoutPlan } from '../models';
+import { Workout, WorkoutPlan } from '../models';
 import { UserService } from '../user.service';
 import { WorkoutsApiService } from '../workouts-api.service';
 import { PlanDialogComponent } from './plan-dialog.component';
+import { WorkoutDialogComponent } from '../workouts/workout-dialog.component';
 
 @Component({
   selector: 'app-plans',
   templateUrl: './plans.component.html',
+  styleUrl: './plans.component.css',
   standalone: false
 })
 export class PlansComponent implements OnInit {
   plans: WorkoutPlan[] = [];
-  displayedColumns = ['id', 'name', 'isActive', 'actions'];
+  /** Lazy-loaded workouts keyed by plan id */
+  workoutsMap: Record<number, Workout[]> = {};
+  workoutColumns = ['order', 'name', 'actions'];
 
   constructor(
     private api: WorkoutsApiService,
     private userService: UserService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar,
-    private router: Router
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +37,20 @@ export class PlansComponent implements OnInit {
     });
   }
 
+  /** Called when an expansion panel opens — load workouts for that plan if not cached. */
+  onPlanOpened(plan: WorkoutPlan): void {
+    this.loadWorkoutsForPlan(plan.id);
+  }
+
+  loadWorkoutsForPlan(planId: number): void {
+    this.api.getWorkouts(planId).subscribe({
+      next: w => (this.workoutsMap = { ...this.workoutsMap, [planId]: w }),
+      error: () => this.snackBar.open('Failed to load workouts', 'Close', { duration: 3000 })
+    });
+  }
+
+  // ── Plan CRUD ──────────────────────────────────────────────────────────────
+
   openAdd(): void {
     const ref = this.dialog.open(PlanDialogComponent, { data: {} });
     ref.afterClosed().subscribe(result => {
@@ -47,7 +63,8 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  openEdit(plan: WorkoutPlan): void {
+  openEdit(plan: WorkoutPlan, event: Event): void {
+    event.stopPropagation();
     const ref = this.dialog.open(PlanDialogComponent, { data: { plan } });
     ref.afterClosed().subscribe(result => {
       if (!result) return;
@@ -59,7 +76,29 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  viewWorkouts(plan: WorkoutPlan): void {
-    this.router.navigate(['/plans', plan.id, 'workouts']);
+  // ── Workout CRUD (inline within each plan) ────────────────────────────────
+
+  openAddWorkout(plan: WorkoutPlan, event: Event): void {
+    event.stopPropagation();
+    const ref = this.dialog.open(WorkoutDialogComponent, { data: {} });
+    ref.afterClosed().subscribe(result => {
+      if (!result) return;
+      this.api.createWorkout(plan.id, result).subscribe({
+        next: () => this.loadWorkoutsForPlan(plan.id),
+        error: () => this.snackBar.open('Failed to create workout', 'Close', { duration: 3000 })
+      });
+    });
+  }
+
+  openEditWorkout(plan: WorkoutPlan, workout: Workout, event: Event): void {
+    event.stopPropagation();
+    const ref = this.dialog.open(WorkoutDialogComponent, { data: { workout } });
+    ref.afterClosed().subscribe(result => {
+      if (!result) return;
+      this.api.updateWorkout(workout.id, plan.id, result).subscribe({
+        next: () => this.loadWorkoutsForPlan(plan.id),
+        error: () => this.snackBar.open('Failed to update workout', 'Close', { duration: 3000 })
+      });
+    });
   }
 }

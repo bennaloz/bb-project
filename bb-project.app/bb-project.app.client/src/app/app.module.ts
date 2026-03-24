@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 
@@ -63,6 +64,7 @@ import { UserService } from './user.service';
     MatCardModule,
     MatChipsModule,
     MatProgressSpinnerModule,
+    MatExpansionModule,
     MatListModule,
   ],
   providers: [UserService],

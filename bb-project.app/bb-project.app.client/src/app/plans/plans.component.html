@@ -1,35 +1,78 @@
-<mat-toolbar color="primary">
-  <span>Workout Plans</span>
-  <span style="flex:1 1 auto"></span>
-  <button mat-icon-button (click)="openAdd()" title="Add Plan">
-    <mat-icon>add</mat-icon>
+<div class="plans-header">
+  <h2>Workout Plans</h2>
+  <button mat-raised-button color="primary" (click)="openAdd()">
+    <mat-icon>add</mat-icon> New Plan
   </button>
-</mat-toolbar>
+</div>
 
-<table mat-table [dataSource]="plans" style="width:100%">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell *matCellDef="let p">{{ p.id }}</td>
-  </ng-container>
+<mat-accordion *ngIf="plans.length > 0; else noPlans">
+  <mat-expansion-panel
+    *ngFor="let plan of plans"
+    (opened)="onPlanOpened(plan)"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon style="margin-right:8px">fitness_center</mat-icon>
+        {{ plan.name }}
+      </mat-panel-title>
+      <mat-panel-description>
+        <span [class.active-chip]="plan.isActive" [class.inactive-chip]="!plan.isActive">
+          {{ plan.isActive ? 'Active' : 'Inactive' }}
+        </span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
 
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let p">{{ p.name }}</td>
-  </ng-container>
+    <!-- Plan actions -->
+    <div class="panel-actions">
+      <button mat-stroked-button color="primary" (click)="openEdit(plan, $event)">
+        <mat-icon>edit</mat-icon> Edit Plan
+      </button>
+    </div>
 
-  <ng-container matColumnDef="isActive">
-    <th mat-header-cell *matHeaderCellDef>Active</th>
-    <td mat-cell *matCellDef="let p">{{ p.isActive ? 'Yes' : 'No' }}</td>
-  </ng-container>
+    <!-- Workouts section -->
+    <div class="workouts-section">
+      <div class="workouts-header">
+        <strong>Workouts</strong>
+        <button mat-button color="primary" (click)="openAddWorkout(plan, $event)">
+          <mat-icon>add</mat-icon> Add Workout
+        </button>
+      </div>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
-    <td mat-cell *matCellDef="let p">
-      <button mat-button color="primary" (click)="openEdit(p)">Edit</button>
-      <button mat-button (click)="viewWorkouts(p)">Workouts</button>
-    </td>
-  </ng-container>
+      <ng-container *ngIf="workoutsMap[plan.id] as workouts; else loadingWorkouts">
+        <p *ngIf="workouts.length === 0" class="empty-msg">No workouts yet. Add one above.</p>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+        <table *ngIf="workouts.length > 0" mat-table [dataSource]="workouts" class="workouts-table">
+          <ng-container matColumnDef="order">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let w">{{ w.order }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let w">{{ w.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let w">
+              <button mat-icon-button color="primary" title="Edit" (click)="openEditWorkout(plan, w, $event)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="workoutColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: workoutColumns;"></tr>
+        </table>
+      </ng-container>
+
+      <ng-template #loadingWorkouts>
+        <mat-spinner diameter="24" style="margin:8px auto"></mat-spinner>
+      </ng-template>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<ng-template #noPlans>
+  <p class="empty-msg">No plans yet. Click <em>New Plan</em> to create one.</p>
+</ng-template>

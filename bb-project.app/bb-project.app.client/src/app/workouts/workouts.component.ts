@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Workout } from '../models';
@@ -13,11 +13,13 @@ import { WorkoutDialogComponent } from './workout-dialog.component';
 })
 export class WorkoutsComponent implements OnInit {
   planId = 0;
+  planName = '';
   workouts: Workout[] = [];
-  displayedColumns = ['id', 'name', 'order', 'actions'];
+  displayedColumns = ['order', 'name', 'actions'];
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private api: WorkoutsApiService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -25,6 +27,9 @@ export class WorkoutsComponent implements OnInit {
 
   ngOnInit(): void {
     this.planId = Number(this.route.snapshot.paramMap.get('planId'));
+    this.api.getPlans(String(this.planId)).subscribe({
+      next: plans => { if (plans.length) this.planName = plans[0].name; }
+    });
     this.loadWorkouts();
   }
 
@@ -33,6 +38,10 @@ export class WorkoutsComponent implements OnInit {
       next: w => (this.workouts = w),
       error: () => this.snackBar.open('Failed to load workouts', 'Close', { duration: 3000 })
     });
+  }
+
+  backToPlans(): void {
+    this.router.navigate(['/plans']);
   }
 
   openAdd(): void {

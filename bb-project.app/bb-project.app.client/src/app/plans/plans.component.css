@@ -1,0 +1,44 @@
+.plans-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.plans-header h2 {
+  margin: 0;
+}
+
+.panel-actions {
+  margin-bottom: 12px;
+}
+
+.workouts-section {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+}
+
+.workouts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.workouts-table {
+  width: 100%;
+}
+
+.empty-msg {
+  color: #888;
+  font-style: italic;
+}
+
+.active-chip {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.inactive-chip {
+  color: #888;
+}
