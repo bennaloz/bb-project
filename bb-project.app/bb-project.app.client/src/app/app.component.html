@@ -1,14 +1,20 @@
-<mat-toolbar color="primary">
-  <span>BB Workout Tracker</span>
-  <span class="spacer"></span>
-  <nav>
-    <a mat-button routerLink="/users">Users</a>
-    <a mat-button routerLink="/plans">Plans</a>
-    <a mat-button routerLink="/exercises">Exercises</a>
-    <a mat-button routerLink="/history">History</a>
-  </nav>
-</mat-toolbar>
+<p-toolbar styleClass="app-toolbar">
+  <ng-template pTemplate="start">
+    <span class="app-title">BB Workout Tracker</span>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <nav class="app-nav">
+      <a routerLink="/users" routerLinkActive="active-link">Users</a>
+      <a routerLink="/plans" routerLinkActive="active-link">Plans</a>
+      <a routerLink="/exercises" routerLinkActive="active-link">Exercises</a>
+      <a routerLink="/history" routerLinkActive="active-link">History</a>
+    </nav>
+  </ng-template>
+</p-toolbar>
 
 <div class="content">
   <router-outlet></router-outlet>
 </div>
+
+<p-toast />
+

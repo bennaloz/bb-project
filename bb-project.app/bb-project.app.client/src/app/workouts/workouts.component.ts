@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Workout } from '../models';
 import { WorkoutsApiService } from '../workouts-api.service';
-import { WorkoutDialogComponent } from './workout-dialog.component';
 
 @Component({
   selector: 'app-workouts',
@@ -15,15 +14,23 @@ export class WorkoutsComponent implements OnInit {
   planId = 0;
   planName = '';
   workouts: Workout[] = [];
-  displayedColumns = ['order', 'name', 'actions'];
+
+  dialogVisible = false;
+  editingWorkout: Workout | null = null;
+  form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private api: WorkoutsApiService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {}
+    private messageService: MessageService,
+    fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      name: ['', Validators.required],
+      order: [0]
+    });
+  }
 
   ngOnInit(): void {
     this.planId = Number(this.route.snapshot.paramMap.get('planId'));
@@ -36,7 +43,7 @@ export class WorkoutsComponent implements OnInit {
   loadWorkouts(): void {
     this.api.getWorkouts(this.planId).subscribe({
       next: w => (this.workouts = w),
-      error: () => this.snackBar.open('Failed to load workouts', 'Close', { duration: 3000 })
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to load workouts' })
     });
   }
 
@@ -45,24 +52,30 @@ export class WorkoutsComponent implements OnInit {
   }
 
   openAdd(): void {
-    const ref = this.dialog.open(WorkoutDialogComponent, { data: {} });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      this.api.createWorkout(this.planId, result).subscribe({
-        next: () => this.loadWorkouts(),
-        error: () => this.snackBar.open('Failed to create workout', 'Close', { duration: 3000 })
-      });
-    });
+    this.editingWorkout = null;
+    this.form.reset({ name: '', order: 0 });
+    this.dialogVisible = true;
   }
 
   openEdit(workout: Workout): void {
-    const ref = this.dialog.open(WorkoutDialogComponent, { data: { workout } });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      this.api.updateWorkout(workout.id, this.planId, result).subscribe({
-        next: () => this.loadWorkouts(),
-        error: () => this.snackBar.open('Failed to update workout', 'Close', { duration: 3000 })
+    this.editingWorkout = workout;
+    this.form.setValue({ name: workout.name, order: workout.order });
+    this.dialogVisible = true;
+  }
+
+  submit(): void {
+    if (this.form.invalid) return;
+    const value = this.form.value;
+    if (this.editingWorkout) {
+      this.api.updateWorkout(this.editingWorkout.id, this.planId, value).subscribe({
+        next: () => { this.dialogVisible = false; this.loadWorkouts(); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update workout' })
       });
-    });
+    } else {
+      this.api.createWorkout(this.planId, value).subscribe({
+        next: () => { this.dialogVisible = false; this.loadWorkouts(); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create workout' })
+      });
+    }
   }
 }

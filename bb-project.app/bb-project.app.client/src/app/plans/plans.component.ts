@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { Workout, WorkoutPlan } from '../models';
 import { UserService } from '../user.service';
 import { WorkoutsApiService } from '../workouts-api.service';
-import { PlanDialogComponent } from './plan-dialog.component';
-import { WorkoutDialogComponent } from '../workouts/workout-dialog.component';
 
 @Component({
   selector: 'app-plans',
@@ -15,16 +13,35 @@ import { WorkoutDialogComponent } from '../workouts/workout-dialog.component';
 })
 export class PlansComponent implements OnInit {
   plans: WorkoutPlan[] = [];
-  /** Lazy-loaded workouts keyed by plan id */
   workoutsMap: Record<number, Workout[]> = {};
   workoutColumns = ['order', 'name', 'actions'];
+
+  // Plan dialog
+  planDialogVisible = false;
+  editingPlan: WorkoutPlan | null = null;
+  planForm: FormGroup;
+
+  // Workout dialog
+  workoutDialogVisible = false;
+  editingWorkout: Workout | null = null;
+  currentPlanId = 0;
+  workoutForm: FormGroup;
 
   constructor(
     private api: WorkoutsApiService,
     private userService: UserService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {}
+    private messageService: MessageService,
+    fb: FormBuilder
+  ) {
+    this.planForm = fb.group({
+      name: ['', Validators.required],
+      isActive: [false]
+    });
+    this.workoutForm = fb.group({
+      name: ['', Validators.required],
+      order: [0]
+    });
+  }
 
   ngOnInit(): void {
     this.loadPlans();
@@ -33,72 +50,82 @@ export class PlansComponent implements OnInit {
   loadPlans(): void {
     this.api.getPlans().subscribe({
       next: plans => (this.plans = plans),
-      error: () => this.snackBar.open('Failed to load plans', 'Close', { duration: 3000 })
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to load plans' })
     });
   }
 
-  /** Called when an expansion panel opens — load workouts for that plan if not cached. */
-  onPlanOpened(plan: WorkoutPlan): void {
-    this.loadWorkoutsForPlan(plan.id);
+  onPanelOpen(event: { index: number }): void {
+    // event.index is the [value] bound to p-accordion-panel, which equals plan.id
+    this.loadWorkoutsForPlan(event.index);
   }
 
   loadWorkoutsForPlan(planId: number): void {
     this.api.getWorkouts(planId).subscribe({
       next: w => (this.workoutsMap = { ...this.workoutsMap, [planId]: w }),
-      error: () => this.snackBar.open('Failed to load workouts', 'Close', { duration: 3000 })
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to load workouts' })
     });
   }
 
   // ── Plan CRUD ──────────────────────────────────────────────────────────────
 
-  openAdd(): void {
-    const ref = this.dialog.open(PlanDialogComponent, { data: {} });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      const userId = this.userService.getCurrentUser();
-      this.api.createPlan(userId, result).subscribe({
-        next: () => this.loadPlans(),
-        error: () => this.snackBar.open('Failed to create plan', 'Close', { duration: 3000 })
-      });
-    });
+  openAddPlan(): void {
+    this.editingPlan = null;
+    this.planForm.reset({ name: '', isActive: false });
+    this.planDialogVisible = true;
   }
 
-  openEdit(plan: WorkoutPlan, event: Event): void {
-    event.stopPropagation();
-    const ref = this.dialog.open(PlanDialogComponent, { data: { plan } });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      const userId = this.userService.getCurrentUser();
-      this.api.updatePlan(plan.id, userId, result).subscribe({
-        next: () => this.loadPlans(),
-        error: () => this.snackBar.open('Failed to update plan', 'Close', { duration: 3000 })
-      });
-    });
+  openEditPlan(plan: WorkoutPlan): void {
+    this.editingPlan = plan;
+    this.planForm.setValue({ name: plan.name, isActive: plan.isActive });
+    this.planDialogVisible = true;
   }
 
-  // ── Workout CRUD (inline within each plan) ────────────────────────────────
-
-  openAddWorkout(plan: WorkoutPlan, event: Event): void {
-    event.stopPropagation();
-    const ref = this.dialog.open(WorkoutDialogComponent, { data: {} });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      this.api.createWorkout(plan.id, result).subscribe({
-        next: () => this.loadWorkoutsForPlan(plan.id),
-        error: () => this.snackBar.open('Failed to create workout', 'Close', { duration: 3000 })
+  submitPlan(): void {
+    if (this.planForm.invalid) return;
+    const userId = this.userService.getCurrentUser();
+    const value = this.planForm.value;
+    if (this.editingPlan) {
+      this.api.updatePlan(this.editingPlan.id, userId, value).subscribe({
+        next: () => { this.planDialogVisible = false; this.loadPlans(); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update plan' })
       });
-    });
+    } else {
+      this.api.createPlan(userId, value).subscribe({
+        next: () => { this.planDialogVisible = false; this.loadPlans(); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create plan' })
+      });
+    }
   }
 
-  openEditWorkout(plan: WorkoutPlan, workout: Workout, event: Event): void {
-    event.stopPropagation();
-    const ref = this.dialog.open(WorkoutDialogComponent, { data: { workout } });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      this.api.updateWorkout(workout.id, plan.id, result).subscribe({
-        next: () => this.loadWorkoutsForPlan(plan.id),
-        error: () => this.snackBar.open('Failed to update workout', 'Close', { duration: 3000 })
+  // ── Workout CRUD ──────────────────────────────────────────────────────────
+
+  openAddWorkout(plan: WorkoutPlan): void {
+    this.editingWorkout = null;
+    this.currentPlanId = plan.id;
+    this.workoutForm.reset({ name: '', order: 0 });
+    this.workoutDialogVisible = true;
+  }
+
+  openEditWorkout(plan: WorkoutPlan, workout: Workout): void {
+    this.editingWorkout = workout;
+    this.currentPlanId = plan.id;
+    this.workoutForm.setValue({ name: workout.name, order: workout.order });
+    this.workoutDialogVisible = true;
+  }
+
+  submitWorkout(): void {
+    if (this.workoutForm.invalid) return;
+    const value = this.workoutForm.value;
+    if (this.editingWorkout) {
+      this.api.updateWorkout(this.editingWorkout.id, this.currentPlanId, value).subscribe({
+        next: () => { this.workoutDialogVisible = false; this.loadWorkoutsForPlan(this.currentPlanId); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update workout' })
       });
-    });
+    } else {
+      this.api.createWorkout(this.currentPlanId, value).subscribe({
+        next: () => { this.workoutDialogVisible = false; this.loadWorkoutsForPlan(this.currentPlanId); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create workout' })
+      });
+    }
   }
 }

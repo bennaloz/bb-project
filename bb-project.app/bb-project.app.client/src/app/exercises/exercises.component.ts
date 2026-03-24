@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { ExerciseDefinition, ExerciseType, InvolvedMuscles } from '../models';
 import { UserService } from '../user.service';
 import { WorkoutsApiService } from '../workouts-api.service';
-import { ExerciseDialogComponent } from './exercise-dialog.component';
 
 @Component({
   selector: 'app-exercises',
@@ -13,9 +12,17 @@ import { ExerciseDialogComponent } from './exercise-dialog.component';
 })
 export class ExercisesComponent implements OnInit {
   exercises: ExerciseDefinition[] = [];
-  displayedColumns = ['id', 'name', 'type', 'involvedMuscles', 'actions'];
 
-  private muscleMap: { label: string; value: number }[] = [
+  dialogVisible = false;
+  editingExercise: ExerciseDefinition | null = null;
+  form: FormGroup;
+
+  exerciseTypes = [
+    { label: 'Cardio', value: ExerciseType.Cardio },
+    { label: 'Weights', value: ExerciseType.Weights }
+  ];
+
+  muscleOptions = [
     { label: 'Pectorals',  value: InvolvedMuscles.Pectorals },
     { label: 'Back',       value: InvolvedMuscles.Back },
     { label: 'Deltoids',   value: InvolvedMuscles.Deltoids },
@@ -30,9 +37,15 @@ export class ExercisesComponent implements OnInit {
   constructor(
     private api: WorkoutsApiService,
     private userService: UserService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
-  ) {}
+    private messageService: MessageService,
+    fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      name: ['', Validators.required],
+      type: [ExerciseType.Cardio, Validators.required],
+      involvedMuscles: [[]]
+    });
+  }
 
   ngOnInit(): void {
     this.loadExercises();
@@ -42,7 +55,7 @@ export class ExercisesComponent implements OnInit {
     const userId = this.userService.getCurrentUser();
     this.api.getExerciseDefinitions(userId).subscribe({
       next: ex => (this.exercises = ex),
-      error: () => this.snackBar.open('Failed to load exercises', 'Close', { duration: 3000 })
+      error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to load exercises' })
     });
   }
 
@@ -51,29 +64,45 @@ export class ExercisesComponent implements OnInit {
   }
 
   muscleNames(mask: number): string {
-    return this.muscleMap.filter(m => (mask & m.value) !== 0).map(m => m.label).join(', ') || '—';
+    return this.muscleOptions.filter(m => (mask & m.value) !== 0).map(m => m.label).join(', ') || '—';
+  }
+
+  private bitmaskToArray(mask: number): number[] {
+    return this.muscleOptions.filter(m => (mask & m.value) !== 0).map(m => m.value);
   }
 
   openAdd(): void {
-    const ref = this.dialog.open(ExerciseDialogComponent, { data: {} });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      const userId = this.userService.getCurrentUser();
-      this.api.createExercise(userId, result).subscribe({
-        next: () => this.loadExercises(),
-        error: () => this.snackBar.open('Failed to create exercise', 'Close', { duration: 3000 })
-      });
-    });
+    this.editingExercise = null;
+    this.form.reset({ name: '', type: ExerciseType.Cardio, involvedMuscles: [] });
+    this.dialogVisible = true;
   }
 
   openEdit(exercise: ExerciseDefinition): void {
-    const ref = this.dialog.open(ExerciseDialogComponent, { data: { exercise } });
-    ref.afterClosed().subscribe(result => {
-      if (!result) return;
-      this.api.updateExercise(exercise.id, result).subscribe({
-        next: () => this.loadExercises(),
-        error: () => this.snackBar.open('Failed to update exercise', 'Close', { duration: 3000 })
-      });
+    this.editingExercise = exercise;
+    this.form.setValue({
+      name: exercise.name,
+      type: exercise.type,
+      involvedMuscles: this.bitmaskToArray(exercise.involvedMuscles)
     });
+    this.dialogVisible = true;
+  }
+
+  submit(): void {
+    if (this.form.invalid) return;
+    const value = this.form.value;
+    const mask = (value.involvedMuscles as number[]).reduce((acc, v) => acc | v, 0);
+    const payload = { name: value.name, type: value.type, involvedMuscles: mask };
+    if (this.editingExercise) {
+      this.api.updateExercise(this.editingExercise.id, payload).subscribe({
+        next: () => { this.dialogVisible = false; this.loadExercises(); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update exercise' })
+      });
+    } else {
+      const userId = this.userService.getCurrentUser();
+      this.api.createExercise(userId, payload).subscribe({
+        next: () => { this.dialogVisible = false; this.loadExercises(); },
+        error: () => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to create exercise' })
+      });
+    }
   }
 }
