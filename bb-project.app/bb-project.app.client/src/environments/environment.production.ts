@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBase: ''
+  apiBase: 'https://bb-project-api-test-eadzayfddmeucfgb.italynorth-01.azurewebsites.net'
 };
