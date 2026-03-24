@@ -10,8 +10,11 @@ export class WorkoutsApiService {
 
   constructor(private http: HttpClient) {}
 
-  getPlans(workoutPlanId = ''): Observable<WorkoutPlan[]> {
-    return this.http.get<WorkoutPlan[]>(`${this.base}/plans`, { params: { workoutPlanId } });
+  getPlans(userId = '', workoutPlanId = ''): Observable<WorkoutPlan[]> {
+    const params: Record<string, string> = {};
+    if (userId) params['userId'] = userId;
+    if (workoutPlanId) params['workoutPlanId'] = workoutPlanId;
+    return this.http.get<WorkoutPlan[]>(`${this.base}/plans`, { params });
   }
 
   createPlan(userId: string, plan: Partial<WorkoutPlan>): Observable<number> {

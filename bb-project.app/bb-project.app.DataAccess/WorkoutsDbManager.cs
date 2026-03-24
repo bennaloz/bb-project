@@ -77,12 +77,13 @@ namespace bb_project.app.DataAccess
             }
         }
 
-        public async Task<IEnumerable<WorkoutPlanDbRecord>> GetWorkoutPlansAsync(ulong? id = null, bool getArchived = false)
+        public async Task<IEnumerable<WorkoutPlanDbRecord>> GetWorkoutPlansAsync(ulong? id = null, string? userId = null, bool getArchived = false)
         {
             using (var conn = new SqlConnection(this.connectionString))
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("workoutPlanId", (long)(id ?? 0), dbType: DbType.Int64);
+                parameters.Add("userId", string.IsNullOrWhiteSpace(userId) ? null : userId);
                 parameters.Add("getArchived", getArchived);
                 var workoutPlans = await conn.QueryAsync<WorkoutPlanDbRecord>("spr_GetWorkoutPlans", parameters, commandType: CommandType.StoredProcedure);
                 return workoutPlans;
