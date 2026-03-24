@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{ data.exercise ? 'Edit Exercise' : 'Add Exercise' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" style="display:flex;flex-direction:column;gap:12px;min-width:300px">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let t of exerciseTypes" [value]="t.value">{{ t.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Involved Muscles</mat-label>
+      <mat-select formControlName="involvedMuscles" multiple>
+        <mat-option *ngFor="let m of muscleOptions" [value]="m.value">{{ m.label }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="form.invalid">Save</button>
+</mat-dialog-actions>

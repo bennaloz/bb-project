@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-title>Users</mat-card-title>
+  <mat-card-content>
+    <p><strong>Current user:</strong> {{ currentUser }}</p>
+
+    <mat-list>
+      <mat-list-item *ngFor="let user of users" (click)="selectUser(user)"
+        [style.font-weight]="user === currentUser ? 'bold' : 'normal'"
+        style="cursor:pointer">
+        {{ user }} <span *ngIf="user === currentUser"> ✓</span>
+      </mat-list-item>
+    </mat-list>
+
+    <div style="margin-top:16px;display:flex;gap:8px;align-items:center">
+      <mat-form-field appearance="outline">
+        <mat-label>Custom username</mat-label>
+        <input matInput [(ngModel)]="customUser" placeholder="Enter username" />
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="addCustomUser()">Add &amp; Select</button>
+    </div>
+
+    <div style="margin-top:16px">
+      <button mat-raised-button color="primary" (click)="goToPlans()">Go to Plans</button>
+    </div>
+  </mat-card-content>
+</mat-card>
